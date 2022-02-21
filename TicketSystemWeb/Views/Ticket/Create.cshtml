@@ -1,0 +1,27 @@
+﻿@model Ticket
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Ticket aanmaken</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label asp-for="ticketSubject">Onderwerp</label>
+            <input asp-for="ticketSubject" class="form-control"/>
+            <span asp-validation-for="ticketSubject" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="ticketContent">Probleemomschrijving</label>
+            <input asp-for="ticketContent" class="form-control"/>
+            <span asp-validation-for="ticketContent" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 150px">Ticket aanmaken</button>
+        <a asp-controller="Ticket" asp-action="Index" class="btn btn-secondary" style="width: 150px">Terug naar overzicht</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
