@@ -18,6 +18,8 @@ namespace TicketSystemWeb.Models
         [DisplayName("Probleemomschrijving")]
         public string ticketContent { get; set; }
         public int displayOrder { get; set; }
+        public int ticketCategory { get; set; }
+        public int ticketPriority { get; set; } 
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
     }
 }

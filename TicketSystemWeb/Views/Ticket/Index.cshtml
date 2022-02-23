@@ -15,46 +15,96 @@
         </div>
     </div>
 </div>
-<br/><br/>
+<br />
+<br />
 
 <table class="table table-bordered table-striped" style="width: 100%">
     <thead>
-    <tr>
-        <th>
-            Onderwerp
-        </th>
-        <th>
-            Probleemomschrijving
-        </th>
-        <th>
-            Bewerken
-        </th>
-        <th>
-            Verwijderen
-        </th>
-    </tr>
-    <tbody>
-    @foreach (var obj in Model)
-    {
         <tr>
-            <td width="50%">
-                @obj.ticketSubject
-            </td>
-            <td width="50%">
-                @obj.ticketContent
-            </td>
-            <td>
-                <div class="w-75 btn-group" role="group">
-                    <a asp-controller="Ticket" asp-action="Edit" asp-route-ticketId="@obj.ticketId" class="btn btn-primary"><i class="bi bi-pen-fill"></i>Bewerken</a>
-                </div>
-            </td>
-            <td>
-                <div class="w-75 btn-group" role="group">
-                <a asp-controller="Ticket" asp-action="Delete" asp-route-ticketId="@obj.ticketId" class="btn btn-primary"><i class="bi bi-trash-fill"></i>Verwijderen</a>
-                </div>
-            </td>
+            <th>
+                Onderwerp
+            </th>
+            <th>
+                Probleemomschrijving
+            </th>
+            <th>
+                Categorie
+            </th>
+            <th>
+                Prioriteit
+            </th>
+            <th>
+                Bekijken
+            </th>
+            <th>
+                Bewerken
+            </th>
+            <th>
+                Verwijderen
+            </th>
         </tr>
-    }
-    </tbody>
     </thead>
+    <tbody>
+        @foreach (var obj in Model)
+        {
+            <tr>
+                <td width="50%">
+                    @obj.ticketSubject
+                </td>
+                <td width="50%">
+                    @obj.ticketContent
+                </td>
+                <td width="50%">
+                    @if (@obj.ticketCategory.Equals(0))
+                    {
+                        <p>Windows</p>
+                    }
+                    @if (@obj.ticketCategory.Equals(1))
+                    {
+                        <p>macOS</p>
+                    }
+                    @if (@obj.ticketCategory.Equals(2))
+                    {
+                        <p>Printer</p>
+                    }
+                    @if (@obj.ticketCategory.Equals(3))
+                    {
+                        <p>Interne systemen</p>
+                    }
+                <td width="50%">
+                        @if (@obj.ticketPriority.Equals(0))
+                        {
+                        <span class="badge bg-primary">Laag</span>
+                        }
+                        @if (@obj.ticketPriority.Equals(1))
+                        {
+                        <span class="badge bg-secondary">Gemiddeld</span>
+                        }
+                        @if (@obj.ticketPriority.Equals(2))
+                        {
+                        <span class="badge bg-warning">Hoog</span>
+                        }
+                        @if (@obj.ticketPriority.Equals(3))
+                        {
+                        <span class="badge bg-danger">Kritiek</span>
+                        }
+                </td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Ticket" asp-action="View" asp-route-ticketId="@obj.ticketId" class="btn btn-primary"><i class="bi bi-eye-fill"></i>Bekijken</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Ticket" asp-action="Edit" asp-route-ticketId="@obj.ticketId" class="btn btn-primary"><i class="bi bi-pen-fill"></i>Bewerken</a>
+                    </div>
+                </td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="Ticket" asp-action="Delete" asp-route-ticketId="@obj.ticketId" class="btn btn-primary"><i class="bi bi-trash-fill"></i>Verwijderen</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

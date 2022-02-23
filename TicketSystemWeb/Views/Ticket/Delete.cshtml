@@ -1,26 +1,51 @@
 ﻿@model Ticket
 
 <form method="post" asp-action="Delete">
-    <input asp-for="ticketId" hidden/>
+    <input asp-for="ticketId" hidden />
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">Ticket verwijderen</h2>
-            <hr/>
+            <hr />
         </div>
         <div asp-validation-summary="All"></div>
         <div class="mb-3">
             <label asp-for="ticketSubject">Onderwerp</label>
-            <input asp-for="ticketSubject" disabled class="form-control"/>
+            <input asp-for="ticketSubject" disabled class="form-control" />
         </div>
         <div class="mb-3">
-            <label asp-for="ticketContent">Probleemomschrijving</label>
-            <input asp-for="ticketContent" disabled class="form-control"/>
+            <textarea asp-for="ticketContent" disabled class="form-control" rows="7"></textarea>
+            <br />
+            <input asp-for="ticketContent" disabled class="form-control" />
         </div>
+        <div class="row">
+            <span asp-validation-for="ticketCategory">Categorie</span>
+            <div class="col-sm-3">
+                <select asp-for="ticketCategory" asp-validation-for="ticketCategory" class="form-control" disabled>
+                    <option value="0">Windows</option>
+                    <option value="1">macOS</option>
+                    <option value="2">Printer</option>
+                    <option value="3">Interne systemen</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <span asp-validation-for="ticketCategory">Prioriteit</span>
+            <div class="col-sm-3">
+                <select asp-for="ticketPriority" asp-validation-for="ticketPriority" class="form-control" disabled>
+                    <option value="0">Laag</option>
+                    <option value="1">Gemiddeld</option>
+                    <option value="2">Hoog</option>
+                    <option value="3">Kritiek</option>
+                </select>
+            </div>
+        </div>
+        <br />
         <button type="submit" class="btn btn-danger" style="width: 150px">Ticket verwijderen</button>
         <a asp-controller="Ticket" asp-action="Index" class="btn btn-secondary" style="width: 150px">Terug naar overzicht</a>
     </div>
 </form>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
 }

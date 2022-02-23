@@ -30,6 +30,23 @@ namespace TicketSystemWeb.Controllers
             return View();
         }
 
+        //GET
+        public IActionResult View(int? ticketId)
+        {
+            if (ticketId == null || ticketId == 0)
+            {
+                return NotFound();
+            }
+
+            var ticketFromDb = _db.Tickets.Find(ticketId);
+
+            if (ticketFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(ticketFromDb);
+        }
+
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -40,9 +57,8 @@ namespace TicketSystemWeb.Controllers
                 _db.Tickets.Add(obj);
                 _db.SaveChanges();
                 TempData["success"] = "Ticket succesvol aangemaakt";
-                return RedirectToAction();
+                return RedirectToAction("Index");
             }
-
             return View(obj);
         }
         //GET

@@ -9,19 +9,43 @@
         <div asp-validation-summary="All"></div>
         <div class="mb-3">
             <label asp-for="ticketSubject">Onderwerp</label>
-            <input asp-for="ticketSubject" class="form-control"/>
+            <input asp-for="ticketSubject" class="form-control" />
             <span asp-validation-for="ticketSubject" class="text-danger"></span>
         </div>
         <div class="mb-3">
             <label asp-for="ticketContent">Probleemomschrijving</label>
-            <input asp-for="ticketContent" class="form-control"/>
+            <textarea asp-for="ticketContent" class="form-control" rows="7"></textarea>
             <span asp-validation-for="ticketContent" class="text-danger"></span>
         </div>
+        <div class="row">
+            <span asp-validation-for="ticketCategory">Categorie</span>
+            <div class="col-sm-3">
+                <select asp-for="ticketCategory" asp-validation-for="ticketCategory" class="form-control">
+                    <option value="0">Windows</option>
+                    <option value="1">macOS</option>
+                    <option value="2">Printer</option>
+                    <option value="3">Interne systemen</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <span asp-validation-for="ticketCategory">Prioriteit</span>
+            <div class="col-sm-3">
+                <select asp-for="ticketPriority" asp-validation-for="ticketPriority" class="form-control">
+                    <option value="0">Laag</option>
+                    <option value="1">Gemiddeld</option>
+                    <option value="2">Hoog</option>
+                    <option value="3">Kritiek</option>
+                </select>
+            </div>
+        </div>
+        </div>
+        <br />
         <button type="submit" class="btn btn-primary" style="width: 150px">Ticket aanmaken</button>
         <a asp-controller="Ticket" asp-action="Index" class="btn btn-secondary" style="width: 150px">Terug naar overzicht</a>
-    </div>
 </form>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
 }
