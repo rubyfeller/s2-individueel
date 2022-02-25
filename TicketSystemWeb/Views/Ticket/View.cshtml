@@ -5,10 +5,18 @@
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">Ticket</h2>
+            <h2></h2>
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
         <div class="mb-3">
+            <label asp-for="CreatedDateTime">Ticket voor het laatst aangepast op</label>
+            <input asp-for="CreatedDateTime" disabled class="form-control">
+            <br />
+            <label asp-for="ticketId">Ticketnummer</label>
+            <input asp-for="ticketId" disabled class="form-control">
+
+            <br />
             <label asp-for="ticketSubject">Onderwerp</label>
             <input asp-for="ticketSubject" disabled class="form-control" />
         </div>

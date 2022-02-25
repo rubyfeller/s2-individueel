@@ -22,6 +22,9 @@
     <thead>
         <tr>
             <th>
+                Ticketnummer
+            </th>
+            <th>
                 Onderwerp
             </th>
             <th>
@@ -48,6 +51,9 @@
         @foreach (var obj in Model)
         {
             <tr>
+                <td width="50%">
+                    @obj.ticketId
+                </td>
                 <td width="50%">
                     @obj.ticketSubject
                 </td>

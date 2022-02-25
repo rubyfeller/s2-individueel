@@ -33,6 +33,7 @@ namespace TicketSystemWeb.Controllers
         //GET
         public IActionResult View(int? ticketId)
         {
+
             if (ticketId == null || ticketId == 0)
             {
                 return NotFound();
@@ -61,9 +62,17 @@ namespace TicketSystemWeb.Controllers
             }
             return View(obj);
         }
+
         //GET
         public IActionResult Edit(int? ticketId)
         {
+            List<string> ticketStatusList = new List<string>();
+            ticketStatusList.Add("Open");
+            ticketStatusList.Add("In behandeling");
+            ticketStatusList.Add("Gesloten");
+
+            ViewBag.ticketStatusList = ticketStatusList;
+
             if (ticketId == null || ticketId == 0)
             {
                 return NotFound();
@@ -75,6 +84,7 @@ namespace TicketSystemWeb.Controllers
             {
                 return NotFound();
             }
+
             return View(ticketFromDb);
         }
 
@@ -93,6 +103,7 @@ namespace TicketSystemWeb.Controllers
 
             return View(obj);
         }
+
         //GET
         public IActionResult Delete(int? ticketId)
         {
