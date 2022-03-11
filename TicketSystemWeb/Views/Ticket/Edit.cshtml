@@ -1,5 +1,8 @@
-﻿@model Ticket
-
+﻿@using static TicketSystemWeb.Models.Ticket
+@model Ticket
+@{
+    ViewData["Title"] = "Ticket bewerken";
+}
 <form method="post">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
@@ -7,6 +10,17 @@
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
+        <div class="row">
+            <div class="row">
+                <span asp-validation-for="ticketStatus">Status</span>
+                <div class="col-sm-3">
+                    <select asp-for="ticketStatus" asp-items="Html.GetEnumSelectList<ticketStatuses>()" class="form-control">
+                        <option selected="selected" value=""></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
         <div class="mb-3">
             <label asp-for="ticketSubject">Onderwerp</label>
             <input asp-for="ticketSubject" class="form-control" />
@@ -20,39 +34,17 @@
         <div class="row">
             <span asp-validation-for="ticketCategory">Categorie</span>
             <div class="col-sm-3">
-                <select asp-for="ticketCategory" asp-validation-for="ticketCategory" class="form-control">
-                    <option value="0">Windows</option>
-                    <option value="1">macOS</option>
-                    <option value="2">Printer</option>
-                    <option value="3">Interne systemen</option>
+                <select asp-for="ticketCategory" asp-items="Html.GetEnumSelectList<ticketCategories>()" class="form-control">
+                    <option selected="selected" value=""></option>
                 </select>
             </div>
         </div>
         <br />
         <div class="row">
-            <span asp-validation-for="ticketCategory">Prioriteit</span>
+            <span asp-validation-for="ticketPriority">Prioriteit</span>
             <div class="col-sm-3">
-                <select asp-for="ticketPriority" asp-validation-for="ticketPriority" class="form-control">
-                    <option value="0">Laag</option>
-                    <option value="1">Gemiddeld</option>
-                    <option value="2">Hoog</option>
-                    <option value="3">Kritiek</option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <span asp-validation-for="ticketCategory">Status</span>
-            <div class="col-sm-3">
-                <select asp-for="ticketStatus" class="form-control">
-@*                    @{
-                        int i = 0;
-                    }
-                    @foreach (var status in ViewBag.ticketStatusList)
-                    {
-                        i++;
-                        <option value="i">@status</option>
-                    }*@
-                    <option value="0">Placeholder</option>
+                <select asp-for="ticketPriority" asp-items="Html.GetEnumSelectList<ticketPriorities>()" class="form-control">
+                    <option selected="selected" value=""></option>
                 </select>
             </div>
         </div>

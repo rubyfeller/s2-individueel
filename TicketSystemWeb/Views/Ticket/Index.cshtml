@@ -1,12 +1,14 @@
-﻿@model IEnumerable<Ticket>
+﻿@using static TicketSystemWeb.Models.Ticket
+@model IEnumerable<Ticket>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Tickets";
 }
 
 <div class="container p-3">
     <div class="row pt-4">
         <div class="col-6">
-            <h2 class="text-primary">Ticket lijst</h2>
+            <h2 class="text-primary">Ticketlijst</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus faucibus scelerisque arcu ut lobortis. Nulla venenatis finibus mattis. Praesent tempus, arcu quis dictum aliquam, lectus libero egestas mauris, in sodales justo enim id dolor. Ut lobortis, ante in efficitur aliquet, felis augue iaculis nisl, sed viverra massa lectus at sem.</p>
         </div>
         <div class="col-6 text-end">
             <a asp-controller="Ticket" asp-action="Create" class="btn btn-primary">
@@ -35,6 +37,9 @@
             </th>
             <th>
                 Prioriteit
+            </th>
+            <th>
+                Status
             </th>
             <th>
                 Bekijken
@@ -94,6 +99,22 @@
                         {
                         <span class="badge bg-danger">Kritiek</span>
                         }
+                </td>
+                <td width="50%">
+                    <span>
+                            @if (@obj.ticketStatus.Equals(ticketStatuses.Open))
+                            {
+                            <span>Open</span>
+                            }
+                            @if (@obj.ticketStatus.Equals(ticketStatuses.InBehandeling))
+                            {
+                            <span>In behandeling</span>
+                            }
+                            @if (obj.ticketStatus.Equals(ticketStatuses.Gesloten))
+                            {
+                            <span>Gesloten</span>
+                            }
+                    </span>
                 </td>
                 <td>
                     <div class="w-75 btn-group" role="group">

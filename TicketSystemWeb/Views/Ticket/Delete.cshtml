@@ -1,4 +1,8 @@
-﻿@model Ticket
+﻿@using static TicketSystemWeb.Models.Ticket
+@model Ticket
+@{
+    ViewData["Title"] = "Ticket verwijderen";
+}
 
 <form method="post" asp-action="Delete">
     <input asp-for="ticketId" hidden />
@@ -8,6 +12,17 @@
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
+        <div class="row">
+            <div class="row">
+                <span asp-validation-for="ticketStatus">Status</span>
+                <div class="col-sm-3">
+                    <select asp-for="ticketStatus" asp-items="Html.GetEnumSelectList<ticketStatuses>()" class="form-control" disabled>
+                        <option selected="selected" value="">@ticketStatuses.Gesloten</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br />
         <div class="mb-3">
             <label asp-for="ticketSubject">Onderwerp</label>
             <input asp-for="ticketSubject" disabled class="form-control" />

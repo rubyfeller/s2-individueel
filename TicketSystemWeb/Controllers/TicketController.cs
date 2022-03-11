@@ -21,6 +21,7 @@ namespace TicketSystemWeb.Controllers
         public IActionResult Index()
         {
             IEnumerable<Ticket> objTicketList = _db.Tickets;
+
             return View(objTicketList);
         }
 
@@ -45,6 +46,14 @@ namespace TicketSystemWeb.Controllers
             {
                 return NotFound();
             }
+            List<string> ticketStatusList = new List<string>
+            {
+                "Open",
+                "In behandeling",
+                "Gesloten"
+            };
+
+            ViewBag.ticketStatusList = ticketStatusList;
             return View(ticketFromDb);
         }
 
@@ -66,13 +75,6 @@ namespace TicketSystemWeb.Controllers
         //GET
         public IActionResult Edit(int? ticketId)
         {
-            List<string> ticketStatusList = new List<string>();
-            ticketStatusList.Add("Open");
-            ticketStatusList.Add("In behandeling");
-            ticketStatusList.Add("Gesloten");
-
-            ViewBag.ticketStatusList = ticketStatusList;
-
             if (ticketId == null || ticketId == 0)
             {
                 return NotFound();
@@ -80,11 +82,19 @@ namespace TicketSystemWeb.Controllers
 
             var ticketFromDb = _db.Tickets.Find(ticketId);
 
+
             if (ticketFromDb == null)
             {
                 return NotFound();
             }
+            List<string> ticketStatusList = new List<string>
+            {
+                "Open",
+                "In behandeling",
+                "Gesloten"
+            };
 
+            ViewBag.ticketStatusList = ticketStatusList;
             return View(ticketFromDb);
         }
 
@@ -100,7 +110,14 @@ namespace TicketSystemWeb.Controllers
                 TempData["success"] = "Ticket succesvol aangepast";
                 return RedirectToAction("Index");
             }
+            List<string> ticketStatusList = new List<string>
+            {
+                "Open",
+                "In behandeling",
+                "Gesloten"
+            };
 
+            ViewBag.ticketStatusList = ticketStatusList;
             return View(obj);
         }
 
@@ -137,6 +154,35 @@ namespace TicketSystemWeb.Controllers
             TempData["success"] = "Ticket succesvol verwijderd";
             return RedirectToAction("Index");
         }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateReply(int ticketId, Ticket obj)
+        {
+            obj.replyId = ticketId;
+            obj.ticketId = 309;
+
+            obj.ticketSubject = "Reactie op ticket";
+
+            _db.Tickets.Add(obj);
+            _db.SaveChanges();
+            TempData["success"] = "Reactie succesvol geplaatst";
+
+            return RedirectToAction("Index");
+
+        }
+
+        //    //POST
+        //    public IActionResult ReplyPOST(int? ticketId, Ticket obj)
+        //    {
+        //        _db.Add(obj);
+        //        obj.ticketContent = "test IDE";
+        //        obj.replyId = (int)ticketId;
+        //        _db.SaveChanges();
+
+        //        TempData["success"] = "Reactie succesvol geplaatst";
+        //        return RedirectToAction("Index");
+
     }
 }
-

@@ -1,14 +1,23 @@
-﻿@model Ticket
+﻿@using static TicketSystemWeb.Models.Ticket
+@model Ticket
 
-<form method="post" asp-action="Delete">
+<form method="post">
     <input asp-for="ticketId" hidden />
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">Ticket</h2>
-            <h2></h2>
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
+        <div class="row">
+            <span asp-validation-for="ticketStatus">Status</span>
+            <div class="col-sm-3">
+                <select asp-for="ticketStatus" asp-items="Html.GetEnumSelectList<ticketStatuses>()" class="form-control" disabled>
+                    <option selected="selected" value="">@ticketStatuses.Gesloten</option>
+                </select>
+            </div>
+        </div>
+        <br />
         <div class="mb-3">
             <label asp-for="CreatedDateTime">Ticket voor het laatst aangepast op</label>
             <input asp-for="CreatedDateTime" disabled class="form-control">
@@ -21,6 +30,7 @@
             <input asp-for="ticketSubject" disabled class="form-control" />
         </div>
         <div class="mb-3">
+            <label asp-for="ticketSubject">Probleemomschrijving</label>
             <textarea asp-for="ticketContent" disabled class="form-control" rows="7"></textarea>
         </div>
         <div class="row">
@@ -50,7 +60,23 @@
         <a asp-controller="Ticket" asp-action="Index" class="btn btn-primary" style="width: 150px">Terug naar overzicht</a>
     </div>
 </form>
+<br />
+<form method="post" asp-action="CreateReply">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2>Reageren</h2>
+            <hr />
+        </div>
+        <div class="mb-3">
+            <label asp-for="ticketSubject">Opmerking</label>
+            <textarea asp-for="ticketContent" class="form-control" rows="7"></textarea>
+            <textarea asp-for="ticketId" class="form-control" rows="7" hidden></textarea>
+            <br />
+            <button type="submit" class="btn btn-success" style="width: 150px">Plaats reactie</button>
 
+        </div>
+    </div>
+</form>
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
-}
+    }
