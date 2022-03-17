@@ -5,7 +5,7 @@
     ViewData["Title"] = "Ticket aanmaken";
 }
 
-<form method="post" asp-action="CreateReply">
+@*<form method="post" asp-action="Create">
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-secondary">Apparaten toevoegen</h2>
@@ -13,17 +13,24 @@
             <hr />
         </div>
         <div class="mb-3">
-            <label asp-for="ticketSubject">Voeg apparaat 1 toe (*)</label>
-            <input asp-for="ticketContent" class="form-control" rows="2">
+            <label asp-for="deviceName">Apparaatnaam (*)</label>
+            <input asp-for="deviceName" class="form-control" rows="2">
+            <label asp-for="brand">Merk (*)</label>
+            <input asp-for="brand" class="form-control" rows="2">
+            <span asp-validation-for="deviceName" class="text-danger"></span>
+            <label asp-for="serialNumber">Serienummer</label>
+            <input asp-for="serialNumber" class="form-control" rows="2">
+            <span asp-validation-for="deviceName" class="text-danger"></span>
+            <label asp-for="osVersion">OS</label>
+            <input asp-for="osVersion" class="form-control" rows="2">
+            <span asp-validation-for="deviceName" class="text-danger"></span>
             <br />
-            <label asp-for="ticketSubject">Voeg apparaat 2 toe</label>
-            <input asp-for="ticketContent" class="form-control" rows="2">
-            <textarea asp-for="ticketId" class="form-control" rows="7" hidden></textarea>
-            <br />
-            <button type="submit" class="btn btn-primary" style="width: 150px">Apparaten toevoegen</button>
+
+            <button type="submit" class="btn btn-primary" style="width: 150px">Apparaat toevoegen</button>
+            <a asp-controller="Device" asp-action="Index" class="btn btn-secondary" style="width: 150px">Terug naar overzicht</a>
         </div>
     </div>
-</form>
+</form>*@
 
 <form method="post">
     <div class="border p-3 mt-4">

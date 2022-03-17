@@ -46,14 +46,7 @@ namespace TicketSystemWeb.Controllers
             {
                 return NotFound();
             }
-            List<string> ticketStatusList = new List<string>
-            {
-                "Open",
-                "In behandeling",
-                "Gesloten"
-            };
 
-            ViewBag.ticketStatusList = ticketStatusList;
             return View(ticketFromDb);
         }
 
@@ -87,14 +80,7 @@ namespace TicketSystemWeb.Controllers
             {
                 return NotFound();
             }
-            List<string> ticketStatusList = new List<string>
-            {
-                "Open",
-                "In behandeling",
-                "Gesloten"
-            };
 
-            ViewBag.ticketStatusList = ticketStatusList;
             return View(ticketFromDb);
         }
 
@@ -110,14 +96,7 @@ namespace TicketSystemWeb.Controllers
                 TempData["success"] = "Ticket succesvol aangepast";
                 return RedirectToAction("Index");
             }
-            List<string> ticketStatusList = new List<string>
-            {
-                "Open",
-                "In behandeling",
-                "Gesloten"
-            };
 
-            ViewBag.ticketStatusList = ticketStatusList;
             return View(obj);
         }
 
@@ -158,10 +137,14 @@ namespace TicketSystemWeb.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CreateReply(int ticketId, Ticket obj)
+        public IActionResult CreateReply(int? ticketId, Ticket obj)
         {
             obj.replyId = ticketId;
-            obj.ticketId = 309;
+
+            //if (obj.ticketId == ticketId)
+            //{
+            //    obj.ticketId++;
+            //}
 
             obj.ticketSubject = "Reactie op ticket";
 
@@ -170,7 +153,6 @@ namespace TicketSystemWeb.Controllers
             TempData["success"] = "Reactie succesvol geplaatst";
 
             return RedirectToAction("Index");
-
         }
 
         //    //POST

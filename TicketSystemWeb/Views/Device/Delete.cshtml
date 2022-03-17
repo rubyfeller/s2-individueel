@@ -1,0 +1,36 @@
+﻿@using static TicketSystemWeb.Models.Device
+@model Device
+
+<form method="post">
+    <input asp-for="deviceId" hidden />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Apparaat</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="All"></div>
+        <div class="mb-3">
+            <label asp-for="deviceName">Apparaatnaam</label>
+            <input asp-for="deviceName" disabled class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="brand">Merk</label>
+            <input asp-for="brand" disabled class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="serialNumber">Serienummer</label>
+            <input asp-for="serialNumber" disabled class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="osVersion">OS</label>
+            <input asp-for="osVersion" disabled class="form-control" />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-danger" style="width: 150px">Apparaat verwijderen</button>
+        <a asp-controller="Device" asp-action="Index" class="btn btn-secondary" style="width: 150px">Terug naar overzicht</a>
+    </div>
+</form>
+<br />
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+    }

@@ -23,7 +23,7 @@ namespace TicketSystemWeb.Models
         [Required(ErrorMessage = "Het invullen van een prioriteit is verplicht")]
         public int ticketPriority { get; set; }
         [Required(ErrorMessage = "Het invullen van een status is verplicht")]
-        public int ticketStatus { get; set; }
+        public ticketStatuses ticketStatus { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
         public int? replyId { get; set; }
 
