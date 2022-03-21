@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LOGIC.DeviceLogic;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace TicketSystemWeb.Controllers
     public class DeviceController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly DeviceLogic deviceLogic = new();
 
         public DeviceController(ApplicationDbContext db)
         {
@@ -20,7 +22,7 @@ namespace TicketSystemWeb.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Device> objDeviceList = _db.Devices;
+            IEnumerable<DeviceViewModel> objDeviceList = _db.Devices;
 
             return View(objDeviceList);
         }
@@ -34,12 +36,13 @@ namespace TicketSystemWeb.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Device obj)
+        public IActionResult Create(DeviceViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Devices.Add(obj);
-                _db.SaveChanges();
+                obj.ClientId = 0;
+                obj.TicketId = 0;
+                var result = deviceLogic.CreateNewDevice((int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
                 TempData["success"] = "Apparaat succesvol toegevoegd";
                 return RedirectToAction("Index");
             }
@@ -84,7 +87,7 @@ namespace TicketSystemWeb.Controllers
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Device obj)
+        public IActionResult Edit(DeviceViewModel obj)
         {
             if (ModelState.IsValid)
             {

@@ -8,18 +8,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TicketSystemWeb.Models
 {
-    public class Device
+    public class DeviceViewModel
     {
         [Key]
-        public int deviceId { get; set; }
-        public int clientId { get; set; }
-        public int ticketId { get; set; }
+        public int DeviceId { get; set; }
+        public int? ClientId { get; set; }
+        public int? TicketId { get; set; }
         [Required(ErrorMessage = "Het invullen van een apparaatnaam is verplicht")]
-        public string deviceName { get; set; }
-        public string deviceVersion { get; set; }
+        public string DeviceName { get; set; }
+        public string? DeviceVersion { get; set; }
         [Required(ErrorMessage = "Het invullen van een merk is verplicht")]
-        public string brand { get; set; }
-        public string osVersion { get; set; }
-        public string serialNumber { get; set; }
+        public string Brand { get; set; }
+        public string? OsVersion { get; set; }
+        public string? SerialNumber { get; set; }
     }
 }

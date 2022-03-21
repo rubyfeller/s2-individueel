@@ -1,4 +1,4 @@
-﻿@model Device
+﻿@model DeviceViewModel
 @{
     ViewData["Title"] = "Apparaat bewerken";
 }
@@ -10,24 +10,24 @@
         </div>
         <div asp-validation-summary="All"></div>
         <div class="mb-3">
-            <label asp-for="deviceName">Apparaatnaam</label>
-            <input asp-for="deviceName" class="form-control" />
-            <span asp-validation-for="deviceName" class="text-danger"></span>
+            <label asp-for="DeviceName">Apparaatnaam</label>
+            <input asp-for="DeviceName" class="form-control" />
+            <span asp-validation-for="DeviceName" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="brand">Merk</label>
-            <input asp-for="brand" class="form-control" />
-            <span asp-validation-for="brand" class="text-danger"></span>
+            <label asp-for="Brand">Merk</label>
+            <input asp-for="Brand" class="form-control" />
+            <span asp-validation-for="Brand" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <span asp-validation-for="serialNumber">Serienummer</span>
-            <input asp-for="serialNumber" class="form-control" />
-            <span asp-validation-for="serialNumber" class="text-danger"></span>
+            <span asp-validation-for="SerialNumber">Serienummer</span>
+            <input asp-for="SerialNumber" class="form-control" />
+            <span asp-validation-for="SerialNumber" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <span asp-validation-for="osVersion">OS</span>
-            <input asp-for="osVersion" class="form-control" />
-            <span asp-validation-for="osVersion" class="text-danger"></span>
+            <span asp-validation-for="OsVersion">OS</span>
+            <input asp-for="OsVersion" class="form-control" />
+            <span asp-validation-for="OsVersion" class="text-danger"></span>
         </div>
         <button type="submit" class="btn btn-primary" style="width: 150px">Apparaat bewerken</button>
         <a asp-controller="Device" asp-action="Index" class="btn btn-secondary" style="width: 150px">Terug naar overzicht</a>

@@ -1,8 +1,8 @@
-﻿@using static TicketSystemWeb.Models.Device
-@model Device
+﻿@using static TicketSystemWeb.Models.DeviceViewModel
+@model DeviceViewModel
 
 <form method="post">
-    <input asp-for="deviceId" hidden />
+    <input asp-for="DeviceId" hidden />
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">Apparaat</h2>
@@ -10,20 +10,20 @@
         </div>
         <div asp-validation-summary="All"></div>
         <div class="mb-3">
-            <label asp-for="deviceName">Apparaatnaam</label>
-            <input asp-for="deviceName" disabled class="form-control" />
+            <label asp-for="DeviceName">Apparaatnaam</label>
+            <input asp-for="DeviceName" disabled class="form-control" />
         </div>
         <div class="mb-3">
-            <label asp-for="brand">Merk</label>
-            <input asp-for="brand" disabled class="form-control" />
+            <label asp-for="Brand">Merk</label>
+            <input asp-for="Brand" disabled class="form-control" />
         </div>
         <div class="mb-3">
-            <label asp-for="serialNumber">Serienummer</label>
-            <input asp-for="serialNumber" disabled class="form-control" />
+            <label asp-for="SerialNumber">Serienummer</label>
+            <input asp-for="SerialNumber" disabled class="form-control" />
         </div>
         <div class="mb-3">
-            <label asp-for="osVersion">OS</label>
-            <input asp-for="osVersion" disabled class="form-control" />
+            <label asp-for="OsVersion">OS</label>
+            <input asp-for="OsVersion" disabled class="form-control" />
         </div>
         <br />
         <a asp-controller="Device" asp-action="Index" class="btn btn-primary" style="width: 150px">Terug naar overzicht</a>
