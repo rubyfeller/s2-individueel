@@ -10,7 +10,7 @@ namespace DAL.Interfaces
     public interface IDevice
     {
         Task<Int32> AddDevice(int clientId, int ticketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber);
-        //Task<Device> EditDevice(int DeviceId, Device updatedDevice);
+        Task<Int32> UpdateDevice(int clientId, int ticketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber);
         Task<List<Device>> GetDevices();
     }
 }

@@ -22,9 +22,26 @@ namespace TicketSystemWeb.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<DeviceViewModel> objDeviceList = _db.Devices;
+            List<DeviceViewModel> newDeviceList = new();
+            DeviceViewModel viewmodel = new DeviceViewModel();
+            var deviceList = deviceLogic.GetDevices().Result;
 
-            return View(objDeviceList);
+            foreach (var devices in deviceList)
+            {
+                newDeviceList.Add(new DeviceViewModel
+                {
+                    DeviceId = devices.DeviceId,
+                    ClientId = devices.ClientId,
+                    TicketId = devices.TicketId,
+                    DeviceName = devices.DeviceName,
+                    DeviceVersion = devices.DeviceVersion,
+                    Brand = devices.Brand,
+                    OsVersion = devices.OsVersion,
+                    SerialNumber = devices.SerialNumber,
+
+                });
+            }
+            return View(newDeviceList);
         }
 
         //GET
@@ -91,13 +108,22 @@ namespace TicketSystemWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Devices.Update(obj);
-                _db.SaveChanges();
-                TempData["success"] = "Apparaat succesvol aangepast";
+                obj.ClientId = 0;
+                obj.TicketId = 0;
+                var result = deviceLogic.UpdateDevice((int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
+                TempData["success"] = "Apparaat succesvol bewerkt";
                 return RedirectToAction("Index");
             }
-
             return View(obj);
+            //if (ModelState.IsValid)
+            //{
+            //    _db.Devices.Update(obj);
+            //    _db.SaveChanges();
+            //    TempData["success"] = "Apparaat succesvol aangepast";
+            //    return RedirectToAction("Index");
+            //}
+
+            //return View(obj);
         }
         //GET
         public IActionResult Delete(int? deviceId)
