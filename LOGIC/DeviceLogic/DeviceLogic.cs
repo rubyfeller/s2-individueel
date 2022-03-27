@@ -17,10 +17,16 @@ namespace LOGIC.DeviceLogic
             var result = await _device.AddDevice(clientId, ticketId, devicename, deviceversion, brand, osVersion, serialNumber);
             return result > 0;
         }
-        public async Task<Boolean> UpdateDevice(int clientId, int ticketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
+        public async Task<Boolean> UpdateDevice(int deviceId, int clientId, int ticketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
         {
-            var updateDeviceResult = await _device.UpdateDevice(clientId, ticketId, devicename, deviceversion, brand, osVersion, serialNumber);
+            var updateDeviceResult = await _device.UpdateDevice(deviceId, clientId, ticketId, devicename, deviceversion, brand, osVersion, serialNumber);
             return updateDeviceResult > 0;
+        }
+
+        public async Task<Boolean> DeleteDevice(int deviceId)
+        {
+            var deleteDeviceResult = await _device.DeleteDevice(deviceId);
+            return deleteDeviceResult > 0;
         }
 
         public async Task<List<Device>> GetDevices()

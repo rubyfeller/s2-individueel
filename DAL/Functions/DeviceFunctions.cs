@@ -18,6 +18,7 @@ namespace DAL.Functions
         DBCollection dbConnection = new DBCollection();
         int deviceResult;
         int updateDeviceResult;
+        int deleteDeviceResult;
 
         // Add a new device
         public async Task<Int32> AddDevice(int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
@@ -95,10 +96,11 @@ namespace DAL.Functions
             }
         }
         // Update device
-        public async Task<Int32> UpdateDevice(int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
+        public async Task<Int32> UpdateDevice(int deviceid, int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
         {
             Device newDevice = new Device
             {
+                DeviceId = deviceid,
                 DeviceName = devicename,
                 DeviceVersion = deviceversion,
                 Brand = brand,
@@ -109,8 +111,9 @@ namespace DAL.Functions
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
-                using (SqlCommand command = new SqlCommand("UPDATE Devices SET deviceName = '@DeviceName' WHERE deviceId = @DeviceId", connection))
+                using (SqlCommand command = new SqlCommand("UPDATE Devices SET deviceName = @DeviceName WHERE deviceId = @DeviceId", connection))
                 {
+                    command.Parameters.AddWithValue("@DeviceId", newDevice.DeviceId);
                     command.Parameters.AddWithValue("@ClientId", newDevice.ClientId ?? Convert.DBNull);
                     command.Parameters.AddWithValue("@TicketId", newDevice.TicketId ?? Convert.DBNull);
                     command.Parameters.AddWithValue("@DeviceName", newDevice.DeviceName);
@@ -124,46 +127,20 @@ namespace DAL.Functions
             }
             return updateDeviceResult;
         }
+        public async Task<Int32> DeleteDevice(int deviceid)
+        {
+            var connectionString = dbConnection.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                using (SqlCommand command = new SqlCommand("DELETE FROM Devices WHERE deviceId = @DeviceId", connection))
+                {
+                    command.Parameters.AddWithValue("@DeviceId", deviceid);
+                    connection.Open();
+                    deleteDeviceResult = await command.ExecuteNonQueryAsync();
+                }
+            }
+            return deleteDeviceResult;
+        }
     }
 }
-
-//// Edit device
-//public async Task<Device> EditDevice(int DeviceId, Device updatedDevice)
-//{
-//    Device device;
-//    device = (Device)context.Devices.FromSqlRaw("SELECT * FROM devices");
-//    using (context)
-//    {
-
-//        device = await (context.Devices.Where(s => s.DeviceId == 1).FirstOrDefaultAsync());
-
-//        if (device != null)
-//        {
-//            device.SerialNumber = updatedDevice.SerialNumber;
-//            device.DeviceName = updatedDevice.DeviceName;
-//            device.DeviceVersion = updatedDevice.DeviceVersion;
-//            device.Brand = updatedDevice.Brand;
-//            device.OsVersion = updatedDevice.OsVersion;
-//            device.SerialNumber = updatedDevice.SerialNumber;
-//        }
-
-
-//        context.Devices.Update(device);
-//        await context.SaveChangesAsync();
-//        return device;
-//    }
-//}
-
-//            // Get all devices
-//            public async Task<List<Device>> GetDevices()
-//            {
-//                List<Device> devices = new List<Device>();
-//                using (var context = new DatabaseContext(DatabaseContext.options.dbOptions))
-//                {
-//                    devices = await context.Devices.ToListAsync();
-//                }
-//                return devices;
-//            }
-//        }
-//    }
-//}

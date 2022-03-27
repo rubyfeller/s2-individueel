@@ -110,20 +110,11 @@ namespace TicketSystemWeb.Controllers
             {
                 obj.ClientId = 0;
                 obj.TicketId = 0;
-                var result = deviceLogic.UpdateDevice((int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
+                var result = deviceLogic.UpdateDevice(obj.DeviceId, (int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
                 TempData["success"] = "Apparaat succesvol bewerkt";
                 return RedirectToAction("Index");
             }
             return View(obj);
-            //if (ModelState.IsValid)
-            //{
-            //    _db.Devices.Update(obj);
-            //    _db.SaveChanges();
-            //    TempData["success"] = "Apparaat succesvol aangepast";
-            //    return RedirectToAction("Index");
-            //}
-
-            //return View(obj);
         }
         //GET
         public IActionResult Delete(int? deviceId)
@@ -145,16 +136,14 @@ namespace TicketSystemWeb.Controllers
         //POST
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? deviceId)
+        public IActionResult DeletePOST(DeviceViewModel obj)
         {
-            var obj = _db.Devices.Find(deviceId);
+            _db.Devices.Find(obj.DeviceId);
             if (obj == null)
             {
                 return NotFound();
             }
-
-            _db.Devices.Remove(obj);
-            _db.SaveChanges();
+            var result = deviceLogic.DeleteDevice(obj.DeviceId);
             TempData["success"] = "Apparaat succesvol verwijderd";
             return RedirectToAction("Index");
         }
