@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.Functions
+namespace LOGIC.TicketLogic
 {
-    public class TicketFunctions
+    public class TicketLogic
     {
     }
 }

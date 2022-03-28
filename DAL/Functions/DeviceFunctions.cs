@@ -1,5 +1,4 @@
-﻿using DAL.DataContext;
-using DAL.Interfaces;
+﻿using DAL.Interfaces;
 using DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -95,6 +94,52 @@ namespace DAL.Functions
                 return deviceList;
             }
         }
+
+        // Get specific device
+        public async Task<List<Device>> GetDevice(int deviceid)
+        {
+            Device device = new Device();
+            var connectionString = dbConnection.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.ConnectionString = connectionString;
+                await connection.OpenAsync();
+                DbCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM Devices WHERE deviceId = " + deviceid;
+                List<Device> specificDeviceList = new();
+                using (DbDataReader reader = await command.ExecuteReaderAsync())
+                {
+                    while (reader.Read())
+                    {
+                        device.ClientId = 0;
+                        device.TicketId = 0;
+                        //device.ClientId = reader.GetInt32("clientId");
+                        //device.TicketId = reader.GetInt32("ticketId");
+                        device.DeviceId = reader.GetInt32("deviceId");
+                        device.DeviceName = reader.GetString("deviceName");
+                        device.DeviceVersion = reader.GetString("deviceVersion");
+                        device.Brand = reader.GetString("brand");
+                        device.OsVersion = reader.GetString("osVersion");
+                        device.SerialNumber = reader.GetString("serialNumber");
+                        specificDeviceList.Add(new Device
+                        {
+                            ClientId = 0,
+                            TicketId = 0,
+                            //device.ClientId = reader.GetInt32("clientId");
+                            //device.TicketId = reader.GetInt32("ticketId");
+                            DeviceId = Convert.ToInt32(reader.GetInt32("deviceId")),
+                            DeviceName = reader.GetString("deviceName"),
+                            DeviceVersion = reader.GetString("deviceVersion"),
+                            Brand = reader.GetString("brand"),
+                            OsVersion = reader.GetString("osVersion"),
+                            SerialNumber = reader.GetString("serialNumber"),
+                        });
+                    }
+                }
+                return specificDeviceList;
+            }
+        }
+
         // Update device
         public async Task<Int32> UpdateDevice(int deviceid, int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
         {
@@ -111,7 +156,7 @@ namespace DAL.Functions
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
-                using (SqlCommand command = new SqlCommand("UPDATE Devices SET deviceName = @DeviceName WHERE deviceId = @DeviceId", connection))
+                using (SqlCommand command = new SqlCommand("UPDATE Devices SET deviceName = @DeviceName, deviceVersion = @DeviceVersion, brand = @Brand, osVersion = @OsVersion, serialNumber = @SerialNumber WHERE deviceId = @DeviceId", connection))
                 {
                     command.Parameters.AddWithValue("@DeviceId", newDevice.DeviceId);
                     command.Parameters.AddWithValue("@ClientId", newDevice.ClientId ?? Convert.DBNull);
@@ -127,6 +172,7 @@ namespace DAL.Functions
             }
             return updateDeviceResult;
         }
+
         public async Task<Int32> DeleteDevice(int deviceid)
         {
             var connectionString = dbConnection.GetConnectionString();

@@ -17,6 +17,7 @@ namespace LOGIC.DeviceLogic
             var result = await _device.AddDevice(clientId, ticketId, devicename, deviceversion, brand, osVersion, serialNumber);
             return result > 0;
         }
+
         public async Task<Boolean> UpdateDevice(int deviceId, int clientId, int ticketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
         {
             var updateDeviceResult = await _device.UpdateDevice(deviceId, clientId, ticketId, devicename, deviceversion, brand, osVersion, serialNumber);
@@ -33,6 +34,12 @@ namespace LOGIC.DeviceLogic
         {
             List<Device> devices = await _device.GetDevices();
             return devices;
+        }
+
+        public async Task<List<Device>> GetDevice(int deviceId)
+        {
+            List<Device> specificDeviceList = await _device.GetDevice(deviceId);
+            return specificDeviceList;
         }
     }
 }

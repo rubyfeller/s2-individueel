@@ -5,22 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using TicketSystemWeb.Data;
 using TicketSystemWeb.Models;
 
 namespace TicketSystemWeb.Controllers
 {
     public class DeviceController : Controller
     {
-        private readonly ApplicationDbContext _db;
         private readonly DeviceLogic deviceLogic = new();
 
-        public DeviceController(ApplicationDbContext db)
-        {
-            _db = db;
-        }
-
-        public IActionResult Index()
+        public List<DeviceViewModel> TransferViewAll()
         {
             List<DeviceViewModel> newDeviceList = new();
             DeviceViewModel viewmodel = new DeviceViewModel();
@@ -41,6 +34,36 @@ namespace TicketSystemWeb.Controllers
 
                 });
             }
+            return newDeviceList;
+        }
+
+        public List<DeviceViewModel> TransferViewSpecfic(int deviceid)
+        {
+            List<DeviceViewModel> newDeviceList = new();
+            DeviceViewModel viewmodel = new DeviceViewModel();
+            var deviceList = deviceLogic.GetDevice(deviceid).Result;
+
+            foreach (var devices in deviceList)
+            {
+                newDeviceList.Add(new DeviceViewModel
+                {
+                    DeviceId = devices.DeviceId,
+                    ClientId = devices.ClientId,
+                    TicketId = devices.TicketId,
+                    DeviceName = devices.DeviceName,
+                    DeviceVersion = devices.DeviceVersion,
+                    Brand = devices.Brand,
+                    OsVersion = devices.OsVersion,
+                    SerialNumber = devices.SerialNumber,
+
+                });
+            }
+            return newDeviceList;
+        }
+
+        public IActionResult Index()
+        {
+            var newDeviceList = TransferViewAll();
             return View(newDeviceList);
         }
 
@@ -60,47 +83,62 @@ namespace TicketSystemWeb.Controllers
                 obj.ClientId = 0;
                 obj.TicketId = 0;
                 var result = deviceLogic.CreateNewDevice((int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
-                TempData["success"] = "Apparaat succesvol toegevoegd";
+
+                if (result != null)
+                {
+                    TempData["success"] = "Apparaat succesvol toegevoegd";
+                }
+                else
+                {
+                    TempData["error"] = "Apparaat niet toegevoegd";
+                }
                 return RedirectToAction("Index");
             }
             return View(obj);
         }
+
         //GET
-        public IActionResult View(int? deviceId)
+        public IActionResult View(int deviceId)
         {
 
-            if (deviceId == null || deviceId == 0)
+            if (deviceId == 0)
             {
                 return NotFound();
             }
 
-            var deviceFromDb = _db.Devices.Find(deviceId);
+            var newDeviceList = TransferViewSpecfic(deviceId);
 
-            if (deviceFromDb == null)
+            if (newDeviceList == null || newDeviceList.Count == 0)
             {
                 return NotFound();
             }
-
-            return View(deviceFromDb);
+            else
+            {
+                return View(newDeviceList[0]);
+            }
         }
+
         //GET
-        public IActionResult Edit(int? deviceId)
+        public IActionResult Edit(int deviceId)
         {
-            if (deviceId == null || deviceId == 0)
+            if (deviceId == 0)
             {
                 return NotFound();
             }
 
-            var deviceFromDb = _db.Devices.Find(deviceId);
+            var newDeviceList = TransferViewSpecfic(deviceId);
 
 
-            if (deviceFromDb == null)
+            if (newDeviceList == null || newDeviceList.Count == 0)
             {
                 return NotFound();
             }
-
-            return View(deviceFromDb);
+            else
+            {
+                return View(newDeviceList[0]);
+            }
         }
+
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -111,26 +149,36 @@ namespace TicketSystemWeb.Controllers
                 obj.ClientId = 0;
                 obj.TicketId = 0;
                 var result = deviceLogic.UpdateDevice(obj.DeviceId, (int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
-                TempData["success"] = "Apparaat succesvol bewerkt";
+
+                if (result != null)
+                {
+                    TempData["success"] = "Apparaat succesvol aangepast";
+                }
+                else
+                {
+                    TempData["error"] = "Apparaat niet aangepast";
+                }
                 return RedirectToAction("Index");
             }
             return View(obj);
         }
+
         //GET
-        public IActionResult Delete(int? deviceId)
+        public IActionResult Delete(int deviceId)
         {
-            if (deviceId == null || deviceId == 0)
+            if (deviceId == 0)
             {
                 return NotFound();
             }
 
-            var deviceFromDb = _db.Devices.Find(deviceId);
+            var newDeviceList = TransferViewSpecfic(deviceId);
 
-            if (deviceFromDb == null)
+            if (newDeviceList == null || newDeviceList.Count == 0)
             {
                 return NotFound();
             }
-            return View(deviceFromDb);
+
+            return View(newDeviceList[0]);
         }
 
         //POST
@@ -138,13 +186,16 @@ namespace TicketSystemWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(DeviceViewModel obj)
         {
-            _db.Devices.Find(obj.DeviceId);
-            if (obj == null)
-            {
-                return NotFound();
-            }
             var result = deviceLogic.DeleteDevice(obj.DeviceId);
-            TempData["success"] = "Apparaat succesvol verwijderd";
+
+            if (result != null)
+            {
+                TempData["success"] = "Apparaat succesvol verwijderd";
+            }
+            else
+            {
+                TempData["error"] = "Apparaat niet verwijderd";
+            }
             return RedirectToAction("Index");
         }
     }
