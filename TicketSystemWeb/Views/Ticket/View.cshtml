@@ -1,8 +1,8 @@
-﻿@using static TicketSystemWeb.Models.Ticket
-@model Ticket
+﻿@using static TicketSystemWeb.Models.TicketViewModel
+@model TicketViewModel
 
 <form method="post">
-    <input asp-for="ticketId" hidden />
+    <input asp-for="TicketId" hidden />
     <div class="border p-3 mt-4">
         <div class="row pb-2">
             <h2 class="text-primary">Ticket</h2>
@@ -10,9 +10,9 @@
         </div>
         <div asp-validation-summary="All"></div>
         <div class="row">
-            <span asp-validation-for="ticketStatus">Status</span>
+            <span asp-validation-for="TicketStatus">Status</span>
             <div class="col-sm-3">
-                <select asp-for="ticketStatus" asp-items="Html.GetEnumSelectList<ticketStatuses>()" class="form-control" disabled>
+                <select asp-for="TicketStatus" asp-items="Html.GetEnumSelectList<ticketStatuses>()" class="form-control" disabled>
                     <option selected="selected" value="">@ticketStatuses.Gesloten</option>
                 </select>
             </div>
@@ -22,21 +22,21 @@
             <label asp-for="CreatedDateTime">Ticket voor het laatst aangepast op</label>
             <input asp-for="CreatedDateTime" disabled class="form-control">
             <br />
-            <label asp-for="ticketId">Ticketnummer</label>
-            <input asp-for="ticketId" disabled class="form-control">
+            <label asp-for="TicketId">Ticketnummer</label>
+            <input asp-for="TicketId" disabled class="form-control">
 
             <br />
-            <label asp-for="ticketSubject">Onderwerp</label>
-            <input asp-for="ticketSubject" disabled class="form-control" />
+            <label asp-for="TicketSubject">Onderwerp</label>
+            <input asp-for="TicketSubject" disabled class="form-control" />
         </div>
         <div class="mb-3">
-            <label asp-for="ticketSubject">Probleemomschrijving</label>
-            <textarea asp-for="ticketContent" disabled class="form-control" rows="7"></textarea>
+            <label asp-for="TicketSubject">Probleemomschrijving</label>
+            <textarea asp-for="TicketContent" disabled class="form-control" rows="7"></textarea>
         </div>
         <div class="row">
-            <span asp-validation-for="ticketCategory">Categorie</span>
+            <span asp-validation-for="TicketCategory">Categorie</span>
             <div class="col-sm-3">
-                <select asp-for="ticketCategory" asp-validation-for="ticketCategory" class="form-control" disabled>
+                <select asp-for="TicketCategory" asp-validation-for="ticketCategory" class="form-control" disabled>
                     <option value="0">Windows</option>
                     <option value="1">macOS</option>
                     <option value="2">Printer</option>
@@ -46,9 +46,9 @@
         </div>
         <br />
         <div class="row">
-            <span asp-validation-for="ticketCategory">Prioriteit</span>
+            <span asp-validation-for="TicketCategory">Prioriteit</span>
             <div class="col-sm-3">
-                <select asp-for="ticketPriority" asp-validation-for="ticketPriority" class="form-control" disabled>
+                <select asp-for="TicketPriority" asp-validation-for="ticketPriority" class="form-control" disabled>
                     <option value="0">Laag</option>
                     <option value="1">Gemiddeld</option>
                     <option value="2">Hoog</option>
@@ -68,9 +68,9 @@
             <hr />
         </div>
         <div class="mb-3">
-            <label asp-for="ticketSubject">Opmerking</label>
-            <textarea asp-for="ticketContent" class="form-control" rows="7"></textarea>
-            <textarea asp-for="ticketId" class="form-control" rows="7" hidden></textarea>
+            <label asp-for="TicketSubject">Opmerking</label>
+            <textarea asp-for="TicketContent" class="form-control" rows="7"></textarea>
+            <textarea asp-for="TicketId" class="form-control" rows="7" hidden></textarea>
             <br />
             <button type="submit" class="btn btn-success" style="width: 150px">Plaats reactie</button>
         </div>

@@ -8,24 +8,26 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TicketSystemWeb.Models
 {
-    public class Ticket
+    public class TicketViewModel
     {
         [Key]
-        public int ticketId { get; set; }
+        public int TicketId { get; set; }
         [Required(ErrorMessage = "Het invullen van een onderwerp is verplicht")]
         [DisplayName("Onderwerp")]
-        public string ticketSubject { get; set; }
+        public string TicketSubject { get; set; }
         [Required(ErrorMessage = "Het invullen van een probleemomschrijving is verplicht")]
         [DisplayName("Probleemomschrijving")]
-        public string ticketContent { get; set; }
+        public string TicketContent { get; set; }
         [Required(ErrorMessage = "Het invullen van een categorie is verplicht")]
-        public int ticketCategory { get; set; }
+        public int TicketCategory { get; set; }
         [Required(ErrorMessage = "Het invullen van een prioriteit is verplicht")]
-        public int ticketPriority { get; set; }
+        public int TicketPriority { get; set; }
         [Required(ErrorMessage = "Het invullen van een status is verplicht")]
-        public ticketStatuses ticketStatus { get; set; }
+        //public ticketStatuses TicketStatus { get; set; }
+        public int TicketStatus { get; set; }
+
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        public int? replyId { get; set; }
+        //public int? ReplyId { get; set; }
 
         public enum ticketCategories
         {
@@ -34,7 +36,6 @@ namespace TicketSystemWeb.Models
             Printer,
             [Display(Name = "Interne systemen")] InterneSystemen
         }
-
         public enum ticketPriorities
         {
             Laag,

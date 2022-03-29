@@ -37,15 +37,15 @@ namespace TicketSystemWeb.Controllers
             return newDeviceList;
         }
 
-        public List<DeviceViewModel> TransferViewSpecfic(int deviceid)
+        public DeviceViewModel TransferViewSpecfic(int deviceid)
         {
             List<DeviceViewModel> newDeviceList = new();
-            DeviceViewModel viewmodel = new DeviceViewModel();
+            DeviceViewModel viewmodel = null;
             var deviceList = deviceLogic.GetDevice(deviceid).Result;
 
             foreach (var devices in deviceList)
             {
-                newDeviceList.Add(new DeviceViewModel
+                DeviceViewModel currDevice = new DeviceViewModel
                 {
                     DeviceId = devices.DeviceId,
                     ClientId = devices.ClientId,
@@ -55,10 +55,11 @@ namespace TicketSystemWeb.Controllers
                     Brand = devices.Brand,
                     OsVersion = devices.OsVersion,
                     SerialNumber = devices.SerialNumber,
-
-                });
+                };
+                newDeviceList.Add(currDevice);
+                viewmodel = currDevice;
             }
-            return newDeviceList;
+            return viewmodel;
         }
 
         public IActionResult Index()
@@ -106,15 +107,15 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var newDeviceList = TransferViewSpecfic(deviceId);
+            var specificDevice = TransferViewSpecfic(deviceId);
 
-            if (newDeviceList == null || newDeviceList.Count == 0)
+            if (specificDevice == null)
             {
                 return NotFound();
             }
             else
             {
-                return View(newDeviceList[0]);
+                return View(specificDevice);
             }
         }
 
@@ -126,16 +127,16 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var newDeviceList = TransferViewSpecfic(deviceId);
+            var specificDevice = TransferViewSpecfic(deviceId);
 
 
-            if (newDeviceList == null || newDeviceList.Count == 0)
+            if (specificDevice == null)
             {
                 return NotFound();
             }
             else
             {
-                return View(newDeviceList[0]);
+                return View(specificDevice);
             }
         }
 
@@ -171,14 +172,14 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var newDeviceList = TransferViewSpecfic(deviceId);
+            var specificDevice = TransferViewSpecfic(deviceId);
 
-            if (newDeviceList == null || newDeviceList.Count == 0)
+            if (specificDevice == null)
             {
                 return NotFound();
             }
 
-            return View(newDeviceList[0]);
+            return View(specificDevice);
         }
 
         //POST

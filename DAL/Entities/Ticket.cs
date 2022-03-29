@@ -11,19 +11,21 @@ namespace DAL.Entities
     public class Ticket
     {
         [Key]
-        public int ticketId { get; set; }
+        public int TicketId { get; set; }
         [Required]
-        public string ticketSubject { get; set; }
+        public string TicketSubject { get; set; }
         [Required]
-        public string ticketContent { get; set; }
+        public string TicketContent { get; set; }
         [Required]
-        public int ticketCategory { get; set; }
+        public int TicketCategory { get; set; }
         [Required]
-        public int ticketPriority { get; set; }
+        public int TicketPriority { get; set; }
+        //[Required]
+        //public ticketStatuses TicketStatus { get; set; }
         [Required]
-        public ticketStatuses ticketStatus { get; set; }
+        public int TicketStatus { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        public int? replyId { get; set; }
+        //public int? ReplyId { get; set; }
 
         public enum ticketCategories
         {
@@ -32,7 +34,6 @@ namespace DAL.Entities
             Printer,
             InterneSystemen
         }
-
         public enum ticketPriorities
         {
             Laag,

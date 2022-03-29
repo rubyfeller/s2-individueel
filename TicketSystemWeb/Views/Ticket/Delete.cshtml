@@ -1,49 +1,61 @@
-﻿@using static TicketSystemWeb.Models.Ticket
-@model Ticket
+﻿@using static TicketSystemWeb.Models.TicketViewModel
+@model TicketViewModel
 @{
     ViewData["Title"] = "Ticket verwijderen";
 }
 
 <form method="post" asp-action="Delete">
-    <input asp-for="ticketId" hidden />
+    <input asp-for="TicketId" hidden />
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">Ticket verwijderen</h2>
+            <h2 class="text-primary">Ticket</h2>
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
         <div class="row">
-            <div class="row">
-                <span asp-validation-for="ticketStatus">Status</span>
-                <div class="col-sm-3">
-                    <select asp-for="ticketStatus" asp-items="Html.GetEnumSelectList<ticketStatuses>()" class="form-control" disabled>
-                        <option selected="selected" value="">@ticketStatuses.Gesloten</option>
-                    </select>
-                </div>
+            <span asp-validation-for="TicketStatus">Status</span>
+            <div class="col-sm-3">
+                <select asp-for="TicketStatus" asp-items="Html.GetEnumSelectList<ticketStatuses>()" class="form-control" disabled>
+                    <option selected="selected" value="">@ticketStatuses.Gesloten</option>
+                </select>
             </div>
         </div>
         <br />
         <div class="mb-3">
-            <label asp-for="ticketSubject">Onderwerp</label>
-            <input asp-for="ticketSubject" disabled class="form-control" />
+            <label asp-for="CreatedDateTime">Ticket voor het laatst aangepast op</label>
+            <input asp-for="CreatedDateTime" disabled class="form-control">
+            <br />
+            <label asp-for="TicketId">Ticketnummer</label>
+            <input asp-for="TicketId" disabled class="form-control">
+
+            <br />
+            <label asp-for="TicketSubject">Onderwerp</label>
+            <input asp-for="TicketSubject" disabled class="form-control" />
         </div>
         <div class="mb-3">
-            <textarea asp-for="ticketContent" disabled class="form-control" rows="7"></textarea>
-            <br />
-            <input asp-for="ticketContent" disabled class="form-control" />
+            <label asp-for="TicketSubject">Probleemomschrijving</label>
+            <textarea asp-for="TicketContent" disabled class="form-control" rows="7"></textarea>
         </div>
         <div class="row">
-            <span asp-validation-for="ticketCategory">Categorie</span>
+            <span asp-validation-for="TicketCategory">Categorie</span>
             <div class="col-sm-3">
-                <select asp-for="ticketCategory" asp-validation-for="ticketCategory" class="form-control" disabled>
+                <select asp-for="TicketCategory" asp-validation-for="ticketCategory" class="form-control" disabled>
+                    <option value="0">Windows</option>
+                    <option value="1">macOS</option>
+                    <option value="2">Printer</option>
+                    <option value="3">Interne systemen</option>
                 </select>
             </div>
         </div>
         <br />
         <div class="row">
-            <span asp-validation-for="ticketCategory">Prioriteit</span>
+            <span asp-validation-for="TicketCategory">Prioriteit</span>
             <div class="col-sm-3">
-                <select asp-for="ticketPriority" asp-validation-for="ticketPriority" class="form-control" disabled>
+                <select asp-for="TicketPriority" asp-validation-for="ticketPriority" class="form-control" disabled>
+                    <option value="0">Laag</option>
+                    <option value="1">Gemiddeld</option>
+                    <option value="2">Hoog</option>
+                    <option value="3">Kritiek</option>
                 </select>
             </div>
         </div>

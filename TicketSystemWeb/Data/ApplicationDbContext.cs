@@ -15,7 +15,7 @@ namespace TicketSystemWeb.Data
 
         }
 
-        public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketViewModel> Tickets { get; set; }
         public DbSet<DeviceViewModel> Devices { get; set; }
 
     }

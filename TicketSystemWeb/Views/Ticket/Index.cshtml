@@ -1,5 +1,5 @@
-﻿@using static TicketSystemWeb.Models.Ticket
-@model IEnumerable<Ticket>
+﻿@using static TicketSystemWeb.Models.TicketViewModel
+@model IEnumerable<TicketViewModel>
 @{
     ViewData["Title"] = "Tickets";
 }
@@ -57,60 +57,60 @@
         {
             <tr>
                 <td width="50%">
-                    @obj.ticketId
+                    @obj.TicketId
                 </td>
                 <td width="50%">
-                    @obj.ticketSubject
+                    @obj.TicketSubject
                 </td>
                 <td width="50%">
-                    @obj.ticketContent
+                    @obj.TicketContent
                 </td>
                 <td width="50%">
-                    @if (@obj.ticketCategory.Equals(0))
+                    @if (@obj.TicketCategory.Equals(0))
                     {
                         <p>Windows</p>
                     }
-                    @if (@obj.ticketCategory.Equals(1))
+                    @if (@obj.TicketCategory.Equals(1))
                     {
                         <p>macOS</p>
                     }
-                    @if (@obj.ticketCategory.Equals(2))
+                    @if (@obj.TicketCategory.Equals(2))
                     {
                         <p>Printer</p>
                     }
-                    @if (@obj.ticketCategory.Equals(3))
+                    @if (@obj.TicketCategory.Equals(3))
                     {
                         <p>Interne systemen</p>
                     }
                 <td width="50%">
-                        @if (@obj.ticketPriority.Equals(0))
+                        @if (@obj.TicketPriority.Equals(0))
                         {
                         <span class="badge bg-primary">Laag</span>
                         }
-                        @if (@obj.ticketPriority.Equals(1))
+                        @if (@obj.TicketPriority.Equals(1))
                         {
                         <span class="badge bg-secondary">Gemiddeld</span>
                         }
-                        @if (@obj.ticketPriority.Equals(2))
+                        @if (@obj.TicketPriority.Equals(2))
                         {
                         <span class="badge bg-warning">Hoog</span>
                         }
-                        @if (@obj.ticketPriority.Equals(3))
+                        @if (@obj.TicketPriority.Equals(3))
                         {
                         <span class="badge bg-danger">Kritiek</span>
                         }
                 </td>
                 <td width="50%">
                     <span>
-                            @if (@obj.ticketStatus.Equals(ticketStatuses.Open))
+                            @if (@obj.TicketStatus.Equals(ticketStatuses.Open))
                             {
                             <span>Open</span>
                             }
-                            @if (@obj.ticketStatus.Equals(ticketStatuses.InBehandeling))
+                            @if (@obj.TicketStatus.Equals(ticketStatuses.InBehandeling))
                             {
                             <span>In behandeling</span>
                             }
-                            @if (obj.ticketStatus.Equals(ticketStatuses.Gesloten))
+                            @if (obj.TicketStatus.Equals(ticketStatuses.Gesloten))
                             {
                             <span>Gesloten</span>
                             }
@@ -118,17 +118,17 @@
                 </td>
                 <td>
                     <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Ticket" asp-action="View" asp-route-ticketId="@obj.ticketId" class="btn btn-primary"><i class="bi bi-eye-fill"></i>Bekijken</a>
+                        <a asp-controller="Ticket" asp-action="View" asp-route-ticketId="@obj.TicketId" class="btn btn-primary"><i class="bi bi-eye-fill"></i>Bekijken</a>
                     </div>
                 </td>
                 <td>
                     <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Ticket" asp-action="Edit" asp-route-ticketId="@obj.ticketId" class="btn btn-primary"><i class="bi bi-pen-fill"></i>Bewerken</a>
+                        <a asp-controller="Ticket" asp-action="Edit" asp-route-ticketId="@obj.TicketId" class="btn btn-primary"><i class="bi bi-pen-fill"></i>Bewerken</a>
                     </div>
                 </td>
                 <td>
                     <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Ticket" asp-action="Delete" asp-route-ticketId="@obj.ticketId" class="btn btn-primary"><i class="bi bi-trash-fill"></i>Verwijderen</a>
+                        <a asp-controller="Ticket" asp-action="Delete" asp-route-ticketId="@obj.TicketId" class="btn btn-primary"><i class="bi bi-trash-fill"></i>Verwijderen</a>
                     </div>
                 </td>
             </tr>

@@ -1,5 +1,5 @@
-﻿@using static TicketSystemWeb.Models.Ticket
-@model Ticket
+﻿@using static TicketSystemWeb.Models.TicketViewModel
+@model TicketViewModel
 @{
     ViewData["Title"] = "Ticket bewerken";
 }
@@ -12,9 +12,9 @@
         <div asp-validation-summary="All"></div>
         <div class="row">
             <div class="row">
-                <span asp-validation-for="ticketStatus">Status</span>
+                <span asp-validation-for="TicketStatus">Status</span>
                 <div class="col-sm-3">
-                    <select asp-for="ticketStatus" asp-items="Html.GetEnumSelectList<ticketStatuses>()" class="form-control">
+                    <select asp-for="TicketStatus" asp-items="Html.GetEnumSelectList<ticketStatuses>()" class="form-control">
                         <option selected="selected" value=""></option>
                     </select>
                 </div>
@@ -22,28 +22,28 @@
         </div>
         <br />
         <div class="mb-3">
-            <label asp-for="ticketSubject">Onderwerp</label>
-            <input asp-for="ticketSubject" class="form-control" />
-            <span asp-validation-for="ticketSubject" class="text-danger"></span>
+            <label asp-for="TicketSubject">Onderwerp</label>
+            <input asp-for="TicketSubject" class="form-control" />
+            <span asp-validation-for="TicketSubject" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="ticketContent">Probleemomschrijving</label>
-            <textarea asp-for="ticketContent" class="form-control" rows="7"></textarea>
-            <span asp-validation-for="ticketContent" class="text-danger"></span>
+            <label asp-for="TicketContent">Probleemomschrijving</label>
+            <textarea asp-for="TicketContent" class="form-control" rows="7"></textarea>
+            <span asp-validation-for="TicketContent" class="text-danger"></span>
         </div>
         <div class="row">
-            <span asp-validation-for="ticketCategory">Categorie</span>
+            <span asp-validation-for="TicketCategory">Categorie</span>
             <div class="col-sm-3">
-                <select asp-for="ticketCategory" asp-items="Html.GetEnumSelectList<ticketCategories>()" class="form-control">
+                <select asp-for="TicketCategory" asp-items="Html.GetEnumSelectList<ticketCategories>()" class="form-control">
                     <option selected="selected" value=""></option>
                 </select>
             </div>
         </div>
         <br />
         <div class="row">
-            <span asp-validation-for="ticketPriority">Prioriteit</span>
+            <span asp-validation-for="TicketPriority">Prioriteit</span>
             <div class="col-sm-3">
-                <select asp-for="ticketPriority" asp-items="Html.GetEnumSelectList<ticketPriorities>()" class="form-control">
+                <select asp-for="TicketPriority" asp-items="Html.GetEnumSelectList<ticketPriorities>()" class="form-control">
                     <option selected="selected" value=""></option>
                 </select>
             </div>

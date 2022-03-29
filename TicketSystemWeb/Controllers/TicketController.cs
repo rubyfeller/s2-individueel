@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LOGIC.TicketLogic;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,18 +12,59 @@ namespace TicketSystemWeb.Controllers
 {
     public class TicketController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly TicketLogic ticketLogic = new();
 
-        public TicketController(ApplicationDbContext db)
+        public List<TicketViewModel> TransferViewAll()
         {
-            _db = db;
+            List<TicketViewModel> newTicketList = new();
+            TicketViewModel viewmodel = new TicketViewModel();
+            var ticketList = ticketLogic.GetTickets().Result;
+
+            foreach (var tickets in ticketList)
+            {
+                newTicketList.Add(new TicketViewModel
+                {
+                    TicketId = tickets.TicketId,
+                    TicketSubject = tickets.TicketSubject,
+                    TicketContent = tickets.TicketContent,
+                    TicketCategory = tickets.TicketCategory,
+                    TicketPriority = tickets.TicketPriority,
+                    TicketStatus = tickets.TicketStatus,
+                    CreatedDateTime = tickets.CreatedDateTime,
+
+                });
+            }
+            return newTicketList;
+        }
+
+        public TicketViewModel TransferViewSpecfic(int ticketid)
+        {
+            List<TicketViewModel> newTicketList = new();
+            TicketViewModel viewmodel = null;
+            var ticketList = ticketLogic.GetTicket(ticketid).Result;
+
+            foreach (var tickets in ticketList)
+            {
+                TicketViewModel currTicket = new TicketViewModel
+                {
+                    TicketId = tickets.TicketId,
+                    TicketSubject = tickets.TicketSubject,
+                    TicketContent = tickets.TicketContent,
+                    TicketCategory = tickets.TicketCategory,
+                    TicketPriority = tickets.TicketPriority,
+                    TicketStatus = tickets.TicketStatus,
+                    CreatedDateTime = tickets.CreatedDateTime,
+                };
+                newTicketList.Add(currTicket);
+                viewmodel = currTicket;
+            }
+            return viewmodel;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Ticket> objTicketList = _db.Tickets;
-
-            return View(objTicketList);
+            var newTicketList = TransferViewAll();
+            return View(newTicketList);
         }
 
         //GET
@@ -32,139 +74,124 @@ namespace TicketSystemWeb.Controllers
         }
 
         //GET
-        public IActionResult View(int? ticketId)
+        public IActionResult View(int ticketId)
         {
-
-            if (ticketId == null || ticketId == 0)
+            if (ticketId == 0)
             {
                 return NotFound();
             }
 
-            var ticketFromDb = _db.Tickets.Find(ticketId);
+            var specificTicket = TransferViewSpecfic(ticketId);
 
-            if (ticketFromDb == null)
+            if (specificTicket == null)
             {
                 return NotFound();
             }
-
-            return View(ticketFromDb);
+            else
+            {
+                return View(specificTicket);
+            }
         }
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Ticket obj)
+        public IActionResult Create(TicketViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Tickets.Add(obj);
-                _db.SaveChanges();
-                TempData["success"] = "Ticket succesvol aangemaakt";
+                var result = ticketLogic.CreateNewTicket(obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, obj.TicketCategory, obj.TicketPriority, obj.TicketStatus);
+
+                if (result != null)
+                {
+                    TempData["success"] = "Ticket succesvol toegevoegd";
+                }
+                else
+                {
+                    TempData["error"] = "Ticket niet toegevoegd";
+                }
                 return RedirectToAction("Index");
             }
             return View(obj);
         }
 
         //GET
-        public IActionResult Edit(int? ticketId)
+        public IActionResult Edit(int ticketId)
         {
-            if (ticketId == null || ticketId == 0)
+            if (ticketId == 0)
             {
                 return NotFound();
             }
 
-            var ticketFromDb = _db.Tickets.Find(ticketId);
+            var specificTicket = TransferViewSpecfic(ticketId);
 
 
-            if (ticketFromDb == null)
+            if (specificTicket == null)
             {
                 return NotFound();
             }
-
-            return View(ticketFromDb);
+            else
+            {
+                return View(specificTicket);
+            }
         }
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Ticket obj)
+        public IActionResult Edit(TicketViewModel obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Tickets.Update(obj);
-                _db.SaveChanges();
-                TempData["success"] = "Ticket succesvol aangepast";
+                var result = ticketLogic.UpdateTicket(obj.TicketId, obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, obj.TicketCategory, obj.TicketPriority, obj.TicketStatus);
+
+                if (result != null)
+                {
+                    TempData["success"] = "Ticket succesvol aangepast";
+                }
+                else
+                {
+                    TempData["error"] = "Ticket niet aangepast";
+                }
                 return RedirectToAction("Index");
             }
-
             return View(obj);
         }
 
         //GET
-        public IActionResult Delete(int? ticketId)
+        public IActionResult Delete(int ticketId)
         {
-            if (ticketId == null || ticketId == 0)
+            if (ticketId == 0)
             {
                 return NotFound();
             }
 
-            var ticketFromDb = _db.Tickets.Find(ticketId);
+            var specificTicket = TransferViewSpecfic(ticketId);
 
-            if (ticketFromDb == null)
+            if (specificTicket == null)
             {
                 return NotFound();
             }
-            return View(ticketFromDb);
+
+            return View(specificTicket);
         }
 
         //POST
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? ticketId)
+        public IActionResult DeletePOST(TicketViewModel obj)
         {
-            var obj = _db.Tickets.Find(ticketId);
-            if (obj == null)
+            var result = ticketLogic.DeleteTicket(obj.TicketId);
+
+            if (result != null)
             {
-                return NotFound();
+                TempData["success"] = "Apparaat succesvol verwijderd";
             }
-
-            _db.Tickets.Remove(obj);
-            _db.SaveChanges();
-            TempData["success"] = "Ticket succesvol verwijderd";
+            else
+            {
+                TempData["error"] = "Apparaat niet verwijderd";
+            }
             return RedirectToAction("Index");
         }
-
-        //POST
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult CreateReply(int? ticketId, Ticket obj)
-        {
-            obj.replyId = ticketId;
-
-            //if (obj.ticketId == ticketId)
-            //{
-            //    obj.ticketId++;
-            //}
-
-            obj.ticketSubject = "Reactie op ticket";
-
-            _db.Tickets.Add(obj);
-            _db.SaveChanges();
-            TempData["success"] = "Reactie succesvol geplaatst";
-
-            return RedirectToAction("Index");
-        }
-
-        //    //POST
-        //    public IActionResult ReplyPOST(int? ticketId, Ticket obj)
-        //    {
-        //        _db.Add(obj);
-        //        obj.ticketContent = "test IDE";
-        //        obj.replyId = (int)ticketId;
-        //        _db.SaveChanges();
-
-        //        TempData["success"] = "Reactie succesvol geplaatst";
-        //        return RedirectToAction("Index");
-
     }
 }
