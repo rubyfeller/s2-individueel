@@ -26,9 +26,9 @@ namespace DAL.Functions
                 TicketSubject = ticketsubject,
                 TicketContent = ticketcontent,
                 CreatedDateTime = createddatetime,
-                TicketCategory = ticketcategory,
-                TicketPriority = ticketpriority,
-                TicketStatus = ticketstatus,
+                TicketCategory = (Ticket.ticketCategories)ticketcategory,
+                TicketPriority = (Ticket.ticketPriorities)ticketpriority,
+                TicketStatus = (Ticket.ticketStatuses)ticketstatus,
             };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -69,18 +69,18 @@ namespace DAL.Functions
                         ticket.TicketSubject = reader.GetString("ticketSubject");
                         ticket.TicketContent = reader.GetString("ticketContent");
                         ticket.CreatedDateTime = reader.GetDateTime("createdDateTime");
-                        ticket.TicketCategory = Convert.ToInt32(reader.GetInt32("ticketCategory"));
-                        ticket.TicketPriority = Convert.ToInt32(reader.GetInt32("ticketPriority"));
-                        ticket.TicketStatus = Convert.ToInt32(reader.GetInt32("ticketStatus"));
+                        ticket.TicketCategory = (Ticket.ticketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
+                        ticket.TicketPriority = (Ticket.ticketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
+                        ticket.TicketStatus = (Ticket.ticketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
                         ticketList.Add(new Ticket
                         {
                             TicketId = Convert.ToInt32(reader.GetInt32("TicketId")),
                             TicketSubject = reader.GetString("ticketSubject"),
                             TicketContent = reader.GetString("ticketContent"),
                             CreatedDateTime = reader.GetDateTime("createdDateTime"),
-                            TicketCategory = Convert.ToInt32(reader.GetInt32("ticketCategory")),
-                            TicketPriority = Convert.ToInt32(reader.GetInt32("ticketPriority")),
-                            TicketStatus = Convert.ToInt32(reader.GetInt32("ticketStatus")),
+                            TicketCategory = (Ticket.ticketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
+                            TicketPriority = (Ticket.ticketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
+                            TicketStatus = (Ticket.ticketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
                         });
                     }
                 }
@@ -108,18 +108,18 @@ namespace DAL.Functions
                         ticket.TicketSubject = reader.GetString("ticketSubject");
                         ticket.TicketContent = reader.GetString("ticketContent");
                         ticket.CreatedDateTime = reader.GetDateTime("createdDateTime");
-                        ticket.TicketCategory = Convert.ToInt32(reader.GetInt32("ticketCategory"));
-                        ticket.TicketPriority = Convert.ToInt32(reader.GetInt32("ticketPriority"));
-                        ticket.TicketStatus = Convert.ToInt32(reader.GetInt32("ticketStatus"));
+                        ticket.TicketCategory = (Ticket.ticketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
+                        ticket.TicketPriority = (Ticket.ticketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
+                        ticket.TicketStatus = (Ticket.ticketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
                         specificTicketList.Add(new Ticket
                         {
                             TicketId = Convert.ToInt32(reader.GetInt32("ticketId")),
                             TicketSubject = reader.GetString("ticketSubject"),
                             TicketContent = reader.GetString("ticketContent"),
                             CreatedDateTime = reader.GetDateTime("createdDateTime"),
-                            TicketCategory = Convert.ToInt32(reader.GetInt32("ticketCategory")),
-                            TicketPriority = Convert.ToInt32(reader.GetInt32("ticketPriority")),
-                            TicketStatus = Convert.ToInt32(reader.GetInt32("ticketStatus")),
+                            TicketCategory = (Ticket.ticketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
+                            TicketPriority = (Ticket.ticketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
+                            TicketStatus = (Ticket.ticketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
                         });
                     }
                 }
@@ -136,9 +136,9 @@ namespace DAL.Functions
                 TicketSubject = ticketsubject,
                 TicketContent = ticketcontent,
                 CreatedDateTime = createddatetime,
-                TicketCategory = ticketcategory,
-                TicketPriority = ticketpriority,
-                TicketStatus = ticketstatus,
+                TicketCategory = (Ticket.ticketCategories)ticketcategory,
+                TicketPriority = (Ticket.ticketPriorities)ticketpriority,
+                TicketStatus = (Ticket.ticketStatuses)ticketstatus,
             };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))

@@ -55,83 +55,83 @@
     <tbody>
         @foreach (var obj in Model)
         {
-            <tr>
-                <td width="50%">
+                <tr>
+                    <td width="50%">
                     @obj.TicketId
-                </td>
-                <td width="50%">
+                    </td>
+                    <td width="50%">
                     @obj.TicketSubject
-                </td>
-                <td width="50%">
+                    </td>
+                    <td width="50%">
                     @obj.TicketContent
-                </td>
-                <td width="50%">
-                    @if (@obj.TicketCategory.Equals(0))
+                    </td>
+                    <td width="50%">
+                    @if (@obj.TicketCategory.Equals(ticketCategories.Windows))
                     {
-                        <p>Windows</p>
+                                <p>Windows</p>
                     }
-                    @if (@obj.TicketCategory.Equals(1))
+                    @if (@obj.TicketCategory.Equals(ticketCategories.macOS))
                     {
-                        <p>macOS</p>
+                                <p>macOS</p>
                     }
-                    @if (@obj.TicketCategory.Equals(2))
+                    @if (@obj.TicketCategory.Equals(ticketCategories.Printer))
                     {
-                        <p>Printer</p>
+                                <p>Printer</p>
                     }
-                    @if (@obj.TicketCategory.Equals(3))
+                    @if (@obj.TicketCategory.Equals(ticketCategories.InterneSystemen))
                     {
-                        <p>Interne systemen</p>
+                                <p>Interne systemen</p>
                     }
-                <td width="50%">
-                        @if (@obj.TicketPriority.Equals(0))
+                    <td width="50%">
+                        @if (@obj.TicketPriority.Equals(ticketPriorities.Laag))
                         {
-                        <span class="badge bg-primary">Laag</span>
+                                <span class="badge bg-primary">Laag</span>
                         }
-                        @if (@obj.TicketPriority.Equals(1))
+                        @if (@obj.TicketPriority.Equals(ticketPriorities.Gemiddeld))
                         {
-                        <span class="badge bg-secondary">Gemiddeld</span>
+                                <span class="badge bg-secondary">Gemiddeld</span>
                         }
-                        @if (@obj.TicketPriority.Equals(2))
+                        @if (@obj.TicketPriority.Equals(ticketPriorities.Hoog))
                         {
-                        <span class="badge bg-warning">Hoog</span>
+                                <span class="badge bg-warning">Hoog</span>
                         }
-                        @if (@obj.TicketPriority.Equals(3))
+                        @if (@obj.TicketPriority.Equals(ticketPriorities.Kritiek))
                         {
-                        <span class="badge bg-danger">Kritiek</span>
+                                <span class="badge bg-danger">Kritiek</span>
                         }
-                </td>
-                <td width="50%">
-                    <span>
+                    </td>
+                    <td width="50%">
+                        <span>
                             @if (@obj.TicketStatus.Equals(ticketStatuses.Open))
                             {
-                            <span>Open</span>
+                                    <span>Open</span>
                             }
                             @if (@obj.TicketStatus.Equals(ticketStatuses.InBehandeling))
                             {
-                            <span>In behandeling</span>
+                                    <span>In behandeling</span>
                             }
                             @if (obj.TicketStatus.Equals(ticketStatuses.Gesloten))
                             {
-                            <span>Gesloten</span>
+                                    <span>Gesloten</span>
                             }
-                    </span>
-                </td>
-                <td>
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Ticket" asp-action="View" asp-route-ticketId="@obj.TicketId" class="btn btn-primary"><i class="bi bi-eye-fill"></i>Bekijken</a>
-                    </div>
-                </td>
-                <td>
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Ticket" asp-action="Edit" asp-route-ticketId="@obj.TicketId" class="btn btn-primary"><i class="bi bi-pen-fill"></i>Bewerken</a>
-                    </div>
-                </td>
-                <td>
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Ticket" asp-action="Delete" asp-route-ticketId="@obj.TicketId" class="btn btn-primary"><i class="bi bi-trash-fill"></i>Verwijderen</a>
-                    </div>
-                </td>
-            </tr>
+                        </span>
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Ticket" asp-action="View" asp-route-ticketId="@obj.TicketId" class="btn btn-primary"><i class="bi bi-eye-fill"></i>Bekijken</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Ticket" asp-action="Edit" asp-route-ticketId="@obj.TicketId" class="btn btn-primary"><i class="bi bi-pen-fill"></i>Bewerken</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Ticket" asp-action="Delete" asp-route-ticketId="@obj.TicketId" class="btn btn-primary"><i class="bi bi-trash-fill"></i>Verwijderen</a>
+                        </div>
+                    </td>
+                </tr>
         }
     </tbody>
 </table>

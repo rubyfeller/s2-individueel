@@ -27,9 +27,9 @@ namespace TicketSystemWeb.Controllers
                     TicketId = tickets.TicketId,
                     TicketSubject = tickets.TicketSubject,
                     TicketContent = tickets.TicketContent,
-                    TicketCategory = tickets.TicketCategory,
-                    TicketPriority = tickets.TicketPriority,
-                    TicketStatus = tickets.TicketStatus,
+                    TicketCategory = (TicketViewModel.ticketCategories)tickets.TicketCategory,
+                    TicketPriority = (TicketViewModel.ticketPriorities)tickets.TicketPriority,
+                    TicketStatus = (TicketViewModel.ticketStatuses)tickets.TicketStatus,
                     CreatedDateTime = tickets.CreatedDateTime,
 
                 });
@@ -50,9 +50,9 @@ namespace TicketSystemWeb.Controllers
                     TicketId = tickets.TicketId,
                     TicketSubject = tickets.TicketSubject,
                     TicketContent = tickets.TicketContent,
-                    TicketCategory = tickets.TicketCategory,
-                    TicketPriority = tickets.TicketPriority,
-                    TicketStatus = tickets.TicketStatus,
+                    TicketCategory = (TicketViewModel.ticketCategories)tickets.TicketCategory,
+                    TicketPriority = (TicketViewModel.ticketPriorities)tickets.TicketPriority,
+                    TicketStatus = (TicketViewModel.ticketStatuses)tickets.TicketStatus,
                     CreatedDateTime = tickets.CreatedDateTime,
                 };
                 newTicketList.Add(currTicket);
@@ -100,7 +100,7 @@ namespace TicketSystemWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = ticketLogic.CreateNewTicket(obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, obj.TicketCategory, obj.TicketPriority, obj.TicketStatus);
+                var result = ticketLogic.CreateNewTicket(obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, (int)obj.TicketCategory, (int)obj.TicketPriority, (int)obj.TicketStatus);
 
                 if (result != null)
                 {
@@ -143,7 +143,7 @@ namespace TicketSystemWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = ticketLogic.UpdateTicket(obj.TicketId, obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, obj.TicketCategory, obj.TicketPriority, obj.TicketStatus);
+                var result = ticketLogic.UpdateTicket(obj.TicketId, obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, (int)obj.TicketCategory, (int)obj.TicketPriority, (int)obj.TicketStatus);
 
                 if (result != null)
                 {

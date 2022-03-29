@@ -19,13 +19,11 @@ namespace TicketSystemWeb.Models
         [DisplayName("Probleemomschrijving")]
         public string TicketContent { get; set; }
         [Required(ErrorMessage = "Het invullen van een categorie is verplicht")]
-        public int TicketCategory { get; set; }
+        public ticketCategories TicketCategory { get; set; }
         [Required(ErrorMessage = "Het invullen van een prioriteit is verplicht")]
-        public int TicketPriority { get; set; }
+        public ticketPriorities TicketPriority { get; set; }
         [Required(ErrorMessage = "Het invullen van een status is verplicht")]
-        //public ticketStatuses TicketStatus { get; set; }
-        public int TicketStatus { get; set; }
-
+        public ticketStatuses TicketStatus { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
         //public int? ReplyId { get; set; }
 

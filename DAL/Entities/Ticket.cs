@@ -17,13 +17,12 @@ namespace DAL.Entities
         [Required]
         public string TicketContent { get; set; }
         [Required]
-        public int TicketCategory { get; set; }
+        public ticketCategories TicketCategory { get; set; }
         [Required]
-        public int TicketPriority { get; set; }
-        //[Required]
-        //public ticketStatuses TicketStatus { get; set; }
+        public ticketPriorities TicketPriority { get; set; }
         [Required]
-        public int TicketStatus { get; set; }
+        public ticketStatuses TicketStatus { get; set; }
+        [Required]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
         //public int? ReplyId { get; set; }
 
