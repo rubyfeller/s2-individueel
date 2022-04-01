@@ -1,5 +1,3 @@
-using System;
-
 namespace LOGIC.Entities
 {
     public class ErrorViewModel
