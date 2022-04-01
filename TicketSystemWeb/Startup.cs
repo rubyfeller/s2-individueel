@@ -1,3 +1,7 @@
+using DAL.Functions;
+using LOGIC.DeviceLogic;
+using LOGIC.Interfaces;
+using LOGIC.TicketLogic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,6 +29,11 @@ namespace TicketSystemWeb
         {
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddTransient<IDevice, DeviceFunctions>();
+            services.AddTransient<ITicket, TicketFunctions>();
+            services.AddTransient<ITicketLogic, TicketLogic>();
+            services.AddTransient<IDeviceLogic, DeviceLogic>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

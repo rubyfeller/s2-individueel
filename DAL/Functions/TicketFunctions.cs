@@ -1,5 +1,5 @@
-﻿using DAL.Entities;
-using DAL.Interfaces;
+﻿using LOGIC.Entities;
+using LOGIC.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,8 +18,8 @@ namespace DAL.Functions
         int updateTicketResult;
         int deleteTicketResult;
 
-        // Add a new device
-        public async Task<Int32> AddTicket(string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        // Add a new ticket
+        public Int32 AddTicket(string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
         {
             Ticket newTicket = new Ticket
             {
@@ -43,25 +43,25 @@ namespace DAL.Functions
                     command.Parameters.AddWithValue("@TicketPriority", newTicket.TicketPriority);
                     command.Parameters.AddWithValue("@TicketStatus", newTicket.TicketStatus);
                     connection.Open();
-                    ticketResult = await command.ExecuteNonQueryAsync();
+                    ticketResult = command.ExecuteNonQuery();
                 }
             }
             return ticketResult;
         }
 
         // Get all tickets
-        public async Task<List<Ticket>> GetTickets()
+        public List<Ticket> GetTickets()
         {
             Ticket ticket = new Ticket();
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.ConnectionString = connectionString;
-                await connection.OpenAsync();
+                connection.Open();
                 DbCommand command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM Tickets";
                 List<Ticket> ticketList = new();
-                using (DbDataReader reader = await command.ExecuteReaderAsync())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -89,18 +89,18 @@ namespace DAL.Functions
         }
 
         // Get specific ticket
-        public async Task<List<Ticket>> GetTicket(int ticketid)
+        public List<Ticket> GetTicket(int ticketid)
         {
             Ticket ticket = new Ticket();
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.ConnectionString = connectionString;
-                await connection.OpenAsync();
+                connection.Open();
                 DbCommand command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM Tickets WHERE ticketId = " + ticketid;
                 List<Ticket> specificTicketList = new();
-                using (DbDataReader reader = await command.ExecuteReaderAsync())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -128,7 +128,7 @@ namespace DAL.Functions
         }
 
         // Update ticket
-        public async Task<Int32> UpdateTicket(int ticketid, string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        public Int32 UpdateTicket(int ticketid, string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
         {
             Ticket newTicket = new Ticket
             {
@@ -154,13 +154,14 @@ namespace DAL.Functions
                     command.Parameters.AddWithValue("@TicketPriority", newTicket.TicketPriority);
                     command.Parameters.AddWithValue("@TicketStatus", newTicket.TicketStatus);
                     connection.Open();
-                    updateTicketResult = await command.ExecuteNonQueryAsync();
+                    updateTicketResult = command.ExecuteNonQuery();
                 }
             }
             return updateTicketResult;
         }
 
-        public async Task<Int32> DeleteTicket(int ticketid)
+        // Delete ticket
+        public Int32 DeleteTicket(int ticketid)
         {
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -170,7 +171,7 @@ namespace DAL.Functions
                 {
                     command.Parameters.AddWithValue("@TicketId", ticketid);
                     connection.Open();
-                    deleteTicketResult = await command.ExecuteNonQueryAsync();
+                    deleteTicketResult = command.ExecuteNonQuery();
                 }
             }
             return deleteTicketResult;

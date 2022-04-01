@@ -1,4 +1,5 @@
 ﻿using LOGIC.DeviceLogic;
+using LOGIC.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,18 @@ namespace TicketSystemWeb.Controllers
 {
     public class DeviceController : Controller
     {
-        private readonly DeviceLogic deviceLogic = new();
+        private readonly IDeviceLogic _IDeviceLogic;
+
+        public DeviceController(IDeviceLogic DeviceLogic)
+        {
+            _IDeviceLogic = DeviceLogic;
+        }
 
         public List<DeviceViewModel> TransferViewAll()
         {
             List<DeviceViewModel> newDeviceList = new();
             DeviceViewModel viewmodel = new DeviceViewModel();
-            var deviceList = deviceLogic.GetDevices().Result;
+            var deviceList = _IDeviceLogic.GetDevices();
 
             foreach (var devices in deviceList)
             {
@@ -41,7 +47,7 @@ namespace TicketSystemWeb.Controllers
         {
             List<DeviceViewModel> newDeviceList = new();
             DeviceViewModel viewmodel = null;
-            var deviceList = deviceLogic.GetDevice(deviceid).Result;
+            var deviceList = _IDeviceLogic.GetDevice(deviceid);
 
             foreach (var devices in deviceList)
             {
@@ -83,7 +89,7 @@ namespace TicketSystemWeb.Controllers
             {
                 obj.ClientId = 0;
                 obj.TicketId = 0;
-                var result = deviceLogic.CreateNewDevice((int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
+                var result = _IDeviceLogic.AddDevice((int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
 
                 if (result != null)
                 {
@@ -149,7 +155,7 @@ namespace TicketSystemWeb.Controllers
             {
                 obj.ClientId = 0;
                 obj.TicketId = 0;
-                var result = deviceLogic.UpdateDevice(obj.DeviceId, (int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
+                var result = _IDeviceLogic.UpdateDevice(obj.DeviceId, (int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
 
                 if (result != null)
                 {
@@ -187,7 +193,7 @@ namespace TicketSystemWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(DeviceViewModel obj)
         {
-            var result = deviceLogic.DeleteDevice(obj.DeviceId);
+            var result = _IDeviceLogic.DeleteDevice(obj.DeviceId);
 
             if (result != null)
             {

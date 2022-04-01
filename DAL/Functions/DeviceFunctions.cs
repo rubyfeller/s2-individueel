@@ -1,6 +1,4 @@
-﻿using DAL.Interfaces;
-using DAL.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
+using LOGIC.Interfaces;
+using LOGIC.Entities;
 
 namespace DAL.Functions
 {
@@ -20,7 +20,7 @@ namespace DAL.Functions
         int deleteDeviceResult;
 
         // Add a new device
-        public async Task<Int32> AddDevice(int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
+        public Int32 AddDevice(int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
         {
             Device newDevice = new Device
             {
@@ -44,25 +44,25 @@ namespace DAL.Functions
                     command.Parameters.AddWithValue("@OsVersion", newDevice.OsVersion);
                     command.Parameters.AddWithValue("@SerialNumber", newDevice.SerialNumber);
                     connection.Open();
-                    deviceResult = await command.ExecuteNonQueryAsync();
+                    deviceResult = command.ExecuteNonQuery();
                 }
             }
             return deviceResult;
         }
 
         // Get all devices
-        public async Task<List<Device>> GetDevices()
+        public List<Device> GetDevices()
         {
             Device device = new Device();
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.ConnectionString = connectionString;
-                await connection.OpenAsync();
+                connection.OpenAsync();
                 DbCommand command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM Devices";
                 List<Device> deviceList = new();
-                using (DbDataReader reader = await command.ExecuteReaderAsync())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -96,18 +96,18 @@ namespace DAL.Functions
         }
 
         // Get specific device
-        public async Task<List<Device>> GetDevice(int deviceid)
+        public List<Device> GetDevice(int deviceid)
         {
             Device device = new Device();
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.ConnectionString = connectionString;
-                await connection.OpenAsync();
+                connection.OpenAsync();
                 DbCommand command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM Devices WHERE deviceId = " + deviceid;
                 List<Device> specificDeviceList = new();
-                using (DbDataReader reader = await command.ExecuteReaderAsync())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -141,7 +141,7 @@ namespace DAL.Functions
         }
 
         // Update device
-        public async Task<Int32> UpdateDevice(int deviceid, int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
+        public Int32 UpdateDevice(int deviceid, int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
         {
             Device newDevice = new Device
             {
@@ -167,13 +167,14 @@ namespace DAL.Functions
                     command.Parameters.AddWithValue("@OsVersion", newDevice.OsVersion);
                     command.Parameters.AddWithValue("@SerialNumber", newDevice.SerialNumber);
                     connection.Open();
-                    updateDeviceResult = await command.ExecuteNonQueryAsync();
+                    updateDeviceResult = command.ExecuteNonQuery();
                 }
             }
             return updateDeviceResult;
         }
 
-        public async Task<Int32> DeleteDevice(int deviceid)
+        // Delete ticket
+        public Int32 DeleteDevice(int deviceid)
         {
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -183,7 +184,7 @@ namespace DAL.Functions
                 {
                     command.Parameters.AddWithValue("@DeviceId", deviceid);
                     connection.Open();
-                    deleteDeviceResult = await command.ExecuteNonQueryAsync();
+                    deleteDeviceResult = command.ExecuteNonQuery();
                 }
             }
             return deleteDeviceResult;

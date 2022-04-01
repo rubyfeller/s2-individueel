@@ -1,5 +1,5 @@
-﻿using DAL.Entities;
-using DAL.Interfaces;
+﻿using LOGIC.Entities;
+using LOGIC.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,37 +8,41 @@ using System.Threading.Tasks;
 
 namespace LOGIC.TicketLogic
 {
-    public class TicketLogic
+    public class TicketLogic : ITicketLogic
     {
-        private ITicket _ticket = new DAL.Functions.TicketFunctions();
+        private ITicket _ticket;
 
-        public async Task<Boolean> CreateNewTicket(string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        public TicketLogic(ITicket ticket)
         {
-            var result = await _ticket.AddTicket(ticketsubject, ticketcontent, createddatetime, ticketcategory, ticketpriority, ticketstatus);
+            _ticket = ticket;
+        }
+        public Boolean AddTicket(string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        {
+            var result = _ticket.AddTicket(ticketsubject, ticketcontent, createddatetime, ticketcategory, ticketpriority, ticketstatus);
             return result > 0;
         }
 
-        public async Task<Boolean> UpdateTicket(int ticketid, string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        public Boolean UpdateTicket(int ticketid, string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
         {
-            var updateDeviceResult = await _ticket.UpdateTicket(ticketid, ticketsubject, ticketcontent, createddatetime, ticketcategory, ticketpriority, ticketstatus);
+            var updateDeviceResult = _ticket.UpdateTicket(ticketid, ticketsubject, ticketcontent, createddatetime, ticketcategory, ticketpriority, ticketstatus);
             return updateDeviceResult > 0;
         }
 
-        public async Task<Boolean> DeleteTicket(int ticketid)
+        public Boolean DeleteTicket(int ticketid)
         {
-            var deleteDeviceResult = await _ticket.DeleteTicket(ticketid);
+            var deleteDeviceResult = _ticket.DeleteTicket(ticketid);
             return deleteDeviceResult > 0;
         }
 
-        public async Task<List<Ticket>> GetTickets()
+        public List<Ticket> GetTickets()
         {
-            List<Ticket> tickets = await _ticket.GetTickets();
+            List<Ticket> tickets = _ticket.GetTickets();
             return tickets;
         }
 
-        public async Task<List<Ticket>> GetTicket(int ticketid)
+        public List<Ticket> GetTicket(int ticketid)
         {
-            List<Ticket> specificTicketList = await _ticket.GetTicket(ticketid);
+            List<Ticket> specificTicketList = _ticket.GetTicket(ticketid);
             return specificTicketList;
         }
     }

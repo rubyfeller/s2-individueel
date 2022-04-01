@@ -1,6 +1,6 @@
 using System;
 
-namespace DAL.Entities
+namespace LOGIC.Entities
 {
     public class ErrorViewModel
     {

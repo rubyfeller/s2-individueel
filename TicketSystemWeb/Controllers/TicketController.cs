@@ -1,24 +1,29 @@
-﻿using LOGIC.TicketLogic;
+﻿using LOGIC.Interfaces;
+using LOGIC.TicketLogic;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using TicketSystemWeb.Data;
 using TicketSystemWeb.Models;
 
 namespace TicketSystemWeb.Controllers
 {
     public class TicketController : Controller
     {
-        private readonly TicketLogic ticketLogic = new();
+        private readonly ITicketLogic _ITicketLogic;
+
+        public TicketController(ITicketLogic TicketLogic)
+        {
+            _ITicketLogic = TicketLogic;
+        }
 
         public List<TicketViewModel> TransferViewAll()
         {
             List<TicketViewModel> newTicketList = new();
             TicketViewModel viewmodel = new TicketViewModel();
-            var ticketList = ticketLogic.GetTickets().Result;
+            var ticketList = _ITicketLogic.GetTickets();
 
             foreach (var tickets in ticketList)
             {
@@ -41,7 +46,7 @@ namespace TicketSystemWeb.Controllers
         {
             List<TicketViewModel> newTicketList = new();
             TicketViewModel viewmodel = null;
-            var ticketList = ticketLogic.GetTicket(ticketid).Result;
+            var ticketList = _ITicketLogic.GetTicket(ticketid);
 
             foreach (var tickets in ticketList)
             {
@@ -100,7 +105,7 @@ namespace TicketSystemWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = ticketLogic.CreateNewTicket(obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, (int)obj.TicketCategory, (int)obj.TicketPriority, (int)obj.TicketStatus);
+                var result = _ITicketLogic.AddTicket(obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, (int)obj.TicketCategory, (int)obj.TicketPriority, (int)obj.TicketStatus);
 
                 if (result != null)
                 {
@@ -143,7 +148,7 @@ namespace TicketSystemWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = ticketLogic.UpdateTicket(obj.TicketId, obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, (int)obj.TicketCategory, (int)obj.TicketPriority, (int)obj.TicketStatus);
+                var result = _ITicketLogic.UpdateTicket(obj.TicketId, obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, (int)obj.TicketCategory, (int)obj.TicketPriority, (int)obj.TicketStatus);
 
                 if (result != null)
                 {
@@ -181,7 +186,7 @@ namespace TicketSystemWeb.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(TicketViewModel obj)
         {
-            var result = ticketLogic.DeleteTicket(obj.TicketId);
+            var result = _ITicketLogic.DeleteTicket(obj.TicketId);
 
             if (result != null)
             {

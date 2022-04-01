@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DAL.Entities
+namespace LOGIC.Entities
 {
     public class Device
     {

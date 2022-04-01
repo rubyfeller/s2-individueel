@@ -14,4 +14,8 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LOGIC\LOGIC.csproj" />
+  </ItemGroup>
+
 </Project>
