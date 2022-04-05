@@ -25,7 +25,7 @@
         <div class="row">
             <span asp-for="ticketCategory">Categorie</span>
             <div class="col-sm-3">
-                <select asp-for="TicketCategory" asp-items="Html.GetEnumSelectList<ticketCategories>()" class="form-control">
+                <select asp-for="TicketCategory" asp-items="Html.GetEnumSelectList<TicketCategories>()" class="form-control">
                     <option selected="selected" value="">Kies een categorie</option>
                 </select>
                 <span asp-validation-for="TicketCategory" class="text-danger"></span>
@@ -35,7 +35,7 @@
         <div class="row">
             <span asp-for="ticketPriority">Prioriteit</span>
             <div class="col-sm-3">
-                <select asp-for="TicketPriority" asp-items="Html.GetEnumSelectList<ticketPriorities>()" class="form-control">
+                <select asp-for="TicketPriority" asp-items="Html.GetEnumSelectList<TicketPriorities>()" class="form-control">
                     <option selected="selected" value="">Kies een prioriteit</option>
                 </select>
                 <span asp-validation-for="TicketPriority" class="text-danger"></span>

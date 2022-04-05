@@ -86,7 +86,7 @@ namespace TicketSystemWeb.Controllers
                 obj.TicketId = 0;
                 var result = _IDeviceLogic.AddDevice((int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
 
-                if (result != null)
+                if (result == true)
                 {
                     TempData["success"] = "Apparaat succesvol toegevoegd";
                 }
@@ -152,7 +152,7 @@ namespace TicketSystemWeb.Controllers
                 obj.TicketId = 0;
                 var result = _IDeviceLogic.UpdateDevice(obj.DeviceId, (int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
 
-                if (result != null)
+                if (result == true)
                 {
                     TempData["success"] = "Apparaat succesvol aangepast";
                 }
@@ -190,7 +190,7 @@ namespace TicketSystemWeb.Controllers
         {
             var result = _IDeviceLogic.DeleteDevice(obj.DeviceId);
 
-            if (result != null)
+            if (result == true)
             {
                 TempData["success"] = "Apparaat succesvol verwijderd";
             }

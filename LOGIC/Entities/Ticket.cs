@@ -11,30 +11,30 @@ namespace LOGIC.Entities
         [Required]
         public string TicketContent { get; set; }
         [Required]
-        public ticketCategories TicketCategory { get; set; }
+        public TicketCategories TicketCategory { get; set; }
         [Required]
-        public ticketPriorities TicketPriority { get; set; }
+        public TicketPriorities TicketPriority { get; set; }
         [Required]
-        public ticketStatuses TicketStatus { get; set; }
+        public TicketStatuses TicketStatus { get; set; }
         [Required]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
         //public int? ReplyId { get; set; }
 
-        public enum ticketCategories
+        public enum TicketCategories
         {
             Windows,
             macOS,
             Printer,
             InterneSystemen
         }
-        public enum ticketPriorities
+        public enum TicketPriorities
         {
             Laag,
             Gemiddeld,
             Hoog,
             Kritiek
         }
-        public enum ticketStatuses
+        public enum TicketStatuses
         {
             Open,
             InBehandeling,

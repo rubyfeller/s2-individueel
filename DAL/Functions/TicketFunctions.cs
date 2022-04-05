@@ -15,16 +15,16 @@ namespace DAL.Functions
         int deleteTicketResult;
 
         // Add a new ticket
-        public Int32 AddTicket(string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        public int AddTicket(string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
         {
             Ticket newTicket = new Ticket
             {
                 TicketSubject = ticketsubject,
                 TicketContent = ticketcontent,
                 CreatedDateTime = createddatetime,
-                TicketCategory = (Ticket.ticketCategories)ticketcategory,
-                TicketPriority = (Ticket.ticketPriorities)ticketpriority,
-                TicketStatus = (Ticket.ticketStatuses)ticketstatus,
+                TicketCategory = (Ticket.TicketCategories)ticketcategory,
+                TicketPriority = (Ticket.TicketPriorities)ticketpriority,
+                TicketStatus = (Ticket.TicketStatuses)ticketstatus,
             };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -65,18 +65,18 @@ namespace DAL.Functions
                         ticket.TicketSubject = reader.GetString("ticketSubject");
                         ticket.TicketContent = reader.GetString("ticketContent");
                         ticket.CreatedDateTime = reader.GetDateTime("createdDateTime");
-                        ticket.TicketCategory = (Ticket.ticketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
-                        ticket.TicketPriority = (Ticket.ticketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
-                        ticket.TicketStatus = (Ticket.ticketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
+                        ticket.TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
+                        ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
+                        ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
                         ticketList.Add(new Ticket
                         {
                             TicketId = Convert.ToInt32(reader.GetInt32("TicketId")),
                             TicketSubject = reader.GetString("ticketSubject"),
                             TicketContent = reader.GetString("ticketContent"),
                             CreatedDateTime = reader.GetDateTime("createdDateTime"),
-                            TicketCategory = (Ticket.ticketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
-                            TicketPriority = (Ticket.ticketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
-                            TicketStatus = (Ticket.ticketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
+                            TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
+                            TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
+                            TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
                         });
                     }
                 }
@@ -104,18 +104,66 @@ namespace DAL.Functions
                         ticket.TicketSubject = reader.GetString("ticketSubject");
                         ticket.TicketContent = reader.GetString("ticketContent");
                         ticket.CreatedDateTime = reader.GetDateTime("createdDateTime");
-                        ticket.TicketCategory = (Ticket.ticketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
-                        ticket.TicketPriority = (Ticket.ticketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
-                        ticket.TicketStatus = (Ticket.ticketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
+                        ticket.TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
+                        ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
+                        ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
                         specificTicketList.Add(new Ticket
                         {
                             TicketId = Convert.ToInt32(reader.GetInt32("ticketId")),
                             TicketSubject = reader.GetString("ticketSubject"),
                             TicketContent = reader.GetString("ticketContent"),
                             CreatedDateTime = reader.GetDateTime("createdDateTime"),
-                            TicketCategory = (Ticket.ticketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
-                            TicketPriority = (Ticket.ticketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
-                            TicketStatus = (Ticket.ticketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
+                            TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
+                            TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
+                            TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
+                        });
+                    }
+                }
+                return specificTicketList;
+            }
+        }
+
+        // Get specific ticket and comments
+        public List<Ticket> GetTicketAndComments(int ticketid)
+        {
+            Ticket ticket = new Ticket();
+            Comment comment = new Comment();
+            var connectionString = dbConnection.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                DbCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM Tickets INNER JOIN Comments ON Tickets.ticketId = Comments.ticketId WHERE Tickets.TicketId = " + ticketid;
+                List<Ticket> specificTicketList = new();
+                List<Comment> specificCommentList = new();
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ticket.TicketId = Convert.ToInt32(reader.GetInt32("ticketId"));
+                        ticket.TicketSubject = reader.GetString("ticketSubject");
+                        ticket.TicketContent = reader.GetString("ticketContent");
+                        ticket.CreatedDateTime = reader.GetDateTime("createdDateTime");
+                        ticket.TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
+                        ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
+                        ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
+                        comment.CommentId = Convert.ToInt32(reader.GetInt32("commentId"));
+                        comment.CommentContent = reader.GetString("commentContent");
+                        specificTicketList.Add(new Ticket
+                        {
+                            TicketId = Convert.ToInt32(reader.GetInt32("ticketId")),
+                            TicketSubject = reader.GetString("ticketSubject"),
+                            TicketContent = reader.GetString("ticketContent"),
+                            CreatedDateTime = reader.GetDateTime("createdDateTime"),
+                            TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
+                            TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
+                            TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
+                        });
+                        specificCommentList.Add(new Comment
+                        {
+                            CommentId = Convert.ToInt32(reader.GetInt32("commentId")),
+                            CommentContent = reader.GetString("commentContent"),
                         });
                     }
                 }
@@ -124,7 +172,7 @@ namespace DAL.Functions
         }
 
         // Update ticket
-        public Int32 UpdateTicket(int ticketid, string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        public int UpdateTicket(int ticketid, string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
         {
             Ticket newTicket = new Ticket
             {
@@ -132,9 +180,9 @@ namespace DAL.Functions
                 TicketSubject = ticketsubject,
                 TicketContent = ticketcontent,
                 CreatedDateTime = createddatetime,
-                TicketCategory = (Ticket.ticketCategories)ticketcategory,
-                TicketPriority = (Ticket.ticketPriorities)ticketpriority,
-                TicketStatus = (Ticket.ticketStatuses)ticketstatus,
+                TicketCategory = (Ticket.TicketCategories)ticketcategory,
+                TicketPriority = (Ticket.TicketPriorities)ticketpriority,
+                TicketStatus = (Ticket.TicketStatuses)ticketstatus,
             };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -157,7 +205,7 @@ namespace DAL.Functions
         }
 
         // Delete ticket
-        public Int32 DeleteTicket(int ticketid)
+        public int DeleteTicket(int ticketid)
         {
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))

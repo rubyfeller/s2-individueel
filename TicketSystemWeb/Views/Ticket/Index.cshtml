@@ -66,51 +66,51 @@
                     @obj.TicketContent
                     </td>
                     <td width="50%">
-                    @if (@obj.TicketCategory.Equals(ticketCategories.Windows))
+                    @if (@obj.TicketCategory.Equals(TicketCategories.Windows))
                     {
                                 <p>Windows</p>
                     }
-                    @if (@obj.TicketCategory.Equals(ticketCategories.macOS))
+                    @if (@obj.TicketCategory.Equals(TicketCategories.macOS))
                     {
                                 <p>macOS</p>
                     }
-                    @if (@obj.TicketCategory.Equals(ticketCategories.Printer))
+                    @if (@obj.TicketCategory.Equals(TicketCategories.Printer))
                     {
                                 <p>Printer</p>
                     }
-                    @if (@obj.TicketCategory.Equals(ticketCategories.InterneSystemen))
+                    @if (@obj.TicketCategory.Equals(TicketCategories.InterneSystemen))
                     {
                                 <p>Interne systemen</p>
                     }
                     <td width="50%">
-                        @if (@obj.TicketPriority.Equals(ticketPriorities.Laag))
+                        @if (@obj.TicketPriority.Equals(TicketPriorities.Laag))
                         {
                                 <span class="badge bg-primary">Laag</span>
                         }
-                        @if (@obj.TicketPriority.Equals(ticketPriorities.Gemiddeld))
+                        @if (@obj.TicketPriority.Equals(TicketPriorities.Gemiddeld))
                         {
                                 <span class="badge bg-secondary">Gemiddeld</span>
                         }
-                        @if (@obj.TicketPriority.Equals(ticketPriorities.Hoog))
+                        @if (@obj.TicketPriority.Equals(TicketPriorities.Hoog))
                         {
                                 <span class="badge bg-warning">Hoog</span>
                         }
-                        @if (@obj.TicketPriority.Equals(ticketPriorities.Kritiek))
+                        @if (@obj.TicketPriority.Equals(TicketPriorities.Kritiek))
                         {
                                 <span class="badge bg-danger">Kritiek</span>
                         }
                     </td>
                     <td width="50%">
                         <span>
-                            @if (@obj.TicketStatus.Equals(ticketStatuses.Open))
+                            @if (@obj.TicketStatus.Equals(TicketStatuses.Open))
                             {
                                     <span>Open</span>
                             }
-                            @if (@obj.TicketStatus.Equals(ticketStatuses.InBehandeling))
+                            @if (@obj.TicketStatus.Equals(TicketStatuses.InBehandeling))
                             {
                                     <span>In behandeling</span>
                             }
-                            @if (obj.TicketStatus.Equals(ticketStatuses.Gesloten))
+                            @if (obj.TicketStatus.Equals(TicketStatuses.Gesloten))
                             {
                                     <span>Gesloten</span>
                             }

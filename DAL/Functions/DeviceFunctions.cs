@@ -15,7 +15,7 @@ namespace DAL.Functions
         int deleteDeviceResult;
 
         // Add a new device
-        public Int32 AddDevice(int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
+        public int AddDevice(int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
         {
             Device newDevice = new Device
             {
@@ -53,7 +53,7 @@ namespace DAL.Functions
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.ConnectionString = connectionString;
-                connection.OpenAsync();
+                connection.Open();
                 DbCommand command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM Devices";
                 List<Device> deviceList = new();
@@ -98,7 +98,7 @@ namespace DAL.Functions
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.ConnectionString = connectionString;
-                connection.OpenAsync();
+                connection.Open();
                 DbCommand command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM Devices WHERE deviceId = " + deviceid;
                 List<Device> specificDeviceList = new();
