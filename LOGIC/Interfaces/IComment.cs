@@ -2,6 +2,6 @@
 {
     public interface IComment
     {
-        int AddComment(string commentcontent, int ticketid);
+        int AddComment(string commentcontent, DateTime CreatedDateTime, int ticketid);
     }
 }

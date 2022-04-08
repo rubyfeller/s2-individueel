@@ -9,5 +9,6 @@ namespace LOGIC.Interfaces
         int DeleteTicket(int ticketid);
         List<Ticket> GetTickets();
         List<Ticket> GetTicket(int ticketid);
+        List<Ticket> GetTicketAndComments(int ticketid);
     }
 }

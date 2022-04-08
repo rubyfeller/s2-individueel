@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LOGIC.Entities;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -21,8 +23,8 @@ namespace TicketSystemWeb.Models
         [Required(ErrorMessage = "Het invullen van een status is verplicht")]
         public TicketStatuses TicketStatus { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        //public int? ReplyId { get; set; }
-
+        public List<Comment> Comments { get; set; }
+        public string CommentContent { get; set; }
         public enum TicketCategories
         {
             Windows,

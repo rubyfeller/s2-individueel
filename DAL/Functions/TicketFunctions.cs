@@ -150,6 +150,11 @@ namespace DAL.Functions
                         ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
                         comment.CommentId = Convert.ToInt32(reader.GetInt32("commentId"));
                         comment.CommentContent = reader.GetString("commentContent");
+                        specificCommentList.Add(new Comment
+                        {
+                            CommentId = comment.CommentId,
+                            CommentContent = comment.CommentContent,
+                        });
                         specificTicketList.Add(new Ticket
                         {
                             TicketId = Convert.ToInt32(reader.GetInt32("ticketId")),
@@ -159,11 +164,7 @@ namespace DAL.Functions
                             TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
                             TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
                             TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
-                        });
-                        specificCommentList.Add(new Comment
-                        {
-                            CommentId = Convert.ToInt32(reader.GetInt32("commentId")),
-                            CommentContent = reader.GetString("commentContent"),
+                            Comments = specificCommentList
                         });
                     }
                 }

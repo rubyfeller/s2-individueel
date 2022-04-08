@@ -18,7 +18,7 @@ namespace LOGIC.Entities
         public TicketStatuses TicketStatus { get; set; }
         [Required]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        //public int? ReplyId { get; set; }
+        public List<Comment> Comments { get; set; }
 
         public enum TicketCategories
         {

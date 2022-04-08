@@ -1,4 +1,5 @@
 using DAL.Functions;
+using LOGIC;
 using LOGIC.DeviceLogic;
 using LOGIC.Interfaces;
 using LOGIC.TicketLogic;
@@ -25,8 +26,10 @@ namespace TicketSystemWeb
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddTransient<IDevice, DeviceFunctions>();
             services.AddTransient<ITicket, TicketFunctions>();
+            services.AddTransient<IComment, CommentFunctions>();
             services.AddTransient<ITicketLogic, TicketLogic>();
             services.AddTransient<IDeviceLogic, DeviceLogic>();
+            services.AddTransient<ICommentLogic, CommentLogic>();
 
         }
 

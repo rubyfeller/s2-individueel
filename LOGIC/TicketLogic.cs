@@ -40,5 +40,10 @@ namespace LOGIC.TicketLogic
             List<Ticket> specificTicketList = _ticket.GetTicket(ticketid);
             return specificTicketList;
         }
+        public List<Ticket> GetTicketAndComments(int ticketid)
+        {
+            List<Ticket> ticketAndCommentsList = _ticket.GetTicketAndComments(ticketid);
+            return ticketAndCommentsList;
+        }
     }
 }

@@ -2,16 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TicketSystemWeb.Models;
+using TicketSystemWeb.ViewModels;
 
 namespace TicketSystemWeb.Controllers
 {
     public class TicketController : Controller
     {
         private readonly ITicketLogic _ITicketLogic;
+        private readonly ICommentLogic _ICommentLogic;
 
-        public TicketController(ITicketLogic TicketLogic)
+        public TicketController(ITicketLogic TicketLogic, ICommentLogic CommentLogic)
         {
             _ITicketLogic = TicketLogic;
+            _ICommentLogic = CommentLogic;
         }
 
         public List<TicketViewModel> TransferViewAll()
@@ -40,8 +43,19 @@ namespace TicketSystemWeb.Controllers
         public TicketViewModel TransferViewSpecfic(int ticketid)
         {
             List<TicketViewModel> newTicketList = new();
+            List<CommentViewModel> specificCommentList = new();
             TicketViewModel viewmodel = null;
-            var ticketList = _ITicketLogic.GetTicket(ticketid);
+            var ticketList = _ITicketLogic.GetTicketAndComments(ticketid);
+
+            foreach (var comments in specificCommentList)
+            {
+                CommentViewModel currComment = new CommentViewModel
+                {
+                    CommentId = comments.CommentId,
+                    CommentContent = comments.CommentContent,
+                };
+                specificCommentList.Add(currComment);
+            }
 
             foreach (var tickets in ticketList)
             {
@@ -54,8 +68,11 @@ namespace TicketSystemWeb.Controllers
                     TicketPriority = (TicketViewModel.TicketPriorities)tickets.TicketPriority,
                     TicketStatus = (TicketViewModel.TicketStatuses)tickets.TicketStatus,
                     CreatedDateTime = tickets.CreatedDateTime,
+                    Comments = tickets.Comments,
                 };
+
                 newTicketList.Add(currTicket);
+
                 viewmodel = currTicket;
             }
             return viewmodel;
@@ -109,6 +126,28 @@ namespace TicketSystemWeb.Controllers
                 else
                 {
                     TempData["error"] = "Ticket niet toegevoegd";
+                }
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+
+        //POST
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateComment(CommentViewModel obj, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                int TicketId = id;
+                var result = _ICommentLogic.AddComment(obj.CommentContent, obj.CreatedDateTime, TicketId);
+                if (result == true)
+                {
+                    TempData["success"] = "Reactie succesvol toegevoegd";
+                }
+                else
+                {
+                    TempData["error"] = "Reactie niet toegevoegd";
                 }
                 return RedirectToAction("Index");
             }

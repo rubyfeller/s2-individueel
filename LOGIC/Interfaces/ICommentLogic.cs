@@ -4,6 +4,6 @@ namespace LOGIC.Interfaces
 {
     public interface ICommentLogic
     {
-        Boolean AddComment(string commentcontent, int ticketid);
+        Boolean AddComment(string commentcontent, DateTime CreatedDateTime, int ticketid);
     }
 }
