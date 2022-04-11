@@ -3,11 +3,11 @@ using LOGIC.Entities;
 
 namespace LOGIC.Interfaces
 {
-    public interface ITicketLogic
+    public interface ITicketDal
     {
         Object AddTicket(TicketDTO ticketDto);
         Object UpdateTicket(TicketDTO ticketDto);
-        Boolean DeleteTicket(int ticketid);
+        int DeleteTicket(int ticketid);
         List<Ticket> GetTickets();
         List<Ticket> GetTicket(int ticketid);
         List<Ticket> GetTicketAndComments(int ticketid);

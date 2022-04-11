@@ -1,26 +1,29 @@
-﻿using LOGIC.Entities;
+﻿using LOGIC.DTO_s;
+using LOGIC.Entities;
 using LOGIC.Interfaces;
 
 namespace LOGIC.TicketLogic
 {
     public class TicketLogic : ITicketLogic
     {
-        private ITicket _ticket;
+        private ITicketDal _ticket;
 
-        public TicketLogic(ITicket ticket)
+        public TicketLogic(ITicketDal ticket)
         {
             _ticket = ticket;
         }
-        public Boolean AddTicket(string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        public Object AddTicket(TicketDTO ticketDto)
         {
-            var result = _ticket.AddTicket(ticketsubject, ticketcontent, createddatetime, ticketcategory, ticketpriority, ticketstatus);
-            return result > 0;
+            var result = _ticket.AddTicket(ticketDto);
+
+            return result;
         }
 
-        public Boolean UpdateTicket(int ticketid, string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        public Object UpdateTicket(TicketDTO ticketDto)
         {
-            var updateDeviceResult = _ticket.UpdateTicket(ticketid, ticketsubject, ticketcontent, createddatetime, ticketcategory, ticketpriority, ticketstatus);
-            return updateDeviceResult > 0;
+            var updateDeviceResult = _ticket.UpdateTicket(ticketDto);
+
+            return updateDeviceResult;
         }
 
         public Boolean DeleteTicket(int ticketid)

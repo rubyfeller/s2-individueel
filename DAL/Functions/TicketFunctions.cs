@@ -1,4 +1,5 @@
-﻿using LOGIC.Entities;
+﻿using LOGIC.DTO_s;
+using LOGIC.Entities;
 using LOGIC.Interfaces;
 using System.Data;
 using System.Data.Common;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace DAL.Functions
 {
-    public class TicketFunctions : ITicket
+    public class TicketFunctions : ITicketDal
     {
         DBCollection dbConnection = new DBCollection();
         int ticketResult;
@@ -15,16 +16,16 @@ namespace DAL.Functions
         int deleteTicketResult;
 
         // Add a new ticket
-        public int AddTicket(string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        public Object AddTicket(TicketDTO ticketDto)
         {
             Ticket newTicket = new Ticket
             {
-                TicketSubject = ticketsubject,
-                TicketContent = ticketcontent,
-                CreatedDateTime = createddatetime,
-                TicketCategory = (Ticket.TicketCategories)ticketcategory,
-                TicketPriority = (Ticket.TicketPriorities)ticketpriority,
-                TicketStatus = (Ticket.TicketStatuses)ticketstatus,
+                TicketSubject = ticketDto.TicketSubject,
+                TicketContent = ticketDto.TicketContent,
+                CreatedDateTime = ticketDto.CreatedDateTime,
+                TicketCategory = (Ticket.TicketCategories)ticketDto.TicketCategory,
+                TicketPriority = (Ticket.TicketPriorities)ticketDto.TicketPriority,
+                TicketStatus = (Ticket.TicketStatuses)ticketDto.TicketStatus,
             };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -173,17 +174,17 @@ namespace DAL.Functions
         }
 
         // Update ticket
-        public int UpdateTicket(int ticketid, string ticketsubject, string ticketcontent, DateTime createddatetime, int ticketcategory, int ticketpriority, int ticketstatus)
+        public Object UpdateTicket(TicketDTO ticketDto)
         {
             Ticket newTicket = new Ticket
             {
-                TicketId = ticketid,
-                TicketSubject = ticketsubject,
-                TicketContent = ticketcontent,
-                CreatedDateTime = createddatetime,
-                TicketCategory = (Ticket.TicketCategories)ticketcategory,
-                TicketPriority = (Ticket.TicketPriorities)ticketpriority,
-                TicketStatus = (Ticket.TicketStatuses)ticketstatus,
+                TicketId = ticketDto.TicketId,
+                TicketSubject = ticketDto.TicketSubject,
+                TicketContent = ticketDto.TicketContent,
+                CreatedDateTime = ticketDto.CreatedDateTime,
+                TicketCategory = (Ticket.TicketCategories)ticketDto.TicketCategory,
+                TicketPriority = (Ticket.TicketPriorities)ticketDto.TicketPriority,
+                TicketStatus = (Ticket.TicketStatuses)ticketDto.TicketStatus,
             };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))

@@ -3,11 +3,11 @@ using LOGIC.Entities;
 
 namespace LOGIC.Interfaces
 {
-    public interface IDeviceLogic
+    public interface IDeviceDal
     {
         Object AddDevice(DeviceDTO deviceDto);
         Object UpdateDevice(DeviceDTO deviceDto);
-        Boolean DeleteDevice(int deviceId);
+        int DeleteDevice(int deviceId);
         List<Device> GetDevices();
         List<Device> GetDevice(int deviceId);
     }

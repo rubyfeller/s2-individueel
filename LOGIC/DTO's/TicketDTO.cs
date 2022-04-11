@@ -1,26 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LOGIC.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace LOGIC.Entities
+namespace LOGIC.DTO_s
 {
-    public class Ticket
+    public class TicketDTO
     {
-        [Key]
         public int TicketId { get; set; }
-        [Required]
         public string TicketSubject { get; set; }
-        [Required]
         public string TicketContent { get; set; }
-        [Required]
         public TicketCategories TicketCategory { get; set; }
-        [Required]
         public TicketPriorities TicketPriority { get; set; }
-        [Required]
         public TicketStatuses TicketStatus { get; set; }
-        [Required]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        public List<Comment> Comments { get; set; }
-
-        public ICollection<Ticket> Tickets { get; set; }
 
         public enum TicketCategories
         {

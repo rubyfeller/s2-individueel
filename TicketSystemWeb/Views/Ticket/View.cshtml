@@ -73,18 +73,19 @@
 @foreach (var obj in Model.Comments)
 {
     <br />
-    <div class="card">
-        <div class="card-header">
-            <h2>Reactie</h2>
+    <form method="post" asp-action="DeleteComment" asp-route-commentid="@obj.CommentId">
+        <div class="card">
+            <div class="card-header">
+                <h2>Reactie</h2>
+            </div>
+            <div class="card-body">
+                <label asp-for="TicketSubject">Opmerking</label>
+                <textarea disabled asp-for="@obj.CommentContent" class="form-control" rows="7"></textarea>
+                <p>Geplaatst door: Henk (@obj.CreatedDateTime)</p>
+                <button type="submit" class="btn btn-danger" style="width: 150px">Verwijderen</button>
+            </div>
         </div>
-        <div class="card-body">
-            <label asp-for="TicketSubject">Opmerking</label>
-            <textarea disabled asp-for="@obj.CommentContent" class="form-control" rows="7"></textarea>
-            <p>Geplaatst door: Henk (@obj.CreatedDateTime)</p>
-            <button type="submit" class="btn btn-primary" style="width: 150px">Bewerken</button>
-            <button type="submit" class="btn btn-danger" style="width: 150px">Verwijderen</button>
-        </div>
-    </div>
+    </form>
 }
 
 @section Scripts {

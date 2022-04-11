@@ -1,4 +1,5 @@
-﻿using LOGIC.Interfaces;
+﻿using LOGIC.DTO_s;
+using LOGIC.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TicketSystemWeb.Models;
@@ -8,7 +9,6 @@ namespace TicketSystemWeb.Controllers
     public class DeviceController : Controller
     {
         private readonly IDeviceLogic _IDeviceLogic;
-
         public DeviceController(IDeviceLogic DeviceLogic)
         {
             _IDeviceLogic = DeviceLogic;
@@ -84,9 +84,20 @@ namespace TicketSystemWeb.Controllers
             {
                 obj.ClientId = 0;
                 obj.TicketId = 0;
-                var result = _IDeviceLogic.AddDevice((int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
+                DeviceDTO deviceDto = new DeviceDTO
+                {
+                    DeviceId = obj.DeviceId,
+                    ClientId = obj.ClientId,
+                    TicketId = obj.TicketId,
+                    DeviceName = obj.DeviceName,
+                    DeviceVersion = obj.DeviceVersion,
+                    Brand = obj.Brand,
+                    OsVersion = obj.OsVersion,
+                    SerialNumber = obj.SerialNumber,
+                };
+                var result = _IDeviceLogic.AddDevice(deviceDto);
 
-                if (result == true)
+                if (result != null)
                 {
                     TempData["success"] = "Apparaat succesvol toegevoegd";
                 }
@@ -150,9 +161,20 @@ namespace TicketSystemWeb.Controllers
             {
                 obj.ClientId = 0;
                 obj.TicketId = 0;
-                var result = _IDeviceLogic.UpdateDevice(obj.DeviceId, (int)obj.ClientId, (int)obj.TicketId, obj.DeviceName, obj.DeviceVersion, obj.Brand, obj.OsVersion, obj.SerialNumber);
+                DeviceDTO deviceDto = new DeviceDTO
+                {
+                    DeviceId = obj.DeviceId,
+                    ClientId = obj.ClientId,
+                    TicketId = obj.TicketId,
+                    DeviceName = obj.DeviceName,
+                    DeviceVersion = obj.DeviceVersion,
+                    Brand = obj.Brand,
+                    OsVersion = obj.OsVersion,
+                    SerialNumber = obj.SerialNumber,
+                };
+                var result = _IDeviceLogic.UpdateDevice(deviceDto);
 
-                if (result == true)
+                if (result != null)
                 {
                     TempData["success"] = "Apparaat succesvol aangepast";
                 }

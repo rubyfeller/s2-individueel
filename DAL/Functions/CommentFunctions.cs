@@ -1,22 +1,24 @@
-﻿using LOGIC.Entities;
+﻿using LOGIC.DTO_s;
+using LOGIC.Entities;
 using LOGIC.Interfaces;
 using System.Data.SqlClient;
 
 namespace DAL.Functions
 {
-    public class CommentFunctions : IComment
+    public class CommentFunctions : ICommentDal
     {
         readonly DBCollection dbConnection = new DBCollection();
-        int commentResult;
+        Object commentResult;
+        int deleteCommentResult;
 
         // Add a new device
-        public int AddComment(string commentcontent, DateTime CreatedDateTime, int ticketid)
+        public Object AddComment(CommentDTO comment)
         {
             Comment newComment = new Comment
             {
-                CommentContent = commentcontent,
+                CommentContent = comment.CommentContent,
                 CreatedDateTime = System.DateTime.Now,
-                TicketId = ticketid,
+                TicketId = comment.TicketId,
             };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -32,6 +34,23 @@ namespace DAL.Functions
                 }
             }
             return commentResult;
+        }
+        
+        // Delete ticket
+        public Int32 DeleteComment(int commentid)
+        {
+            var connectionString = dbConnection.GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                using (SqlCommand command = new SqlCommand("DELETE FROM Comments WHERE commentId = @CommentId", connection))
+                {
+                    command.Parameters.AddWithValue("@CommentId", commentid);
+                    connection.Open();
+                    deleteCommentResult = command.ExecuteNonQuery();
+                }
+            }
+            return deleteCommentResult;
         }
     }
 }

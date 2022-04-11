@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace LOGIC.Entities
+namespace LOGIC.DTO_s
 {
-    public class Device
+    public class DeviceDTO
     {
-        [Key]
         public int DeviceId { get; set; }
         public int? ClientId { get; set; }
         public int? TicketId { get; set; }
@@ -13,7 +16,5 @@ namespace LOGIC.Entities
         public string Brand { get; set; }
         public string? OsVersion { get; set; }
         public string? SerialNumber { get; set; }
-
-        public ICollection<Device> Devices { get; set; }
     }
 }

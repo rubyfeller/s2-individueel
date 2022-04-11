@@ -1,4 +1,5 @@
-﻿using LOGIC.Interfaces;
+﻿using LOGIC.DTO_s;
+using LOGIC.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TicketSystemWeb.Models;
@@ -117,9 +118,18 @@ namespace TicketSystemWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _ITicketLogic.AddTicket(obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, (int)obj.TicketCategory, (int)obj.TicketPriority, (int)obj.TicketStatus);
+                TicketDTO ticketDto = new TicketDTO
+                {
+                    TicketSubject = obj.TicketSubject,
+                    TicketContent = obj.TicketContent,
+                    TicketCategory = (TicketDTO.TicketCategories)(int)obj.TicketCategory,
+                    TicketPriority = (TicketDTO.TicketPriorities)(int)obj.TicketPriority,
+                    TicketStatus = (TicketDTO.TicketStatuses)(int)obj.TicketStatus,
+                    CreatedDateTime = obj.CreatedDateTime,
+                };
+                var result = _ITicketLogic.AddTicket(ticketDto);
 
-                if (result == true)
+                if (result != null)
                 {
                     TempData["success"] = "Ticket succesvol toegevoegd";
                 }
@@ -140,8 +150,14 @@ namespace TicketSystemWeb.Controllers
             if (ModelState.IsValid)
             {
                 int TicketId = id;
-                var result = _ICommentLogic.AddComment(obj.CommentContent, obj.CreatedDateTime, TicketId);
-                if (result == true)
+                CommentDTO commentDto = new CommentDTO
+                {
+                    CommentContent = obj.CommentContent,
+                    TicketId = TicketId,
+                };
+                var result = _ICommentLogic.AddComment(commentDto);
+
+                if (result != null)
                 {
                     TempData["success"] = "Reactie succesvol toegevoegd";
                 }
@@ -182,9 +198,19 @@ namespace TicketSystemWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _ITicketLogic.UpdateTicket(obj.TicketId, obj.TicketSubject, obj.TicketContent, obj.CreatedDateTime, (int)obj.TicketCategory, (int)obj.TicketPriority, (int)obj.TicketStatus);
+                TicketDTO ticketDto = new TicketDTO
+                {
+                    TicketId = obj.TicketId,
+                    TicketSubject = obj.TicketSubject,
+                    TicketContent = obj.TicketContent,
+                    TicketCategory = (TicketDTO.TicketCategories)(int)obj.TicketCategory,
+                    TicketPriority = (TicketDTO.TicketPriorities)(int)obj.TicketPriority,
+                    TicketStatus = (TicketDTO.TicketStatuses)(int)obj.TicketStatus,
+                    CreatedDateTime = obj.CreatedDateTime,
+                };
+                var result = _ITicketLogic.UpdateTicket(ticketDto);
 
-                if (result == true)
+                if (result != null)
                 {
                     TempData["success"] = "Ticket succesvol aangepast";
                 }
@@ -224,11 +250,29 @@ namespace TicketSystemWeb.Controllers
 
             if (result == true)
             {
-                TempData["success"] = "Apparaat succesvol verwijderd";
+                TempData["success"] = "Ticket succesvol verwijderd";
             }
             else
             {
-                TempData["error"] = "Apparaat niet verwijderd";
+                TempData["error"] = "Ticket niet verwijderd";
+            }
+            return RedirectToAction("Index");
+        }
+
+        //POST
+        [HttpPost, ActionName("DeleteComment")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteComment(CommentViewModel obj)
+        {
+            var result = _ICommentLogic.DeleteComment(obj.CommentId);
+
+            if (result == true)
+            {
+                TempData["success"] = "Reactie succesvol verwijderd";
+            }
+            else
+            {
+                TempData["error"] = "Reactie niet verwijderd";
             }
             return RedirectToAction("Index");
         }

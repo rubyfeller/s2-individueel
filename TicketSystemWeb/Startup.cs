@@ -24,9 +24,9 @@ namespace TicketSystemWeb
         {
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            services.AddTransient<IDevice, DeviceFunctions>();
-            services.AddTransient<ITicket, TicketFunctions>();
-            services.AddTransient<IComment, CommentFunctions>();
+            services.AddTransient<IDeviceDal, DeviceFunctions>();
+            services.AddTransient<ITicketDal, TicketFunctions>();
+            services.AddTransient<ICommentDal, CommentFunctions>();
             services.AddTransient<ITicketLogic, TicketLogic>();
             services.AddTransient<IDeviceLogic, DeviceLogic>();
             services.AddTransient<ICommentLogic, CommentLogic>();

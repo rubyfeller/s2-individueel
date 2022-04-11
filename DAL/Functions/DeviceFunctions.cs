@@ -4,26 +4,27 @@ using System.Data;
 using System.Data.Common;
 using LOGIC.Interfaces;
 using LOGIC.Entities;
+using LOGIC.DTO_s;
 
 namespace DAL.Functions
 {
-    public class DeviceFunctions : IDevice
+    public class DeviceFunctions : IDeviceDal
     {
         DBCollection dbConnection = new DBCollection();
-        int deviceResult;
-        int updateDeviceResult;
+        Object deviceResult;
+        Object updateDeviceResult;
         int deleteDeviceResult;
 
         // Add a new device
-        public int AddDevice(int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
+        public Object AddDevice(DeviceDTO device)
         {
             Device newDevice = new Device
             {
-                DeviceName = devicename,
-                DeviceVersion = deviceversion,
-                Brand = brand,
-                OsVersion = osVersion,
-                SerialNumber = serialNumber
+                DeviceName = device.DeviceName,
+                DeviceVersion = device.DeviceVersion,
+                Brand = device.Brand,
+                OsVersion = device.OsVersion,
+                SerialNumber = device.SerialNumber
             };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -136,16 +137,16 @@ namespace DAL.Functions
         }
 
         // Update device
-        public Int32 UpdateDevice(int deviceid, int ClientId, int TicketId, string devicename, string deviceversion, string brand, string osVersion, string serialNumber)
+        public Object UpdateDevice(DeviceDTO device)
         {
             Device newDevice = new Device
             {
-                DeviceId = deviceid,
-                DeviceName = devicename,
-                DeviceVersion = deviceversion,
-                Brand = brand,
-                OsVersion = osVersion,
-                SerialNumber = serialNumber
+                DeviceId = device.DeviceId,
+                DeviceName = device.DeviceName,
+                DeviceVersion = device.DeviceVersion,
+                Brand = device.Brand,
+                OsVersion = device.OsVersion,
+                SerialNumber = device.SerialNumber
             };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
