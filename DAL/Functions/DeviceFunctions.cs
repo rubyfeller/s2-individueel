@@ -100,39 +100,41 @@ namespace DAL.Functions
             {
                 connection.ConnectionString = connectionString;
                 connection.Open();
-                DbCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM Devices WHERE deviceId = " + deviceid;
-                List<Device> specificDeviceList = new();
-                using (DbDataReader reader = command.ExecuteReader())
+                using (SqlCommand command = new SqlCommand("SELECT * FROM Devices WHERE deviceId = @DeviceId", connection))
                 {
-                    while (reader.Read())
+                    command.Parameters.AddWithValue("@DeviceId", deviceid);
+                    List<Device> specificDeviceList = new();
+                    using (DbDataReader reader = command.ExecuteReader())
                     {
-                        device.ClientId = 0;
-                        device.TicketId = 0;
-                        //device.ClientId = reader.GetInt32("clientId");
-                        //device.TicketId = reader.GetInt32("ticketId");
-                        device.DeviceId = reader.GetInt32("deviceId");
-                        device.DeviceName = reader.GetString("deviceName");
-                        device.DeviceVersion = reader.GetString("deviceVersion");
-                        device.Brand = reader.GetString("brand");
-                        device.OsVersion = reader.GetString("osVersion");
-                        device.SerialNumber = reader.GetString("serialNumber");
-                        specificDeviceList.Add(new Device
+                        while (reader.Read())
                         {
-                            ClientId = 0,
-                            TicketId = 0,
+                            device.ClientId = 0;
+                            device.TicketId = 0;
                             //device.ClientId = reader.GetInt32("clientId");
                             //device.TicketId = reader.GetInt32("ticketId");
-                            DeviceId = Convert.ToInt32(reader.GetInt32("deviceId")),
-                            DeviceName = reader.GetString("deviceName"),
-                            DeviceVersion = reader.GetString("deviceVersion"),
-                            Brand = reader.GetString("brand"),
-                            OsVersion = reader.GetString("osVersion"),
-                            SerialNumber = reader.GetString("serialNumber"),
-                        });
+                            device.DeviceId = reader.GetInt32("deviceId");
+                            device.DeviceName = reader.GetString("deviceName");
+                            device.DeviceVersion = reader.GetString("deviceVersion");
+                            device.Brand = reader.GetString("brand");
+                            device.OsVersion = reader.GetString("osVersion");
+                            device.SerialNumber = reader.GetString("serialNumber");
+                            specificDeviceList.Add(new Device
+                            {
+                                ClientId = 0,
+                                TicketId = 0,
+                                //device.ClientId = reader.GetInt32("clientId");
+                                //device.TicketId = reader.GetInt32("ticketId");
+                                DeviceId = Convert.ToInt32(reader.GetInt32("deviceId")),
+                                DeviceName = reader.GetString("deviceName"),
+                                DeviceVersion = reader.GetString("deviceVersion"),
+                                Brand = reader.GetString("brand"),
+                                OsVersion = reader.GetString("osVersion"),
+                                SerialNumber = reader.GetString("serialNumber"),
+                            });
+                        }
                     }
+                    return specificDeviceList;
                 }
-                return specificDeviceList;
             }
         }
 

@@ -56,7 +56,7 @@ namespace DAL.Functions
                 connection.ConnectionString = connectionString;
                 connection.Open();
                 DbCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM Tickets";
+                command.CommandText = "SELECT * FROM Tickets ORDER BY ticketPriority DESC, CreatedDateTime";
                 List<Ticket> ticketList = new();
                 using (DbDataReader reader = command.ExecuteReader())
                 {
@@ -94,33 +94,35 @@ namespace DAL.Functions
             {
                 connection.ConnectionString = connectionString;
                 connection.Open();
-                DbCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM Tickets WHERE ticketId = " + ticketid;
-                List<Ticket> specificTicketList = new();
-                using (DbDataReader reader = command.ExecuteReader())
+                using (SqlCommand command = new SqlCommand("SELECT * FROM Tickets WHERE ticketId = @TicketId", connection))
                 {
-                    while (reader.Read())
+                    command.Parameters.AddWithValue("@TicketId", ticketid);
+                    List<Ticket> specificTicketList = new();
+                    using (DbDataReader reader = command.ExecuteReader())
                     {
-                        ticket.TicketId = Convert.ToInt32(reader.GetInt32("ticketId"));
-                        ticket.TicketSubject = reader.GetString("ticketSubject");
-                        ticket.TicketContent = reader.GetString("ticketContent");
-                        ticket.CreatedDateTime = reader.GetDateTime("createdDateTime");
-                        ticket.TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
-                        ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
-                        ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
-                        specificTicketList.Add(new Ticket
+                        while (reader.Read())
                         {
-                            TicketId = Convert.ToInt32(reader.GetInt32("ticketId")),
-                            TicketSubject = reader.GetString("ticketSubject"),
-                            TicketContent = reader.GetString("ticketContent"),
-                            CreatedDateTime = reader.GetDateTime("createdDateTime"),
-                            TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
-                            TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
-                            TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
-                        });
+                            ticket.TicketId = Convert.ToInt32(reader.GetInt32("ticketId"));
+                            ticket.TicketSubject = reader.GetString("ticketSubject");
+                            ticket.TicketContent = reader.GetString("ticketContent");
+                            ticket.CreatedDateTime = reader.GetDateTime("createdDateTime");
+                            ticket.TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
+                            ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
+                            ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
+                            specificTicketList.Add(new Ticket
+                            {
+                                TicketId = Convert.ToInt32(reader.GetInt32("ticketId")),
+                                TicketSubject = reader.GetString("ticketSubject"),
+                                TicketContent = reader.GetString("ticketContent"),
+                                CreatedDateTime = reader.GetDateTime("createdDateTime"),
+                                TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
+                                TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
+                                TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
+                            });
+                        }
                     }
+                    return specificTicketList;
                 }
-                return specificTicketList;
             }
         }
 
@@ -134,42 +136,46 @@ namespace DAL.Functions
             {
                 connection.ConnectionString = connectionString;
                 connection.Open();
-                DbCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT * FROM Tickets INNER JOIN Comments ON Tickets.ticketId = Comments.ticketId WHERE Tickets.TicketId = " + ticketid;
-                List<Ticket> specificTicketList = new();
-                List<Comment> specificCommentList = new();
-                using (DbDataReader reader = command.ExecuteReader())
+                // DbCommand command = connection.CreateCommand();
+                ticket.TicketId = ticketid;
+                using (SqlCommand command = new SqlCommand("SELECT * FROM Tickets INNER JOIN Comments ON Tickets.ticketId = Comments.ticketId WHERE Tickets.TicketId = @TicketId ORDER BY Comments.commentId DESC", connection))
                 {
-                    while (reader.Read())
+                    command.Parameters.AddWithValue("@TicketId", ticket.TicketId);
+                    List<Ticket> specificTicketList = new();
+                    List<Comment> specificCommentList = new();
+                    using (DbDataReader reader = command.ExecuteReader())
                     {
-                        ticket.TicketId = Convert.ToInt32(reader.GetInt32("ticketId"));
-                        ticket.TicketSubject = reader.GetString("ticketSubject");
-                        ticket.TicketContent = reader.GetString("ticketContent");
-                        ticket.CreatedDateTime = reader.GetDateTime("createdDateTime");
-                        ticket.TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
-                        ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
-                        ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
-                        comment.CommentId = Convert.ToInt32(reader.GetInt32("commentId"));
-                        comment.CommentContent = reader.GetString("commentContent");
-                        specificCommentList.Add(new Comment
+                        while (reader.Read())
                         {
-                            CommentId = comment.CommentId,
-                            CommentContent = comment.CommentContent,
-                        });
-                        specificTicketList.Add(new Ticket
-                        {
-                            TicketId = Convert.ToInt32(reader.GetInt32("ticketId")),
-                            TicketSubject = reader.GetString("ticketSubject"),
-                            TicketContent = reader.GetString("ticketContent"),
-                            CreatedDateTime = reader.GetDateTime("createdDateTime"),
-                            TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
-                            TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
-                            TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
-                            Comments = specificCommentList
-                        });
+                            ticket.TicketId = Convert.ToInt32(reader.GetInt32("ticketId"));
+                            ticket.TicketSubject = reader.GetString("ticketSubject");
+                            ticket.TicketContent = reader.GetString("ticketContent");
+                            ticket.CreatedDateTime = reader.GetDateTime("createdDateTime");
+                            ticket.TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
+                            ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
+                            ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
+                            comment.CommentId = Convert.ToInt32(reader.GetInt32("commentId"));
+                            comment.CommentContent = reader.GetString("commentContent");
+                            specificCommentList.Add(new Comment
+                            {
+                                CommentId = comment.CommentId,
+                                CommentContent = comment.CommentContent,
+                            });
+                            specificTicketList.Add(new Ticket
+                            {
+                                TicketId = Convert.ToInt32(reader.GetInt32("ticketId")),
+                                TicketSubject = reader.GetString("ticketSubject"),
+                                TicketContent = reader.GetString("ticketContent"),
+                                CreatedDateTime = reader.GetDateTime("createdDateTime"),
+                                TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
+                                TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
+                                TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
+                                Comments = specificCommentList
+                            });
+                        }
                     }
+                    return specificTicketList;
                 }
-                return specificTicketList;
             }
         }
 

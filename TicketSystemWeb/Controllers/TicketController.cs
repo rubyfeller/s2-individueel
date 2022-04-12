@@ -47,7 +47,6 @@ namespace TicketSystemWeb.Controllers
             List<CommentViewModel> specificCommentList = new();
             TicketViewModel viewmodel = null;
             var ticketList = _ITicketLogic.GetTicketAndComments(ticketid);
-
             foreach (var comments in specificCommentList)
             {
                 CommentViewModel currComment = new CommentViewModel
@@ -57,7 +56,6 @@ namespace TicketSystemWeb.Controllers
                 };
                 specificCommentList.Add(currComment);
             }
-
             foreach (var tickets in ticketList)
             {
                 TicketViewModel currTicket = new TicketViewModel
