@@ -6,7 +6,7 @@ namespace LOGIC.TicketLogic
 {
     public class TicketLogic : ITicketLogic
     {
-        private ITicketDal _ticket;
+        private readonly ITicketDal _ticket;
 
         public TicketLogic(ITicketDal ticket)
         {
@@ -42,11 +42,6 @@ namespace LOGIC.TicketLogic
         {
             List<Ticket> specificTicketList = _ticket.GetTicket(ticketid);
             return specificTicketList;
-        }
-        public List<Ticket> GetTicketAndComments(int ticketid)
-        {
-            List<Ticket> ticketAndCommentsList = _ticket.GetTicketAndComments(ticketid);
-            return ticketAndCommentsList;
         }
     }
 }

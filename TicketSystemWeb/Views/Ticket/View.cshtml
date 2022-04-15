@@ -89,6 +89,7 @@
             <br />
             <button type="submit" class="btn btn-success" style="width: 150px">Plaats reactie</button>
         </div>
+        <span asp-validation-for="CommentContent" class="text-danger"></span>
     </div>
 </form>
 @foreach (var obj in Model.Comments)

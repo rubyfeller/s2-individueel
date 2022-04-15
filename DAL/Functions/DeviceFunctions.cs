@@ -10,7 +10,7 @@ namespace DAL.Functions
 {
     public class DeviceFunctions : IDeviceDal
     {
-        DBCollection dbConnection = new DBCollection();
+        private readonly DBCollection dbConnection = new DBCollection();
         Object deviceResult;
         Object updateDeviceResult;
         int deleteDeviceResult;

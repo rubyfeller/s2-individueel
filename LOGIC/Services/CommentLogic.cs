@@ -10,7 +10,7 @@ namespace LOGIC
 {
     public class CommentLogic : ICommentLogic
     {
-        private ICommentDal _comment;
+        private readonly ICommentDal _comment;
         public CommentLogic(ICommentDal comment)
         {
             _comment = comment;

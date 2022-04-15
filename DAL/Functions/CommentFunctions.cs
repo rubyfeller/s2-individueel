@@ -35,7 +35,7 @@ namespace DAL.Functions
             }
             return commentResult;
         }
-        
+
         // Delete ticket
         public Int32 DeleteComment(int commentid)
         {

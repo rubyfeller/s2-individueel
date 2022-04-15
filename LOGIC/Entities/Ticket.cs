@@ -18,10 +18,8 @@ namespace LOGIC.Entities
         public TicketStatuses TicketStatus { get; set; }
         [Required]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        public List<Comment> Comments { get; set; }
-
-        public ICollection<Ticket> Tickets { get; set; }
-
+        public IEnumerable<Comment>? Comments { get; set; }
+        public IEnumerable<Device>? Devices { get; set; }
         public enum TicketCategories
         {
             Windows,

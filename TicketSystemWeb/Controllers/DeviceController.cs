@@ -35,6 +35,12 @@ namespace TicketSystemWeb.Controllers
 
                 });
             }
+            List<DeviceViewModel> data = new List<DeviceViewModel>()
+    {
+        new DeviceViewModel { DeviceName = "iPhone 12", DeviceVersion = "12" },
+    };
+
+            ViewBag.Data = data;
             return newDeviceList;
         }
 

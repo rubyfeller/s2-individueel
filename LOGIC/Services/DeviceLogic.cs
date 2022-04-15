@@ -6,7 +6,7 @@ namespace LOGIC.DeviceLogic
 {
     public class DeviceLogic : IDeviceLogic
     {
-        private IDeviceDal _device;
+        private readonly IDeviceDal _device;
         public DeviceLogic(IDeviceDal device)
         {
             _device = device;

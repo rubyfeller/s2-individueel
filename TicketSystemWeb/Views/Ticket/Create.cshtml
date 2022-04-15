@@ -41,6 +41,15 @@
                 <span asp-validation-for="TicketPriority" class="text-danger"></span>
             </div>
         </div>
+        <div class="row">
+            <span>Kies betrokken apparaten</span>
+            <div class="col-sm-3">
+                <select class="js-example-basic-single" name="state">
+                    <option>Test</option>
+                    <option>Test 2</option>
+                </select>
+            </div>
+        </div>
     </div>
     <br />
     <button type="submit" class="btn btn-primary" style="width: 150px">Ticket aanmaken</button>
@@ -49,4 +58,5 @@
 
 @section Scripts {
 <partial name="_ValidationScriptsPartial" />
+<partial name="_Select" />
 }

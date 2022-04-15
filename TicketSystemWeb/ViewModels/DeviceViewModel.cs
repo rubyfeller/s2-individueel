@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LOGIC.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace TicketSystemWeb.Models
 {
@@ -15,5 +16,6 @@ namespace TicketSystemWeb.Models
         public string Brand { get; set; }
         public string? OsVersion { get; set; }
         public string? SerialNumber { get; set; }
+        public Ticket Ticket { get; set; }
     }
 }

@@ -7,15 +7,15 @@ namespace DAL
     {
         public void OpenSqlConnection()
         {
-            connectionString = GetConnectionString();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            ConnectionString = GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 connection.Open();
                 Console.WriteLine("ServerVersion: {0}", connection.ServerVersion);
                 Console.WriteLine("State: {0}", connection.State);
             }
         }
-        public string connectionString { get; set; }
+        public string ConnectionString { get; set; }
 
         public string GetConnectionString()
         {

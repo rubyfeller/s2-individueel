@@ -2,6 +2,7 @@ using DAL.Functions;
 using LOGIC;
 using LOGIC.DeviceLogic;
 using LOGIC.Interfaces;
+using LOGIC.Services;
 using LOGIC.TicketLogic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,10 +28,11 @@ namespace TicketSystemWeb
             services.AddTransient<IDeviceDal, DeviceFunctions>();
             services.AddTransient<ITicketDal, TicketFunctions>();
             services.AddTransient<ICommentDal, CommentFunctions>();
+            services.AddTransient<ITicketDeviceCollectionDal, TicketDeviceCollectionFunction>();
             services.AddTransient<ITicketLogic, TicketLogic>();
             services.AddTransient<IDeviceLogic, DeviceLogic>();
             services.AddTransient<ICommentLogic, CommentLogic>();
-
+            services.AddTransient<ITicketDeviceCollectionLogic, TicketDeviceCollectionLogic>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

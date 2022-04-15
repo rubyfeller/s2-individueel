@@ -13,17 +13,20 @@
         <div class="mb-3">
             <label asp-for="DeviceName">Apparaatnaam (*)</label>
             <input asp-for="DeviceName" class="form-control" rows="2">
+            <span asp-validation-for="DeviceName" class="text-danger"></span>
+            <br />
             <label asp-for="Brand">Merk (*)</label>
             <input asp-for="Brand" class="form-control" rows="2">
-            <label asp-for="DeviceVersion">Versie (*)</label>
+            <span asp-validation-for="Brand" class="text-danger"></span>
+            <br />
+            <label asp-for="DeviceVersion">Versie</label>
             <input asp-for="DeviceVersion" class="form-control" rows="2">
-            <span asp-validation-for="DeviceName" class="text-danger"></span>
+            <br />
             <label asp-for="SerialNumber">Serienummer</label>
             <input asp-for="SerialNumber" class="form-control" rows="2">
-            <span asp-validation-for="DeviceName" class="text-danger"></span>
+            <br />
             <label asp-for="OsVersion">OS</label>
             <input asp-for="OsVersion" class="form-control" rows="2">
-            <span asp-validation-for="DeviceName" class="text-danger"></span>
             <br />
 
             <button type="submit" class="btn btn-primary" style="width: 150px">Apparaat toevoegen</button>

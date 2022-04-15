@@ -11,11 +11,13 @@ namespace TicketSystemWeb.Controllers
     {
         private readonly ITicketLogic _ITicketLogic;
         private readonly ICommentLogic _ICommentLogic;
+        private readonly IDeviceLogic _IDeviceLogic;
 
-        public TicketController(ITicketLogic TicketLogic, ICommentLogic CommentLogic)
+        public TicketController(ITicketLogic TicketLogic, ICommentLogic CommentLogic, IDeviceLogic DeviceLogic)
         {
             _ITicketLogic = TicketLogic;
             _ICommentLogic = CommentLogic;
+            _IDeviceLogic = DeviceLogic;
         }
 
         public List<TicketViewModel> TransferViewAll()
@@ -45,8 +47,9 @@ namespace TicketSystemWeb.Controllers
         {
             List<TicketViewModel> newTicketList = new();
             List<CommentViewModel> specificCommentList = new();
+
             TicketViewModel viewmodel = null;
-            var ticketList = _ITicketLogic.GetTicketAndComments(ticketid);
+            var ticketList = _ITicketLogic.GetTicket(ticketid);
             foreach (var comments in specificCommentList)
             {
                 CommentViewModel currComment = new CommentViewModel
@@ -67,7 +70,7 @@ namespace TicketSystemWeb.Controllers
                     TicketPriority = (TicketViewModel.TicketPriorities)tickets.TicketPriority,
                     TicketStatus = (TicketViewModel.TicketStatuses)tickets.TicketStatus,
                     CreatedDateTime = tickets.CreatedDateTime,
-                    Comments = tickets.Comments,
+                    Comments = (List<LOGIC.Entities.Comment>)tickets.Comments,
                 };
 
                 newTicketList.Add(currTicket);
@@ -83,6 +86,22 @@ namespace TicketSystemWeb.Controllers
             return View(newTicketList);
         }
 
+        public List<DeviceViewModel> BindList() // bind list of devices to dropdown
+        {
+            List<DeviceViewModel> newDeviceList = new();
+            DeviceViewModel viewmodel = new DeviceViewModel();
+            var deviceList = _IDeviceLogic.GetDevices();
+
+            foreach (var devices in deviceList)
+            {
+                newDeviceList.Add(new DeviceViewModel
+                {
+                    DeviceId = devices.DeviceId,
+                    DeviceName = devices.DeviceName,
+                });
+            }
+            return newDeviceList;
+        }
         //GET
         public IActionResult Create()
         {

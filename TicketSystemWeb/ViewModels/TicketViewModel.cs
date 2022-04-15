@@ -23,8 +23,10 @@ namespace TicketSystemWeb.Models
         [Required(ErrorMessage = "Het invullen van een status is verplicht")]
         public TicketStatuses TicketStatus { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        public List<Comment> Comments { get; set; }
+        public List<Comment>? Comments { get; set; }
+        [Required(ErrorMessage = "Het invullen van een reactie is verplicht")]
         public string CommentContent { get; set; }
+        public List<Device>? Devices { get; set; }
         public enum TicketCategories
         {
             Windows,

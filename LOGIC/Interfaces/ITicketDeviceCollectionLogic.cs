@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LOGIC.Interfaces
 {
-    public interface ITicketDeviceCollectionDal
+    public interface ITicketDeviceCollectionLogic
     {
         List<TicketDeviceCollection> GetTicketDevices(int ticketid);
     }
