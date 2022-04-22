@@ -25,14 +25,14 @@ namespace TicketSystemWeb
         {
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            services.AddTransient<IDeviceDal, DeviceFunctions>();
-            services.AddTransient<ITicketDal, TicketFunctions>();
-            services.AddTransient<ICommentDal, CommentFunctions>();
-            services.AddTransient<ITicketDeviceCollectionDal, TicketDeviceCollectionFunction>();
-            services.AddTransient<ITicketLogic, TicketLogic>();
-            services.AddTransient<IDeviceLogic, DeviceLogic>();
-            services.AddTransient<ICommentLogic, CommentLogic>();
-            services.AddTransient<ITicketDeviceCollectionLogic, TicketDeviceCollectionLogic>();
+            services.AddScoped<IDeviceDal, DeviceFunctions>();
+            services.AddScoped<ITicketDal, TicketFunctions>();
+            services.AddScoped<ICommentDal, CommentFunctions>();
+            services.AddScoped<ITicketDeviceCollectionDal, TicketDeviceCollectionFunction>();
+            services.AddScoped<ITicketLogic, TicketLogic>();
+            services.AddScoped<IDeviceLogic, DeviceLogic>();
+            services.AddScoped<ICommentLogic, CommentLogic>();
+            services.AddScoped<ITicketDeviceCollectionLogic, TicketDeviceCollectionLogic>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

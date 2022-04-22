@@ -92,7 +92,7 @@ namespace DAL.Functions
         }
 
         // Get specific device
-        public List<Device> GetDevice(int deviceid)
+        public Device GetDevice(int deviceid)
         {
             Device device = new Device();
             var connectionString = dbConnection.GetConnectionString();
@@ -104,6 +104,7 @@ namespace DAL.Functions
                 {
                     command.Parameters.AddWithValue("@DeviceId", deviceid);
                     List<Device> specificDeviceList = new();
+
                     using (DbDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -118,7 +119,8 @@ namespace DAL.Functions
                             device.Brand = reader.GetString("brand");
                             device.OsVersion = reader.GetString("osVersion");
                             device.SerialNumber = reader.GetString("serialNumber");
-                            specificDeviceList.Add(new Device
+
+                            Device newDevice = new Device
                             {
                                 ClientId = 0,
                                 TicketId = 0,
@@ -130,10 +132,11 @@ namespace DAL.Functions
                                 Brand = reader.GetString("brand"),
                                 OsVersion = reader.GetString("osVersion"),
                                 SerialNumber = reader.GetString("serialNumber"),
-                            });
+                            };
                         }
+                        return device;
+
                     }
-                    return specificDeviceList;
                 }
             }
         }

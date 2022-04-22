@@ -16,6 +16,7 @@ namespace LOGIC.Entities
         public TicketPriorities TicketPriority { get; set; }
         [Required]
         public TicketStatuses TicketStatus { get; set; }
+        public TicketLevels TicketLevel { get; set; }
         [Required]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
         public IEnumerable<Comment>? Comments { get; set; }
@@ -39,6 +40,12 @@ namespace LOGIC.Entities
             Open,
             InBehandeling,
             Gesloten
+        }
+        public enum TicketLevels
+        {
+            Moeilijk,
+            Gemiddeld,
+            Simpel
         }
     }
 }

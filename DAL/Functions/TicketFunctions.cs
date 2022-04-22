@@ -113,6 +113,7 @@ namespace DAL.Functions
                             ticket.TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
                             ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
                             ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
+                            ticket.TicketLevel = (Ticket.TicketLevels)Convert.ToInt32(reader.GetInt32("ticketLevel"));
                             specificTicketList.Add(new Ticket
                             {
                                 TicketId = Convert.ToInt32(reader.GetInt32("ticketId")),
@@ -122,6 +123,7 @@ namespace DAL.Functions
                                 TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
                                 TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
                                 TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
+                                TicketLevel = (Ticket.TicketLevels)Convert.ToInt32(reader.GetInt32("ticketLevel")),
                                 Comments = GetComments(ticketid),
                             });
 
@@ -182,20 +184,22 @@ namespace DAL.Functions
                 TicketCategory = (Ticket.TicketCategories)ticketDto.TicketCategory,
                 TicketPriority = (Ticket.TicketPriorities)ticketDto.TicketPriority,
                 TicketStatus = (Ticket.TicketStatuses)ticketDto.TicketStatus,
+                TicketLevel = (Ticket.TicketLevels)ticketDto.TicketLevel,
             };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
-                using (SqlCommand command = new SqlCommand("UPDATE Tickets SET ticketSubject = @TicketSubject, ticketContent = @TicketContent, createdDateTime = @CreatedDateTime, ticketCategory = @TicketCategory, ticketPriority = @TicketPriority, ticketStatus = @TicketStatus WHERE ticketId = @TicketId", connection))
+                using (SqlCommand command = new SqlCommand("UPDATE Tickets SET ticketSubject = @TicketSubject, ticketContent = @TicketContent, ticketLevel = @TicketLevel, createdDateTime = @CreatedDateTime, ticketCategory = @TicketCategory, ticketPriority = @TicketPriority, ticketStatus = @TicketStatus WHERE ticketId = @TicketId", connection))
                 {
                     command.Parameters.AddWithValue("@TicketId", newTicket.TicketId);
                     command.Parameters.AddWithValue("@TicketSubject", newTicket.TicketSubject);
                     command.Parameters.AddWithValue("@TicketContent", newTicket.TicketContent);
+                    command.Parameters.AddWithValue("@TicketStatus", newTicket.TicketStatus);
+                    command.Parameters.AddWithValue("@TicketLevel", newTicket.TicketLevel);
                     command.Parameters.AddWithValue("@CreatedDateTime", newTicket.CreatedDateTime);
                     command.Parameters.AddWithValue("@TicketCategory", newTicket.TicketCategory);
                     command.Parameters.AddWithValue("@TicketPriority", newTicket.TicketPriority);
-                    command.Parameters.AddWithValue("@TicketStatus", newTicket.TicketStatus);
                     connection.Open();
                     updateTicketResult = command.ExecuteNonQuery();
                 }

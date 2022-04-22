@@ -1,6 +1,7 @@
 ﻿using LOGIC.DTO_s;
 using LOGIC.Entities;
 using LOGIC.Interfaces;
+using System.Diagnostics;
 
 namespace LOGIC.TicketLogic
 {
@@ -12,6 +13,9 @@ namespace LOGIC.TicketLogic
         {
             _ticket = ticket;
         }
+        public Stopwatch timer = new Stopwatch();
+        public string elapsedTime;
+
         public Object AddTicket(TicketDTO ticketDto)
         {
             var result = _ticket.AddTicket(ticketDto);

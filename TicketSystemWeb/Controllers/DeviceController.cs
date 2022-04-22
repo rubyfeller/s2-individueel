@@ -44,30 +44,29 @@ namespace TicketSystemWeb.Controllers
             return newDeviceList;
         }
 
-        public DeviceViewModel TransferViewSpecfic(int deviceid)
+        public DeviceViewModel TransferViewSpecific(int deviceid)
         {
             List<DeviceViewModel> newDeviceList = new();
             DeviceViewModel viewmodel = null;
-            var deviceList = _IDeviceLogic.GetDevice(deviceid);
+            var device = _IDeviceLogic.GetDevice(deviceid);
 
-            foreach (var devices in deviceList)
+            DeviceViewModel currDevice = new DeviceViewModel
             {
-                DeviceViewModel currDevice = new DeviceViewModel
-                {
-                    DeviceId = devices.DeviceId,
-                    ClientId = devices.ClientId,
-                    TicketId = devices.TicketId,
-                    DeviceName = devices.DeviceName,
-                    DeviceVersion = devices.DeviceVersion,
-                    Brand = devices.Brand,
-                    OsVersion = devices.OsVersion,
-                    SerialNumber = devices.SerialNumber,
-                };
-                newDeviceList.Add(currDevice);
-                viewmodel = currDevice;
-            }
+                DeviceId = device.DeviceId,
+                ClientId = 0,
+                TicketId = 0,
+                DeviceName = device.DeviceName,
+                DeviceVersion = device.DeviceVersion,
+                Brand = device.Brand,
+                OsVersion = device.OsVersion,
+                SerialNumber = device.SerialNumber,
+            };
+            newDeviceList.Add(currDevice);
+            viewmodel = currDevice;
+
             return viewmodel;
         }
+
 
         public IActionResult Index()
         {
@@ -125,7 +124,7 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var specificDevice = TransferViewSpecfic(deviceId);
+            var specificDevice = TransferViewSpecific(deviceId);
 
             if (specificDevice == null)
             {
@@ -145,7 +144,7 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var specificDevice = TransferViewSpecfic(deviceId);
+            var specificDevice = TransferViewSpecific(deviceId);
 
 
             if (specificDevice == null)
@@ -201,7 +200,7 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var specificDevice = TransferViewSpecfic(deviceId);
+            var specificDevice = TransferViewSpecific(deviceId);
 
             if (specificDevice == null)
             {

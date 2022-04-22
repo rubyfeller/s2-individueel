@@ -49,6 +49,15 @@
             </div>
         </div>
         <br />
+        <div class="row">
+            <span asp-validation-for="TicketLevel">Niveau</span>
+            <div class="col-sm-3">
+                <select asp-for="TicketLevel" asp-items="Html.GetEnumSelectList<TicketLevels>()" class="form-control">
+                    <option selected="selected">Selecteer een niveau</option>
+                </select>
+            </div>
+        </div>
+        <br />
         <button type="submit" class="btn btn-primary" style="width: 150px">Ticket bewerken</button>
         <a asp-controller="Ticket" asp-action="Index" class="btn btn-secondary" style="width: 150px">Terug naar overzicht</a>
     </div>

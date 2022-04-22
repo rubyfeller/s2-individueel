@@ -9,6 +9,9 @@
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
+        <button asp-action="StopTimer" class="btn btn-danger" style="width: 300px">Stop met werken</button>
+        <br />
+        <br />
         <div class="row">
             <span asp-validation-for="TicketStatus">Status</span>
             <div class="col-sm-3">
@@ -47,6 +50,15 @@
             <div class="col-sm-3">
                 <select asp-for="TicketPriority" asp-items="Html.GetEnumSelectList<TicketPriorities>()" class="form-control" disabled>
                     <option selected="selected" value="">@TicketPriorities.Gemiddeld</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <span asp-validation-for="TicketLevel">Niveau</span>
+            <div class="col-sm-3">
+                <select asp-for="TicketLevel" asp-items="Html.GetEnumSelectList<TicketLevels>()" class="form-control" disabled>
+                    <option selected="selected" value="">@TicketLevels.Simpel</option>
                 </select>
             </div>
         </div>

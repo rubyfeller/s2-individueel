@@ -15,6 +15,7 @@ namespace LOGIC.DTO_s
         public TicketCategories TicketCategory { get; set; }
         public TicketPriorities TicketPriority { get; set; }
         public TicketStatuses TicketStatus { get; set; }
+        public TicketLevels TicketLevel { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
 
         public enum TicketCategories
@@ -36,6 +37,12 @@ namespace LOGIC.DTO_s
             Open,
             InBehandeling,
             Gesloten
+        }
+        public enum TicketLevels
+        {
+            Moeilijk,
+            Gemiddeld,
+            Simpel
         }
     }
 }

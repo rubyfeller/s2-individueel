@@ -54,6 +54,15 @@
             </div>
         </div>
         <br />
+        <div class="row">
+            <span asp-validation-for="TicketCategory">Niveau</span>
+            <div class="col-sm-3">
+                <select asp-for="TicketLevel" asp-items="Html.GetEnumSelectList<TicketLevels>()" class="form-control" disabled>
+                    <option selected="selected" value="">@TicketLevels.Gemiddeld</option>
+                </select>
+            </div>
+        </div>
+        <br />
         <button type="submit" class="btn btn-danger" style="width: 150px">Ticket verwijderen</button>
         <a asp-controller="Ticket" asp-action="Index" class="btn btn-secondary" style="width: 150px">Terug naar overzicht</a>
     </div>

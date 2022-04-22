@@ -69,6 +69,7 @@ namespace TicketSystemWeb.Controllers
                     TicketCategory = (TicketViewModel.TicketCategories)tickets.TicketCategory,
                     TicketPriority = (TicketViewModel.TicketPriorities)tickets.TicketPriority,
                     TicketStatus = (TicketViewModel.TicketStatuses)tickets.TicketStatus,
+                    TicketLevel = (TicketViewModel.TicketLevels)tickets.TicketLevel,
                     CreatedDateTime = tickets.CreatedDateTime,
                     Comments = (List<LOGIC.Entities.Comment>)tickets.Comments,
                 };
@@ -102,6 +103,7 @@ namespace TicketSystemWeb.Controllers
             }
             return newDeviceList;
         }
+
         //GET
         public IActionResult Create()
         {
@@ -223,6 +225,7 @@ namespace TicketSystemWeb.Controllers
                     TicketCategory = (TicketDTO.TicketCategories)(int)obj.TicketCategory,
                     TicketPriority = (TicketDTO.TicketPriorities)(int)obj.TicketPriority,
                     TicketStatus = (TicketDTO.TicketStatuses)(int)obj.TicketStatus,
+                    TicketLevel = (TicketDTO.TicketLevels)(int)obj.TicketLevel,
                     CreatedDateTime = obj.CreatedDateTime,
                 };
                 var result = _ITicketLogic.UpdateTicket(ticketDto);

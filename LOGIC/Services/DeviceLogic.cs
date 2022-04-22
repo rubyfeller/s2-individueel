@@ -37,10 +37,10 @@ namespace LOGIC.DeviceLogic
             return devices;
         }
 
-        public List<Device> GetDevice(int deviceId)
+        public Device GetDevice(int deviceId)
         {
-            List<Device> specificDeviceList = _device.GetDevice(deviceId);
-            return specificDeviceList;
+            Device device = _device.GetDevice(deviceId);
+            return device;
         }
     }
 }

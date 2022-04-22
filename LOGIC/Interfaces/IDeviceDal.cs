@@ -9,6 +9,6 @@ namespace LOGIC.Interfaces
         Object UpdateDevice(DeviceDTO deviceDto);
         int DeleteDevice(int deviceId);
         List<Device> GetDevices();
-        List<Device> GetDevice(int deviceId);
+        Device GetDevice(int deviceId);
     }
 }
