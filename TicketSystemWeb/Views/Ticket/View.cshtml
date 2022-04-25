@@ -9,9 +9,6 @@
             <hr />
         </div>
         <div asp-validation-summary="All"></div>
-        <button asp-action="StopTimer" class="btn btn-danger" style="width: 300px">Stop met werken</button>
-        <br />
-        <br />
         <div class="row">
             <span asp-validation-for="TicketStatus">Status</span>
             <div class="col-sm-3">
@@ -96,12 +93,11 @@
         </div>
         <div class="mb-3">
             <label>Opmerking</label>
-            <textarea asp-for="CommentContent" placeholder="Vul hier je reactie in" class="form-control" rows="7"></textarea>
+            <textarea asp-for="CommentContent" required placeholder="Vul hier je reactie in" class="form-control" rows="7"></textarea>
             <input asp-for="TicketId" class="form-control" hidden>
             <br />
             <button type="submit" class="btn btn-success" style="width: 150px">Plaats reactie</button>
         </div>
-        <span asp-validation-for="CommentContent" class="text-danger"></span>
     </div>
 </form>
 @foreach (var obj in Model.Comments)

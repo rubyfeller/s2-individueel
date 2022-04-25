@@ -1,0 +1,30 @@
+﻿@using TicketSystemWeb.ViewModels
+@model EmployeeAccountViewModel
+
+@{
+    ViewData["Title"] = "Account - Inloggen";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Account - Inloggen </h2>
+            <p>Inloggen aan de hand van voornaam en wachtwoord</p>
+        </div>
+        <form method="post" asp-action="Login">
+            <div class="mb-3">
+                <label class="form-label">Voornaam</label>
+                <input asp-for="FirstName" type="text" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Wachtwoord</label>
+                <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input">
+                <label class="form-check-label">Onthoud gegevens</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Inloggen</button>
+        </form>
+    </div>
+</div>

@@ -33,12 +33,18 @@
             <th>
                 Details
             </th>
-            <th>
-                Bewerken
-            </th>
-            <th>
-                Verwijderen
-            </th>
+            @if (TempData.ContainsKey("employee") || TempData.ContainsKey("administrator"))
+            {
+                <th>
+                    Bewerken
+                </th>
+            }
+            @if (TempData.ContainsKey("employee") || TempData.ContainsKey("administrator"))
+            {
+                <th>
+                    Verwijderen
+                </th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -56,16 +62,22 @@
                         <a asp-controller="Device" asp-action="View" asp-route-deviceId="@obj.DeviceId" class="btn btn-primary"><i class="bi bi-eye-fill"></i>Details</a>
                     </div>
                 </td>
-                <td>
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Device" asp-action="Edit" asp-route-deviceId="@obj.DeviceId" class="btn btn-primary"><i class="bi bi-pen-fill"></i>Bewerken</a>
-                    </div>
-                </td>
-                <td>
-                    <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Device" asp-action="Delete" asp-route-deviceId="@obj.DeviceId" class="btn btn-primary"><i class="bi bi-trash-fill"></i>Verwijderen</a>
-                    </div>
-                </td>
+                @if (TempData.ContainsKey("employee") || TempData.ContainsKey("administrator"))
+                {
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Device" asp-action="Edit" asp-route-deviceId="@obj.DeviceId" class="btn btn-primary"><i class="bi bi-pen-fill"></i>Bewerken</a>
+                        </div>
+                    </td>
+                }
+                @if (TempData.ContainsKey("employee") || TempData.ContainsKey("administrator"))
+                {
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Device" asp-action="Delete" asp-route-deviceId="@obj.DeviceId" class="btn btn-primary"><i class="bi bi-trash-fill"></i>Verwijderen</a>
+                        </div>
+                    </td>
+                }
             </tr>
         }
     </tbody>
