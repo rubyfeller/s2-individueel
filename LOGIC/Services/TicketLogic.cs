@@ -13,8 +13,6 @@ namespace LOGIC.TicketLogic
         {
             _ticket = ticket;
         }
-        public Stopwatch timer = new Stopwatch();
-        public string elapsedTime;
 
         public Object AddTicket(TicketDTO ticketDto)
         {

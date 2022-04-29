@@ -29,10 +29,12 @@ namespace TicketSystemWeb
             services.AddScoped<ITicketDal, TicketFunctions>();
             services.AddScoped<ICommentDal, CommentFunctions>();
             services.AddScoped<ITicketDeviceCollectionDal, TicketDeviceCollectionFunction>();
+            services.AddScoped<IEmployeeDal, AccountFunctions>();
             services.AddScoped<ITicketLogic, TicketLogic>();
             services.AddScoped<IDeviceLogic, DeviceLogic>();
             services.AddScoped<ICommentLogic, CommentLogic>();
             services.AddScoped<ITicketDeviceCollectionLogic, TicketDeviceCollectionLogic>();
+            services.AddScoped<IEmployeeLogic, EmployeeLogic>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

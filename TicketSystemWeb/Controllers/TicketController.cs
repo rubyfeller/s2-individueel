@@ -23,7 +23,7 @@ namespace TicketSystemWeb.Controllers
         public List<TicketViewModel> TransferViewAll()
         {
             List<TicketViewModel> newTicketList = new();
-            TicketViewModel viewmodel = new TicketViewModel();
+            //TicketViewModel viewmodel = new TicketViewModel();
             var ticketList = _ITicketLogic.GetTickets();
 
             foreach (var tickets in ticketList)
