@@ -8,7 +8,7 @@ namespace LOGIC.Interfaces
         Object AddTicket(TicketDTO ticketDto);
         Object UpdateTicket(TicketDTO ticketDto);
         int DeleteTicket(int ticketid);
-        List<Ticket> GetTickets();
-        List<Ticket> GetTicket(int ticketid);
+        List<TicketDTO> GetTickets();
+        TicketDTO GetTicket(int ticketid);
     }
 }

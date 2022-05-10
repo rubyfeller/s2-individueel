@@ -9,6 +9,6 @@ namespace LOGIC.Interfaces
         Object UpdateTicket(TicketDTO ticketDto);
         Boolean DeleteTicket(int ticketid);
         List<Ticket> GetTickets();
-        List<Ticket> GetTicket(int ticketid);
+        Ticket GetTicket(int ticketid);
     }
 }

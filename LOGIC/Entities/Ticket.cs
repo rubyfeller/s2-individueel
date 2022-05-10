@@ -19,7 +19,7 @@ namespace LOGIC.Entities
         public TicketLevels TicketLevel { get; set; }
         [Required]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        public IEnumerable<Comment>? Comments { get; set; }
+        public List<Comment>? Comments { get; set; }
         public IEnumerable<Device>? Devices { get; set; }
         public enum TicketCategories
         {

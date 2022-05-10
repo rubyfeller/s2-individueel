@@ -17,6 +17,7 @@ namespace LOGIC.DTO_s
         public TicketStatuses TicketStatus { get; set; }
         public TicketLevels TicketLevel { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
+        public List<Comment> Comments { get; set; }
 
         public enum TicketCategories
         {

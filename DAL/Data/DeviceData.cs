@@ -8,7 +8,7 @@ using LOGIC.DTO_s;
 
 namespace DAL.Functions
 {
-    public class DeviceFunctions : IDeviceDal
+    public class DeviceData : IDeviceDal
     {
         private readonly DBCollection dbConnection = new DBCollection();
         Object deviceResult;
@@ -18,27 +18,19 @@ namespace DAL.Functions
         // Add a new device
         public Object AddDevice(DeviceDTO device)
         {
-            Device newDevice = new Device
-            {
-                DeviceName = device.DeviceName,
-                DeviceVersion = device.DeviceVersion,
-                Brand = device.Brand,
-                OsVersion = device.OsVersion,
-                SerialNumber = device.SerialNumber
-            };
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
                 using (SqlCommand command = new SqlCommand("INSERT INTO Devices (clientId, ticketId, deviceName, deviceVersion, brand, osVersion, serialNumber) VALUES (@ClientId, @TicketId, @DeviceName, @DeviceVersion, @Brand, @OsVersion, @SerialNumber)", connection))
                 {
-                    command.Parameters.AddWithValue("@ClientId", newDevice.ClientId ?? Convert.DBNull);
-                    command.Parameters.AddWithValue("@TicketId", newDevice.TicketId ?? Convert.DBNull);
-                    command.Parameters.AddWithValue("@DeviceName", newDevice.DeviceName);
-                    command.Parameters.AddWithValue("@DeviceVersion", newDevice.DeviceVersion);
-                    command.Parameters.AddWithValue("@Brand", newDevice.Brand);
-                    command.Parameters.AddWithValue("@OsVersion", newDevice.OsVersion);
-                    command.Parameters.AddWithValue("@SerialNumber", newDevice.SerialNumber);
+                    command.Parameters.AddWithValue("@ClientId", device.ClientId ?? Convert.DBNull);
+                    command.Parameters.AddWithValue("@TicketId", device.TicketId ?? Convert.DBNull);
+                    command.Parameters.AddWithValue("@DeviceName", device.DeviceName);
+                    command.Parameters.AddWithValue("@DeviceVersion", device.DeviceVersion);
+                    command.Parameters.AddWithValue("@Brand", device.Brand);
+                    command.Parameters.AddWithValue("@OsVersion", device.OsVersion);
+                    command.Parameters.AddWithValue("@SerialNumber", device.SerialNumber);
                     connection.Open();
                     deviceResult = command.ExecuteNonQuery();
                 }
@@ -47,7 +39,7 @@ namespace DAL.Functions
         }
 
         // Get all devices
-        public List<Device> GetDevices()
+        public List<DeviceDTO> GetDevices()
         {
             Device device = new Device();
             var connectionString = dbConnection.GetConnectionString();
@@ -57,7 +49,7 @@ namespace DAL.Functions
                 connection.Open();
                 DbCommand command = connection.CreateCommand();
                 command.CommandText = "SELECT * FROM Devices";
-                List<Device> deviceList = new();
+                List<DeviceDTO> deviceList = new();
                 using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -72,7 +64,7 @@ namespace DAL.Functions
                         device.Brand = reader.GetString("brand");
                         device.OsVersion = reader.GetString("osVersion");
                         device.SerialNumber = reader.GetString("serialNumber");
-                        deviceList.Add(new Device
+                        deviceList.Add(new DeviceDTO
                         {
                             ClientId = 0,
                             TicketId = 0,
@@ -92,9 +84,9 @@ namespace DAL.Functions
         }
 
         // Get specific device
-        public Device GetDevice(int deviceid)
+        public DeviceDTO GetDevice(int deviceid)
         {
-            Device device = new Device();
+            DeviceDTO device = new DeviceDTO();
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -120,7 +112,7 @@ namespace DAL.Functions
                             device.OsVersion = reader.GetString("osVersion");
                             device.SerialNumber = reader.GetString("serialNumber");
 
-                            Device newDevice = new Device
+                            DeviceDTO newDevice = new DeviceDTO
                             {
                                 ClientId = 0,
                                 TicketId = 0,

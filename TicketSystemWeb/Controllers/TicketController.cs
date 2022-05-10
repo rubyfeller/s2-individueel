@@ -49,35 +49,31 @@ namespace TicketSystemWeb.Controllers
             List<CommentViewModel> specificCommentList = new();
 
             TicketViewModel viewmodel = null;
-            var ticketList = _ITicketLogic.GetTicket(ticketid);
-            foreach (var comments in specificCommentList)
+            var ticket = _ITicketLogic.GetTicket(ticketid);
+            //foreach (var comments in specificCommentList)
+            //{
+            //    CommentViewModel currComment = new CommentViewModel
+            //    {
+            //        CommentId = comments.CommentId,
+            //        CommentContent = comments.CommentContent,
+            //    };
+            //    specificCommentList.Add(currComment);
+            //}
+            TicketViewModel currTicket = new TicketViewModel
             {
-                CommentViewModel currComment = new CommentViewModel
-                {
-                    CommentId = comments.CommentId,
-                    CommentContent = comments.CommentContent,
-                };
-                specificCommentList.Add(currComment);
-            }
-            foreach (var tickets in ticketList)
-            {
-                TicketViewModel currTicket = new TicketViewModel
-                {
-                    TicketId = tickets.TicketId,
-                    TicketSubject = tickets.TicketSubject,
-                    TicketContent = tickets.TicketContent,
-                    TicketCategory = (TicketViewModel.TicketCategories)tickets.TicketCategory,
-                    TicketPriority = (TicketViewModel.TicketPriorities)tickets.TicketPriority,
-                    TicketStatus = (TicketViewModel.TicketStatuses)tickets.TicketStatus,
-                    TicketLevel = (TicketViewModel.TicketLevels)tickets.TicketLevel,
-                    CreatedDateTime = tickets.CreatedDateTime,
-                    Comments = (List<LOGIC.Entities.Comment>)tickets.Comments,
-                };
+                TicketId = ticket.TicketId,
+                TicketSubject = ticket.TicketSubject,
+                TicketContent = ticket.TicketContent,
+                TicketCategory = (TicketViewModel.TicketCategories)ticket.TicketCategory,
+                TicketPriority = (TicketViewModel.TicketPriorities)ticket.TicketPriority,
+                TicketStatus = (TicketViewModel.TicketStatuses)ticket.TicketStatus,
+                TicketLevel = (TicketViewModel.TicketLevels)ticket.TicketLevel,
+                CreatedDateTime = ticket.CreatedDateTime,
+                Comments = (List<LOGIC.Entities.Comment>)ticket.Comments,
+            };
+            newTicketList.Add(currTicket);
 
-                newTicketList.Add(currTicket);
-
-                viewmodel = currTicket;
-            }
+            viewmodel = currTicket;
             return viewmodel;
         }
 

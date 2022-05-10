@@ -33,13 +33,41 @@ namespace LOGIC.DeviceLogic
 
         public List<Device> GetDevices()
         {
-            List<Device> devices = _device.GetDevices();
+            List<DeviceDTO> devicesDTO = _device.GetDevices();
+            List<Device> devices = new();
+
+            foreach (var device in devicesDTO)
+            {
+                devices.Add(new Device
+                {
+                    DeviceId = device.DeviceId,
+                    ClientId = device.ClientId,
+                    TicketId = device.TicketId,
+                    DeviceName = device.DeviceName,
+                    DeviceVersion = device.DeviceVersion,
+                    Brand = device.Brand,
+                    OsVersion = device.OsVersion,
+                    SerialNumber = device.SerialNumber,
+                });
+            }
             return devices;
         }
 
         public Device GetDevice(int deviceId)
         {
-            Device device = _device.GetDevice(deviceId);
+
+            DeviceDTO specificDevice = _device.GetDevice(deviceId);
+            Device device = new Device()
+            {
+                DeviceId = specificDevice.DeviceId,
+                ClientId = specificDevice.ClientId,
+                TicketId = specificDevice.TicketId,
+                DeviceName = specificDevice.DeviceName,
+                DeviceVersion = specificDevice.DeviceVersion,
+                Brand = specificDevice.Brand,
+                OsVersion = specificDevice.OsVersion,
+                SerialNumber = specificDevice.SerialNumber,
+            };
             return device;
         }
     }

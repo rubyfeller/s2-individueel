@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Functions
 {
-    public class TicketDeviceCollectionFunction : ITicketDeviceCollectionDal
+    public class TicketDeviceCollectionData : ITicketDeviceCollectionDal
     {
         private readonly DBCollection dbConnection = new DBCollection();
 

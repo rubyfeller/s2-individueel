@@ -25,11 +25,11 @@ namespace TicketSystemWeb
         {
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
-            services.AddScoped<IDeviceDal, DeviceFunctions>();
-            services.AddScoped<ITicketDal, TicketFunctions>();
-            services.AddScoped<ICommentDal, CommentFunctions>();
-            services.AddScoped<ITicketDeviceCollectionDal, TicketDeviceCollectionFunction>();
-            services.AddScoped<IEmployeeDal, AccountFunctions>();
+            services.AddScoped<IDeviceDal, DeviceData>();
+            services.AddScoped<ITicketDal, TicketData>();
+            services.AddScoped<ICommentDal, CommentData>();
+            services.AddScoped<ITicketDeviceCollectionDal, TicketDeviceCollectionData>();
+            services.AddScoped<IEmployeeDal, AccountData>();
             services.AddScoped<ITicketLogic, TicketLogic>();
             services.AddScoped<IDeviceLogic, DeviceLogic>();
             services.AddScoped<ICommentLogic, CommentLogic>();

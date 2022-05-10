@@ -8,7 +8,7 @@ namespace LOGIC.Interfaces
         Object AddDevice(DeviceDTO deviceDto);
         Object UpdateDevice(DeviceDTO deviceDto);
         int DeleteDevice(int deviceId);
-        List<Device> GetDevices();
-        Device GetDevice(int deviceId);
+        List<DeviceDTO> GetDevices();
+        DeviceDTO GetDevice(int deviceId);
     }
 }

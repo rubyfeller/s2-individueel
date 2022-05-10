@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace DAL.Functions
 {
-    public class AccountFunctions : IEmployeeDal
+    public class AccountData : IEmployeeDal
     {
         private readonly DBCollection dbConnection = new DBCollection();
 
-        // Get all tickets
+        // Get all employees
         public List<Employee> GetEmployees()
         {
             Employee employee = new Employee();
