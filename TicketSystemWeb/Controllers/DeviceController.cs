@@ -1,4 +1,5 @@
 ﻿using LOGIC.DTO_s;
+using LOGIC.Entities;
 using LOGIC.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -14,11 +15,19 @@ namespace TicketSystemWeb.Controllers
             _IDeviceLogic = DeviceLogic;
         }
 
-        public List<DeviceViewModel> TransferViewAll()
+        public List<Device> GetDevices()
+        {
+            return _IDeviceLogic.GetDevices();
+        }
+
+        public Device GetDevice(int deviceid)
+        {
+            return _IDeviceLogic.GetDevice(deviceid);
+        }
+
+        public List<DeviceViewModel> TransferViewAll(List<Device> deviceList)
         {
             List<DeviceViewModel> newDeviceList = new();
-            DeviceViewModel viewmodel = new DeviceViewModel();
-            var deviceList = _IDeviceLogic.GetDevices();
 
             foreach (var devices in deviceList)
             {
@@ -35,22 +44,13 @@ namespace TicketSystemWeb.Controllers
 
                 });
             }
-            List<DeviceViewModel> data = new List<DeviceViewModel>()
-    {
-        new DeviceViewModel { DeviceName = "iPhone 12", DeviceVersion = "12" },
-    };
 
-            ViewBag.Data = data;
             return newDeviceList;
         }
 
-        public DeviceViewModel TransferViewSpecific(int deviceid)
+        public DeviceViewModel TransferViewSpecific(Device device)
         {
-            List<DeviceViewModel> newDeviceList = new();
-            DeviceViewModel viewmodel = null;
-            var device = _IDeviceLogic.GetDevice(deviceid);
-
-            DeviceViewModel currDevice = new DeviceViewModel
+            DeviceViewModel specificDevice = new DeviceViewModel
             {
                 DeviceId = device.DeviceId,
                 ClientId = 0,
@@ -61,17 +61,15 @@ namespace TicketSystemWeb.Controllers
                 OsVersion = device.OsVersion,
                 SerialNumber = device.SerialNumber,
             };
-            newDeviceList.Add(currDevice);
-            viewmodel = currDevice;
 
-            return viewmodel;
+            return specificDevice;
         }
 
 
         public IActionResult Index()
         {
-            var newDeviceList = TransferViewAll();
-            return View(newDeviceList);
+            List<DeviceViewModel> deviceList = TransferViewAll(GetDevices());
+            return View(deviceList);
         }
 
         //GET
@@ -112,6 +110,7 @@ namespace TicketSystemWeb.Controllers
                 }
                 return RedirectToAction("Index");
             }
+
             return View(obj);
         }
 
@@ -124,7 +123,7 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var specificDevice = TransferViewSpecific(deviceId);
+            DeviceViewModel specificDevice = TransferViewSpecific(GetDevice(deviceId));
 
             if (specificDevice == null)
             {
@@ -144,7 +143,7 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var specificDevice = TransferViewSpecific(deviceId);
+            DeviceViewModel specificDevice = TransferViewSpecific(GetDevice(deviceId));
 
 
             if (specificDevice == null)
@@ -200,7 +199,7 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var specificDevice = TransferViewSpecific(deviceId);
+            DeviceViewModel specificDevice = TransferViewSpecific(GetDevice(deviceId));
 
             if (specificDevice == null)
             {

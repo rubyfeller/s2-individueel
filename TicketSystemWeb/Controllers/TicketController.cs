@@ -1,4 +1,5 @@
 ﻿using LOGIC.DTO_s;
+using LOGIC.Entities;
 using LOGIC.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -11,21 +12,30 @@ namespace TicketSystemWeb.Controllers
     {
         private readonly ITicketLogic _ITicketLogic;
         private readonly ICommentLogic _ICommentLogic;
-        private readonly IDeviceLogic _IDeviceLogic;
 
-        public TicketController(ITicketLogic TicketLogic, ICommentLogic CommentLogic, IDeviceLogic DeviceLogic)
+        public TicketController(ITicketLogic TicketLogic, ICommentLogic CommentLogic)
         {
             _ITicketLogic = TicketLogic;
             _ICommentLogic = CommentLogic;
-            _IDeviceLogic = DeviceLogic;
         }
 
-        public List<TicketViewModel> TransferViewAll()
+        public List<Ticket> GetTickets()
+        {
+            List<Ticket> ticketList = _ITicketLogic.GetTickets();
+
+            return ticketList;
+        }
+
+        public Ticket GetSpecificTicket(int ticketid)
+        {
+            Ticket ticket = _ITicketLogic.GetTicket(ticketid);
+
+            return ticket;
+        }
+
+        public List<TicketViewModel> TransferListToViewModel(List<Ticket> ticketList)
         {
             List<TicketViewModel> newTicketList = new();
-            //TicketViewModel viewmodel = new TicketViewModel();
-            var ticketList = _ITicketLogic.GetTickets();
-
             foreach (var tickets in ticketList)
             {
                 newTicketList.Add(new TicketViewModel
@@ -43,22 +53,8 @@ namespace TicketSystemWeb.Controllers
             return newTicketList;
         }
 
-        public TicketViewModel TransferViewSpecfic(int ticketid)
+        public TicketViewModel TransferTicketToViewModel(Ticket ticket)
         {
-            List<TicketViewModel> newTicketList = new();
-            List<CommentViewModel> specificCommentList = new();
-
-            TicketViewModel viewmodel = null;
-            var ticket = _ITicketLogic.GetTicket(ticketid);
-            //foreach (var comments in specificCommentList)
-            //{
-            //    CommentViewModel currComment = new CommentViewModel
-            //    {
-            //        CommentId = comments.CommentId,
-            //        CommentContent = comments.CommentContent,
-            //    };
-            //    specificCommentList.Add(currComment);
-            //}
             TicketViewModel currTicket = new TicketViewModel
             {
                 TicketId = ticket.TicketId,
@@ -69,35 +65,16 @@ namespace TicketSystemWeb.Controllers
                 TicketStatus = (TicketViewModel.TicketStatuses)ticket.TicketStatus,
                 TicketLevel = (TicketViewModel.TicketLevels)ticket.TicketLevel,
                 CreatedDateTime = ticket.CreatedDateTime,
-                Comments = (List<LOGIC.Entities.Comment>)ticket.Comments,
+                Comments = (List<Comment>)ticket.Comments,
             };
-            newTicketList.Add(currTicket);
 
-            viewmodel = currTicket;
-            return viewmodel;
+            return currTicket;
         }
 
         public IActionResult Index()
         {
-            var newTicketList = TransferViewAll();
+            var newTicketList = TransferListToViewModel(GetTickets());
             return View(newTicketList);
-        }
-
-        public List<DeviceViewModel> BindList() // bind list of devices to dropdown
-        {
-            List<DeviceViewModel> newDeviceList = new();
-            DeviceViewModel viewmodel = new DeviceViewModel();
-            var deviceList = _IDeviceLogic.GetDevices();
-
-            foreach (var devices in deviceList)
-            {
-                newDeviceList.Add(new DeviceViewModel
-                {
-                    DeviceId = devices.DeviceId,
-                    DeviceName = devices.DeviceName,
-                });
-            }
-            return newDeviceList;
         }
 
         //GET
@@ -114,7 +91,7 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var specificTicket = TransferViewSpecfic(ticketId);
+            TicketViewModel specificTicket = TransferTicketToViewModel(GetSpecificTicket(ticketId));
 
             if (specificTicket == null)
             {
@@ -193,7 +170,7 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var specificTicket = TransferViewSpecfic(ticketId);
+            TicketViewModel specificTicket = TransferTicketToViewModel(GetSpecificTicket(ticketId));
 
 
             if (specificTicket == null)
@@ -247,7 +224,7 @@ namespace TicketSystemWeb.Controllers
                 return NotFound();
             }
 
-            var specificTicket = TransferViewSpecfic(ticketId);
+            TicketViewModel specificTicket = TransferTicketToViewModel(GetSpecificTicket(ticketId));
 
             if (specificTicket == null)
             {

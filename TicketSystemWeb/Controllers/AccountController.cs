@@ -1,4 +1,5 @@
-﻿using LOGIC.Interfaces;
+﻿using LOGIC.Entities;
+using LOGIC.Interfaces;
 using LOGIC.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,13 +19,16 @@ namespace TicketSystemWeb.Controllers
             return View();
         }
 
-        public List<EmployeeAccountViewModel> TransferViewAll()
+        public List<Employee> GetEmployees()
+        {
+            return _EmployeeLogic.GetEmployees();
+        }
+
+        public List<EmployeeAccountViewModel> TransferViewAll(List<Employee> employees)
         {
             List<EmployeeAccountViewModel> newEmployeeList = new();
-            //TicketViewModel viewmodel = new TicketViewModel();
-            var employeeList = _EmployeeLogic.GetEmployees();
 
-            foreach (var employee in employeeList)
+            foreach (var employee in employees)
             {
                 newEmployeeList.Add(new EmployeeAccountViewModel
                 {
@@ -41,8 +45,8 @@ namespace TicketSystemWeb.Controllers
         }
 
         public IActionResult Info()
-            {
-            var newEmployeeList = TransferViewAll();
+        {
+            List<EmployeeAccountViewModel> newEmployeeList = TransferViewAll(GetEmployees());
             return View(newEmployeeList);
         }
 

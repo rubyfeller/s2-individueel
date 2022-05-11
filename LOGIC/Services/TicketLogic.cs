@@ -1,7 +1,6 @@
 ﻿using LOGIC.DTO_s;
 using LOGIC.Entities;
 using LOGIC.Interfaces;
-using System.Diagnostics;
 
 namespace LOGIC.TicketLogic
 {

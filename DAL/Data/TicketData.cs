@@ -14,7 +14,7 @@ namespace DAL.Functions
         int ticketResult;
         int updateTicketResult;
         int deleteTicketResult;
-        CommentData commentData = new CommentData();
+
         // Add a new ticket
         public Object AddTicket(TicketDTO ticketDto)
         {

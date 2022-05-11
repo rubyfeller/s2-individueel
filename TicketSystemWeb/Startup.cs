@@ -28,12 +28,10 @@ namespace TicketSystemWeb
             services.AddScoped<IDeviceDal, DeviceData>();
             services.AddScoped<ITicketDal, TicketData>();
             services.AddScoped<ICommentDal, CommentData>();
-            services.AddScoped<ITicketDeviceCollectionDal, TicketDeviceCollectionData>();
             services.AddScoped<IEmployeeDal, AccountData>();
             services.AddScoped<ITicketLogic, TicketLogic>();
             services.AddScoped<IDeviceLogic, DeviceLogic>();
             services.AddScoped<ICommentLogic, CommentLogic>();
-            services.AddScoped<ITicketDeviceCollectionLogic, TicketDeviceCollectionLogic>();
             services.AddScoped<IEmployeeLogic, EmployeeLogic>();
         }
 
