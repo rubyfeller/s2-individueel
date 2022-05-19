@@ -16,7 +16,7 @@ namespace DAL.Functions
         int deleteTicketResult;
 
         // Add a new ticket
-        public Object AddTicket(TicketDTO ticketDto)
+        public int AddTicket(TicketDTO ticketDto)
         {
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -114,7 +114,7 @@ namespace DAL.Functions
         }
 
         // Update ticket
-        public Object UpdateTicket(TicketDTO ticketDto)
+        public int UpdateTicket(TicketDTO ticketDto)
         {
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))

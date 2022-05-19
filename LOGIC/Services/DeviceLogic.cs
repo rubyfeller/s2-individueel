@@ -11,16 +11,16 @@ namespace LOGIC.DeviceLogic
         {
             _device = device;
         }
-        public Object AddDevice(DeviceDTO deviceDto)
+        public int AddDevice(DeviceDTO deviceDto)
         {
-            Object result = _device.AddDevice(deviceDto);
+            int result = _device.AddDevice(deviceDto);
 
             return result;
         }
-
-        public Object UpdateDevice(DeviceDTO deviceDto)
+        
+        public int UpdateDevice(DeviceDTO deviceDto)
         {
-            Object updateDeviceResult = _device.UpdateDevice(deviceDto);
+            int updateDeviceResult = _device.UpdateDevice(deviceDto);
 
             return updateDeviceResult;
         }

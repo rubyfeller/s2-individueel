@@ -31,9 +31,9 @@ namespace LOGIC
             return comments;
         }
 
-        public Object AddComment(CommentDTO commentDto)
+        public int AddComment(CommentDTO commentDto)
         {
-            Object result = _comment.AddComment(commentDto);
+            int result = _comment.AddComment(commentDto);
 
             return result;
         }

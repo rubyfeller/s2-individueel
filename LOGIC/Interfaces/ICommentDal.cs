@@ -6,6 +6,6 @@ namespace LOGIC.Interfaces
     {
         List<CommentDTO> GetComments(int ticketid);
         int DeleteComment(int commentid);
-        Object AddComment(CommentDTO commentDto);
+        int AddComment(CommentDTO commentDto);
     }
 }

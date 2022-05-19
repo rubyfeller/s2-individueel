@@ -41,15 +41,18 @@
                 <span asp-validation-for="TicketPriority" class="text-danger"></span>
             </div>
         </div>
-        <div class="row">
+@*        <div class="row">
             <span>Kies betrokken apparaten</span>
             <div class="col-sm-3">
                 <select class="js-example-basic-single" name="state">
-                    <option>Test</option>
-                    <option>Test 2</option>
+                    @foreach (var obj in Model.Devices)
+                    {
+                        <option>@obj.DeviceId</option>
+                        <option>@obj.DeviceName</option>
+                    }
                 </select>
             </div>
-        </div>
+        </div>*@
     </div>
     <br />
     <button type="submit" class="btn btn-primary" style="width: 150px">Ticket aanmaken</button>

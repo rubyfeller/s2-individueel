@@ -15,14 +15,14 @@ namespace LOGIC.TicketLogic
             _comment = comment;
         }
 
-        public Object AddTicket(TicketDTO ticketDto)
+        public int AddTicket(TicketDTO ticketDto)
         {
             var result = _ticket.AddTicket(ticketDto);
 
             return result;
         }
 
-        public Object UpdateTicket(TicketDTO ticketDto)
+        public int UpdateTicket(TicketDTO ticketDto)
         {
             var updateDeviceResult = _ticket.UpdateTicket(ticketDto);
 

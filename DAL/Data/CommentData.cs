@@ -10,7 +10,7 @@ namespace DAL.Functions
     public class CommentData : ICommentDal
     {
         readonly DBCollection dbConnection = new DBCollection();
-        Object commentResult;
+        int commentResult;
         int deleteCommentResult;
 
         // Get comments based on ticketid
@@ -51,7 +51,7 @@ namespace DAL.Functions
         }
 
         // Add a new comment
-        public Object AddComment(CommentDTO comment)
+        public int AddComment(CommentDTO comment)
         {
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))

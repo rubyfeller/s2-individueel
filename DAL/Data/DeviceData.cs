@@ -11,12 +11,12 @@ namespace DAL.Functions
     public class DeviceData : IDeviceDal
     {
         private readonly DBCollection dbConnection = new DBCollection();
-        Object deviceResult;
-        Object updateDeviceResult;
+        int deviceResult;
+        int updateDeviceResult;
         int deleteDeviceResult;
 
         // Add a new device
-        public Object AddDevice(DeviceDTO device)
+        public int AddDevice(DeviceDTO device)
         {
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -134,7 +134,7 @@ namespace DAL.Functions
         }
 
         // Update device
-        public Object UpdateDevice(DeviceDTO device)
+        public int UpdateDevice(DeviceDTO device)
         {
             Device newDevice = new Device
             {
