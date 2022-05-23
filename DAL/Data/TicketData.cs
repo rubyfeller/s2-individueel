@@ -36,15 +36,16 @@ namespace DAL.Functions
         }
 
         // Get all tickets
-        public List<TicketDTO> GetTickets()
+        public List<TicketDTO> GetTickets(int ticketLevel)
         {
             Ticket ticket = new Ticket();
             var connectionString = dbConnection.GetConnectionString();
             using SqlConnection connection = new SqlConnection(connectionString);
             connection.ConnectionString = connectionString;
             connection.Open();
-            DbCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM Tickets ORDER BY ticketPriority DESC, CreatedDateTime";
+            ticket.TicketLevel = (Ticket.TicketLevels)ticketLevel;
+            using SqlCommand command = new SqlCommand("SELECT * FROM Tickets WHERE ticketLevel = @TicketLevel ORDER BY ticketPriority DESC, CreatedDateTime", connection);
+            command.Parameters.AddWithValue("@TicketLevel", ticket.TicketLevel);
             List<TicketDTO> ticketList = new();
             using (DbDataReader reader = command.ExecuteReader())
             {
@@ -57,6 +58,7 @@ namespace DAL.Functions
                     ticket.TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
                     ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
                     ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
+                    ticket.TicketLevel = (Ticket.TicketLevels)Convert.ToInt32(reader.GetInt32("ticketLevel"));
                     ticketList.Add(new TicketDTO
                     {
                         TicketId = Convert.ToInt32(reader.GetInt32("TicketId")),
@@ -66,6 +68,7 @@ namespace DAL.Functions
                         TicketCategory = (TicketDTO.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
                         TicketPriority = (TicketDTO.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
                         TicketStatus = (TicketDTO.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
+                        TicketLevel = (TicketDTO.TicketLevels)Convert.ToInt32(reader.GetInt32("ticketLevel")),
                     });
                 }
             }

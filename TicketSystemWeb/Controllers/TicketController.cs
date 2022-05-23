@@ -21,8 +21,29 @@ namespace TicketSystemWeb.Controllers
 
         public List<Ticket> GetTickets()
         {
-            List<Ticket> ticketList = _ITicketLogic.GetTickets();
+            int ticketLevel = 0;
 
+            if (TempData.ContainsKey("employee") || TempData.ContainsKey("administrator"))
+            {
+                if (TempData.ContainsKey("employee"))
+                {
+                    ticketLevel = (int)TempData["employee"];
+                }
+
+                if (TempData.ContainsKey("administrator"))
+                {
+                    ticketLevel = (int)TempData["administrator"];
+                }
+            }
+
+            if (TempData == null)
+            {
+                ticketLevel = 0;
+            }
+
+            TempData.Keep("employee");
+            TempData.Keep("administrator");
+            List<Ticket> ticketList = _ITicketLogic.GetTickets(ticketLevel);
             return ticketList;
         }
 
@@ -33,7 +54,7 @@ namespace TicketSystemWeb.Controllers
             return ticket;
         }
 
-        public List<TicketViewModel> TransferListToViewModel(List<Ticket> ticketList)
+        public List<TicketViewModel> TransferTicketListToViewModel(List<Ticket> ticketList)
         {
             List<TicketViewModel> newTicketList = new();
             foreach (var tickets in ticketList)
@@ -47,7 +68,6 @@ namespace TicketSystemWeb.Controllers
                     TicketPriority = (TicketViewModel.TicketPriorities)tickets.TicketPriority,
                     TicketStatus = (TicketViewModel.TicketStatuses)tickets.TicketStatus,
                     CreatedDateTime = tickets.CreatedDateTime,
-
                 });
             }
             return newTicketList;
@@ -73,8 +93,16 @@ namespace TicketSystemWeb.Controllers
 
         public IActionResult Index()
         {
-            var newTicketList = TransferListToViewModel(GetTickets());
-            return View(newTicketList);
+            var newTicketList = TransferTicketListToViewModel(GetTickets());
+            if (newTicketList != null)
+            {
+                return View(newTicketList);
+            }
+
+            else
+            {
+                return View();
+            }
         }
 
         //GET

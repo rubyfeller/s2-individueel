@@ -35,9 +35,9 @@ namespace LOGIC.TicketLogic
             return deleteDeviceResult > 0;
         }
 
-        public List<Ticket> GetTickets()
+        public List<Ticket> GetTickets(int ticketLevel)
         {
-            List<TicketDTO> ticketsDto = _ticket.GetTickets();
+            List<TicketDTO> ticketsDto = _ticket.GetTickets(ticketLevel);
             List<Ticket> tickets = new();
 
             foreach (var ticket in ticketsDto)

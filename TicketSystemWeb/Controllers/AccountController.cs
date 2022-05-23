@@ -68,7 +68,7 @@ namespace TicketSystemWeb.Controllers
                 }
                 if (obj.Password == "test2")
                 {
-                    TempData["administrator"] = 1;
+                    TempData["administrator"] = 2;
                     TempData["success"] = "Succesvol ingelogd als administrator";
                     return RedirectToAction("Index", "Home");
                 }

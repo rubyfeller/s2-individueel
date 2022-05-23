@@ -3,6 +3,7 @@ using LOGIC.DTO_s;
 using LOGIC.Entities;
 using LOGIC.Interfaces;
 using LOGIC.TicketLogic;
+using Moq;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -79,13 +80,13 @@ namespace UnitTests
         {
             // Arrange
             using var mock = AutoMock.GetLoose();
-            mock.Mock<ITicketDal>().Setup(x => x.GetTickets()).Returns(GetSampleTickets);
+            mock.Mock<ITicketDal>().Setup(x => x.GetTickets(0)).Returns(GetSampleTickets);
 
             var logicMock = mock.Create<TicketLogic>();
 
             var expectedResult = GetSampleTickets();
 
-            var actualResult = logicMock.GetTickets();
+            var actualResult = logicMock.GetTickets(0);
 
             // Assert
             Assert.True(actualResult != null);
@@ -120,7 +121,7 @@ namespace UnitTests
             logicMock.AddTicket(ticket);
 
             // Assert
-            mock.Mock<ITicketDal>().Verify(x => x.AddTicket(ticket));
+            mock.Mock<ITicketDal>().Verify(x => x.AddTicket(ticket), Times.Once);
         }
 
         [Fact]
@@ -147,7 +148,7 @@ namespace UnitTests
             logicMock.UpdateTicket(ticket);
 
             // Assert
-            mock.Mock<ITicketDal>().Verify(x => x.UpdateTicket(ticket));
+            mock.Mock<ITicketDal>().Verify(x => x.UpdateTicket(ticket), Times.Once);
         }
 
         [Fact]
@@ -163,8 +164,9 @@ namespace UnitTests
             logicMock.DeleteTicket(ticketId);
 
             // Assert
-            mock.Mock<ITicketDal>().Verify(x => x.DeleteTicket(ticketId));
+            mock.Mock<ITicketDal>().Verify(x => x.DeleteTicket(ticketId), Times.Once);
         }
+
         [Fact]
         public void TestGetTicket()
         {

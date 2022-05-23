@@ -132,7 +132,7 @@ namespace UnitTests
             logicMock.UpdateDevice(device);
 
             // Assert
-            mock.Mock<IDeviceDal>().Verify(x => x.UpdateDevice(device));
+            mock.Mock<IDeviceDal>().Verify(x => x.UpdateDevice(device), Times.Once);
         }
 
         [Fact]
@@ -148,8 +148,9 @@ namespace UnitTests
             logicMock.DeleteDevice(deviceId);
 
             // Assert
-            mock.Mock<IDeviceDal>().Verify(x => x.DeleteDevice(deviceId));
+            mock.Mock<IDeviceDal>().Verify(x => x.DeleteDevice(deviceId), Times.Once);
         }
+
         [Fact]
         public void TestGetDevice()
         {

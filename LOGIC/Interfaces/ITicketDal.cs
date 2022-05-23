@@ -7,7 +7,7 @@ namespace LOGIC.Interfaces
         int AddTicket(TicketDTO ticketDto);
         int UpdateTicket(TicketDTO ticketDto);
         int DeleteTicket(int ticketid);
-        List<TicketDTO> GetTickets();
+        List<TicketDTO> GetTickets(int ticketLevel);
         TicketDTO GetTicket(int ticketid);
     }
 }
