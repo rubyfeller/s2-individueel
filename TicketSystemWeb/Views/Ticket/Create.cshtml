@@ -41,16 +41,11 @@
                 <span asp-validation-for="TicketPriority" class="text-danger"></span>
             </div>
         </div>
+        <br />
         <div class="row">
             <span>Kies betrokken apparaten</span>
             <div class="col-sm-3">
-                <select class="js-example-basic-single" name="state">
-                    @foreach (var device in Model.Devices)
-                    {
-                        <option>Samsung Galaxy S8</option>
-                        <option>Dell XPS 15 9570</option>
-                    }
-                </select>
+                @Html.DropDownListFor(n => n.DeviceId, new SelectList(ViewBag.Devices, "DeviceId", "DeviceName"), "Kies een apparaat", htmlAttributes: new { @class = "form-control" })
             </div>
         </div>
     </div>

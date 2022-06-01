@@ -16,6 +16,26 @@
                     <option selected="selected" value="">@TicketStatuses.Gesloten</option>
                 </select>
             </div>
+            <br />
+            <br />
+            <div class="row">
+                <span>Ticket aangemaakt door</span>
+                <div class="col-sm-3">
+                    <select class="form-control" disabled>
+                        <option>@Model.Client.FirstName @Model.Client.LastName</option>
+                    </select>
+                </div>
+                <br />
+                <br />
+                <div class="row">
+                    <span>Gekoppelde medewerker</span>
+                    <div class="col-sm-3">
+                        <select class="form-control" disabled>
+                            <option>@Model.Employee.FirstName @Model.Employee.LastName</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
         <br />
         <div class="mb-3">
@@ -66,23 +86,23 @@
 <br />
 <div class="border p-4 mt-4">
     <div class="row pb-2">
-        <h2 class="text-primary">Betrokken apparaten</h2>
-        <ol class="list-group list-group-numbered">
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">iPhone 12</div>
-                    Merk: Apple, Versie: 11, Serienummer: 123456, OS: iOS 11.0
-                </div>
-                <span class="badge bg-primary rounded-pill">Toegevoegd op: 12-04-2022</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                    <div class="fw-bold">iPhone 12</div>
-                    Merk: Apple, Versie: 11, Serienummer: 123456, OS: iOS 11.0
-                </div>
-                <span class="badge bg-primary rounded-pill">Toegevoegd op: 12-04-2022</span>
-            </li>
-        </ol>
+        <h2 class="text-primary">Betrokken apparaat</h2>
+        @if (@Model.Device.DeviceId != 0)
+        {
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">@Model.Device.DeviceName</div>
+                        Merk: @Model.Device.Brand, Apparaatversie: @Model.Device.DeviceVersion, Merk: @Model.Device.Brand, OS versie: @Model.Device.OsVersion, Serienummer: @Model.Device.SerialNumber
+                    </div>
+                    @*<span class="badge bg-primary rounded-pill">Toegevoegd op: 12-04-2022</span>*@
+                </li>
+            </ol>
+        }
+        else
+        {
+            <p>Geen apparaat gekoppeld aan ticket</p>
+        }
     </div>
 </div>
 <form method="post" asp-action="CreateComment" asp-route-id="@Model.TicketId">

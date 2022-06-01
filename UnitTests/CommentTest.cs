@@ -1,6 +1,7 @@
 using Autofac.Extras.Moq;
 using LOGIC;
 using LOGIC.DTO_s;
+using LOGIC.Entities;
 using LOGIC.Interfaces;
 using Moq;
 using System;
@@ -32,6 +33,26 @@ namespace UnitTests
                 },
             };
             return comments;
+        }
+
+        [Fact]
+        public void TestIsCommentDTOTransferedToLogicObject()
+        {
+            // Arrange
+            using var mock = AutoMock.GetLoose();
+            mock.Mock<ICommentDal>().Setup(x => x.GetComments(0)).Returns(GetSampleComments());
+
+            var logicInstance = mock.Create<CommentLogic>();
+
+            var expectedResult = GetSampleComments();
+
+            // Act
+            var actualResult = logicInstance.GetComments(0);
+
+            // Assert
+            Assert.True(actualResult != null);
+            Assert.IsType<Comment>(actualResult[0]);
+            Assert.Equal(2, expectedResult.Count);
         }
 
         [Fact]

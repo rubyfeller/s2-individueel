@@ -60,6 +60,26 @@ namespace UnitTests
         }
 
         [Fact]
+        public void TestIsDeviceDTOTransferedToLogicObject()
+        {
+            // Arrange
+            using var mock = AutoMock.GetLoose();
+            mock.Mock<IDeviceDal>().Setup(x => x.GetDevices()).Returns(GetSampleDevices());
+
+            var logicInstance = mock.Create<DeviceLogic>();
+
+            var expectedResult = GetSampleDevices();
+
+            // Act
+            var actualResult = logicInstance.GetDevices();
+
+            // Assert
+            Assert.True(actualResult != null);
+            Assert.IsType<Device>(actualResult[0]);
+            Assert.Equal(2, expectedResult.Count);
+        }
+
+        [Fact]
         public void TestGetDevices()
         {
             // Arrange

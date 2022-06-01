@@ -1,10 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace LOGIC.Entities
+namespace LOGIC.DTO_s
 {
-    public class Employee
+    public class EmployeeDTO
     {
-        [Key]
         public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

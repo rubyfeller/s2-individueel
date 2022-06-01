@@ -59,17 +59,23 @@ namespace TicketSystemWeb.Controllers
             if (ModelState.IsValid)
             {
 
-                if (obj.Password == "test")
+                if (obj.Password == "medewerker")
                 {
                     TempData["employee"] = 1;
                     TempData["success"] = "Succesvol ingelogd als medewerker";
                     return RedirectToAction("Index", "Home");
 
                 }
-                if (obj.Password == "test2")
+                if (obj.Password == "administrator")
                 {
                     TempData["administrator"] = 2;
                     TempData["success"] = "Succesvol ingelogd als administrator";
+                    return RedirectToAction("Index", "Home");
+                }
+                if (obj.Password == "klant")
+                {
+                    TempData["klant"] = 3;
+                    TempData["success"] = "Succesvol ingelogd als klant";
                     return RedirectToAction("Index", "Home");
                 }
                 else

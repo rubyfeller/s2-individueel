@@ -10,6 +10,7 @@ namespace TicketSystemWeb.Models
     {
         [Key]
         public int TicketId { get; set; }
+        public int DeviceId { get; set; }
         [Required(ErrorMessage = "Het invullen van een onderwerp is verplicht")]
         [DisplayName("Onderwerp")]
         public string TicketSubject { get; set; }
@@ -23,10 +24,15 @@ namespace TicketSystemWeb.Models
         [Required(ErrorMessage = "Het invullen van een status is verplicht")]
         public TicketStatuses TicketStatus { get; set; }
         public TicketLevels TicketLevel { get; set; }
+        public int ResponsibleEmployee { get; set; }
+        public int ClientId { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
         public List<Comment>? Comments { get; set; }
         public string CommentContent { get; set; }
-        public List<Device>? Devices { get; set; }
+        public Device? Device { get; set; }
+        public Employee? Employee { get; set; }
+        public List<Employee>? Employees { get; set; }
+        public Client? Client { get; set; }
         public enum TicketCategories
         {
             Windows,

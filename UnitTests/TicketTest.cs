@@ -12,6 +12,19 @@ namespace UnitTests
 {
     public class TicketTest
     {
+        private readonly Mock<ITicketDal> _ticketDal = new Mock<ITicketDal>();
+        private readonly Mock<IEmployeeDal> _employeeDal = new Mock<IEmployeeDal>();
+        private readonly Mock<ICommentDal> _commentDal = new Mock<ICommentDal>();
+        private readonly Mock<IClientDal> _clientDal = new Mock<IClientDal>();
+        private readonly Mock<IDeviceDal> _deviceDal = new Mock<IDeviceDal>();
+
+        private readonly TicketLogic _TicketLogic;
+
+        public TicketTest()
+        {
+            _TicketLogic = new TicketLogic(_ticketDal.Object, _commentDal.Object, _employeeDal.Object, _clientDal.Object, _deviceDal.Object);
+        }
+
         private List<TicketDTO> GetSampleTickets()
         {
             List<TicketDTO> tickets = new List<TicketDTO>
@@ -48,12 +61,15 @@ namespace UnitTests
             TicketDTO ticket = new TicketDTO
             {
                 TicketId = 1064,
+                DeviceId = 1025,
                 TicketSubject = "Test",
                 TicketContent = "Test ticket",
                 TicketCategory = (TicketDTO.TicketCategories)1,
                 TicketPriority = (TicketDTO.TicketPriorities)2,
                 TicketStatus = (TicketDTO.TicketStatuses)1,
                 TicketLevel = (TicketDTO.TicketLevels)1,
+                ResponsibleEmployee = 1,
+                ClientId = 2,
                 CreatedDateTime = DateTime.Now,
             };
 
@@ -75,53 +91,115 @@ namespace UnitTests
             return comments;
         }
 
+        private DeviceDTO GetSampleDevice()
+        {
+            DeviceDTO device = new DeviceDTO
+            {
+                DeviceId = 1025,
+                ClientId = null,
+                TicketId = null,
+                DeviceName = "Samsung Galaxy S9",
+                DeviceVersion = "S9",
+                Brand = "Samsung",
+                OsVersion = "9",
+                SerialNumber = "123456",
+            };
+
+            return device;
+        }
+
+        private EmployeeDTO GetSampleEmployee()
+        {
+            EmployeeDTO employee = new EmployeeDTO
+            {
+                EmployeeId = 1025,
+                FirstName = "Ruby",
+                LastName = "Feller",
+                Password = "123",
+                Email = "ruby.feller@student.fontys.nl",
+                CompetenceLevel = 3,
+                Role = 3,
+            };
+
+            return employee;
+        }
+
+        private ClientDTO GetSampleClient()
+        {
+            ClientDTO client = new ClientDTO
+            {
+                ClientId = 1025,
+                FirstName = "Ruby",
+                LastName = "Feller",
+                Password = "123",
+                Email = "ruby.feller@student.fontys.nl",
+            };
+
+            return client;
+        }
+
+        private List<EmployeeDTO> GetSampleEmployees()
+        {
+            List<EmployeeDTO> employees = new List<EmployeeDTO>();
+            {
+                new EmployeeDTO
+                {
+                    EmployeeId = 1025,
+                    FirstName = "Ruby",
+                    LastName = "Feller",
+                    Password = "123",
+                    Email = "ruby.feller@student.fontys.nl",
+                    CompetenceLevel = 3,
+                    Role = 3,
+                };
+
+                return employees;
+            }
+        }
+
         [Fact]
-        public void TestGetTickets()
+        public void TestIsTicketDTOTransferedToLogicObject()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
-            mock.Mock<ITicketDal>().Setup(x => x.GetTickets(0)).Returns(GetSampleTickets);
+            //mock.Mock<ITicketDal>().Setup(x => x.GetTickets(0)).Returns(GetSampleTickets());
+            _ticketDal.Setup(x => x.GetTickets(0)).Returns(GetSampleTickets());
 
-            var logicMock = mock.Create<TicketLogic>();
+            //var logicInstance = mock.Create<TicketLogic>();
 
             var expectedResult = GetSampleTickets();
 
-            var actualResult = logicMock.GetTickets(0);
+            // Act
+            var actualResult = _TicketLogic.GetTickets(0);
 
             // Assert
             Assert.True(actualResult != null);
-
+            Assert.IsType<Ticket>(actualResult[0]);
             for (int i = 0; i < expectedResult.Count; i++)
             {
+                Assert.Equal(expectedResult[i].TicketId, actualResult[i].TicketId);
                 Assert.Equal(expectedResult[i].TicketContent, actualResult[i].TicketContent);
+                Assert.Equal((int)expectedResult[i].TicketCategory, (int)actualResult[i].TicketCategory);
+                Assert.Equal((int)expectedResult[i].TicketPriority, (int)actualResult[i].TicketPriority);
+                Assert.Equal((int)expectedResult[i].TicketStatus, (int)actualResult[i].TicketStatus);
+                Assert.Equal((int)expectedResult[i].TicketLevel, (int)actualResult[i].TicketLevel);
+                Assert.Equal(expectedResult[i].ResponsibleEmployee, actualResult[i].ResponsibleEmployee);
+                Assert.Equal(expectedResult[i].ClientId, actualResult[i].ClientId);
             }
+            Assert.Equal(2, expectedResult.Count);
         }
 
         [Fact]
         public void TestAddTicket()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
-            var ticket = new TicketDTO
-            {
-                TicketId = 1,
-                TicketSubject = "Test",
-                TicketContent = "Test ticket",
-                TicketCategory = (TicketDTO.TicketCategories)1,
-                TicketPriority = (TicketDTO.TicketPriorities)2,
-                TicketStatus = (TicketDTO.TicketStatuses)1,
-                TicketLevel = (TicketDTO.TicketLevels)1,
-                CreatedDateTime = DateTime.Now,
-            };
-
-            mock.Mock<ITicketDal>().Setup(x => x.AddTicket(ticket));
-            var logicMock = mock.Create<TicketLogic>();
+            var ticket = GetSampleTicket();
+            _ticketDal.Setup(x => x.AddTicket(ticket));
 
             // Act
-            logicMock.AddTicket(ticket);
+            _TicketLogic.AddTicket(ticket);
 
             // Assert
-            mock.Mock<ITicketDal>().Verify(x => x.AddTicket(ticket), Times.Once);
+            _ticketDal.Verify(x => x.AddTicket(ticket), Times.Once);
         }
 
         [Fact]
@@ -140,52 +218,54 @@ namespace UnitTests
                 TicketLevel = (TicketDTO.TicketLevels)1,
                 CreatedDateTime = DateTime.Now,
             };
-
-            mock.Mock<ITicketDal>().Setup(x => x.UpdateTicket(ticket));
-            var logicMock = mock.Create<TicketLogic>();
+            _ticketDal.Setup(x => x.UpdateTicket(ticket));
 
             // Act
-            logicMock.UpdateTicket(ticket);
+            _TicketLogic.UpdateTicket(ticket);
 
             // Assert
-            mock.Mock<ITicketDal>().Verify(x => x.UpdateTicket(ticket), Times.Once);
+            _ticketDal.Verify(x => x.UpdateTicket(ticket), Times.Once);
         }
 
         [Fact]
         public void TestDeleteTicket()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
             int ticketId = 1;
-            mock.Mock<ITicketDal>().Setup(x => x.DeleteTicket(ticketId));
-            var logicMock = mock.Create<TicketLogic>();
+            _ticketDal.Setup(x => x.DeleteTicket(ticketId));
 
             // Act
-            logicMock.DeleteTicket(ticketId);
+            _TicketLogic.DeleteTicket(ticketId);
 
             // Assert
-            mock.Mock<ITicketDal>().Verify(x => x.DeleteTicket(ticketId), Times.Once);
+            _ticketDal.Verify(x => x.DeleteTicket(ticketId), Times.Once);
         }
 
         [Fact]
         public void TestGetTicket()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
             var ticket = GetSampleTicket();
-            mock.Mock<ITicketDal>().Setup(x => x.GetTicket(ticket.TicketId)).Returns(GetSampleTicket);
-            mock.Mock<ICommentDal>().Setup(x => x.GetComments(ticket.TicketId)).Returns(GetSampleComments);
+            var comments = GetSampleComments();
+            var device = GetSampleDevice();
+            var employee = GetSampleEmployee();
+            var employees = GetSampleEmployees();
+            var client = GetSampleClient();
 
-            var logicMock = mock.Create<TicketLogic>();
+            _ticketDal.Setup(x => x.GetTicket(ticket.TicketId)).Returns(ticket);
+            _commentDal.Setup(x => x.GetComments(ticket.TicketId)).Returns(comments);
+            _deviceDal.Setup(x => x.GetDevice(ticket.DeviceId)).Returns(device);
+            _employeeDal.Setup(x => x.GetEmployee(ticket.ResponsibleEmployee)).Returns(employee);
+            _employeeDal.Setup(x => x.GetEmployees()).Returns(employees);
+            _clientDal.Setup(x => x.GetClient(ticket.ClientId)).Returns(client);
 
-            var expectedResult = GetSampleTicket();
+            var expectedResult = ticket;
 
-            var actualResult = logicMock.GetTicket(ticket.TicketId);
+            var actualResult = _TicketLogic.GetTicket(ticket.TicketId);
 
             // Assert
             Assert.True(actualResult != null);
             Assert.IsType<Ticket>(actualResult);
-            Assert.Equal(expectedResult.TicketContent, actualResult.TicketContent);
         }
     }
 }

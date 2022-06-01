@@ -1,9 +1,10 @@
-﻿using LOGIC.Entities;
+﻿using LOGIC.DTO_s;
 
 namespace LOGIC.Interfaces
 {
     public interface IEmployeeDal
     {
-        List<Employee> GetEmployees();
+        List<EmployeeDTO> GetEmployees();
+        EmployeeDTO GetEmployee(int employeeId);
     }
 }

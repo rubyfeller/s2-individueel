@@ -56,8 +56,8 @@ namespace DAL.Functions
                     {
                         device.ClientId = 0;
                         device.TicketId = 0;
-                        //device.ClientId = reader.GetInt32("clientId");
-                        //device.TicketId = reader.GetInt32("ticketId");
+                        device.ClientId = reader.GetInt32("clientId");
+                        device.TicketId = reader.GetInt32("ticketId");
                         device.DeviceId = Convert.ToInt32(reader.GetInt32("deviceId"));
                         device.DeviceName = reader.GetString("deviceName");
                         device.DeviceVersion = reader.GetString("deviceVersion");
@@ -66,10 +66,8 @@ namespace DAL.Functions
                         device.SerialNumber = reader.GetString("serialNumber");
                         deviceList.Add(new DeviceDTO
                         {
-                            ClientId = 0,
-                            TicketId = 0,
-                            //device.ClientId = reader.GetInt32("clientId");
-                            //device.TicketId = reader.GetInt32("ticketId");
+                            ClientId = reader.GetInt32("clientId"),
+                            TicketId = reader.GetInt32("ticketId"),
                             DeviceId = Convert.ToInt32(reader.GetInt32("deviceId")),
                             DeviceName = reader.GetString("deviceName"),
                             DeviceVersion = reader.GetString("deviceVersion"),
@@ -103,8 +101,8 @@ namespace DAL.Functions
                         {
                             device.ClientId = 0;
                             device.TicketId = 0;
-                            //device.ClientId = reader.GetInt32("clientId");
-                            //device.TicketId = reader.GetInt32("ticketId");
+                            device.ClientId = reader.GetInt32("clientId");
+                            device.TicketId = reader.GetInt32("ticketId");
                             device.DeviceId = reader.GetInt32("deviceId");
                             device.DeviceName = reader.GetString("deviceName");
                             device.DeviceVersion = reader.GetString("deviceVersion");
@@ -114,10 +112,8 @@ namespace DAL.Functions
 
                             DeviceDTO newDevice = new DeviceDTO
                             {
-                                ClientId = 0,
-                                TicketId = 0,
-                                //device.ClientId = reader.GetInt32("clientId");
-                                //device.TicketId = reader.GetInt32("ticketId");
+                                ClientId = reader.GetInt32("clientId"),
+                                TicketId = reader.GetInt32("ticketId"),
                                 DeviceId = Convert.ToInt32(reader.GetInt32("deviceId")),
                                 DeviceName = reader.GetString("deviceName"),
                                 DeviceVersion = reader.GetString("deviceVersion"),

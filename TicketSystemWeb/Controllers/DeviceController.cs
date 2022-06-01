@@ -61,7 +61,7 @@ namespace TicketSystemWeb.Controllers
                 OsVersion = device.OsVersion,
                 SerialNumber = device.SerialNumber,
             };
-
+            
             return specificDevice;
         }
 
@@ -100,7 +100,7 @@ namespace TicketSystemWeb.Controllers
                 };
                 var result = _IDeviceLogic.AddDevice(deviceDto);
 
-                if (result != null)
+                if (result != 0)
                 {
                     TempData["success"] = "Apparaat succesvol toegevoegd";
                 }
@@ -178,7 +178,7 @@ namespace TicketSystemWeb.Controllers
                 };
                 var result = _IDeviceLogic.UpdateDevice(deviceDto);
 
-                if (result != null)
+                if (result != 0)
                 {
                     TempData["success"] = "Apparaat succesvol aangepast";
                 }

@@ -2,6 +2,7 @@
 using LOGIC.Entities;
 using LOGIC.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using TicketSystemWeb.Models;
 using TicketSystemWeb.ViewModels;
@@ -12,11 +13,13 @@ namespace TicketSystemWeb.Controllers
     {
         private readonly ITicketLogic _ITicketLogic;
         private readonly ICommentLogic _ICommentLogic;
+        private readonly IDeviceLogic _IDeviceLogic;
 
-        public TicketController(ITicketLogic TicketLogic, ICommentLogic CommentLogic)
+        public TicketController(ITicketLogic TicketLogic, ICommentLogic CommentLogic, IDeviceLogic DeviceLogic)
         {
             _ITicketLogic = TicketLogic;
             _ICommentLogic = CommentLogic;
+            _IDeviceLogic = DeviceLogic;
         }
 
         public List<Ticket> GetTickets()
@@ -78,14 +81,21 @@ namespace TicketSystemWeb.Controllers
             TicketViewModel currTicket = new TicketViewModel
             {
                 TicketId = ticket.TicketId,
+                DeviceId = ticket.DeviceId,
                 TicketSubject = ticket.TicketSubject,
                 TicketContent = ticket.TicketContent,
                 TicketCategory = (TicketViewModel.TicketCategories)ticket.TicketCategory,
                 TicketPriority = (TicketViewModel.TicketPriorities)ticket.TicketPriority,
                 TicketStatus = (TicketViewModel.TicketStatuses)ticket.TicketStatus,
                 TicketLevel = (TicketViewModel.TicketLevels)ticket.TicketLevel,
+                ResponsibleEmployee = ticket.ResponsibleEmployee,
+                ClientId = ticket.ClientId,
                 CreatedDateTime = ticket.CreatedDateTime,
                 Comments = (List<Comment>)ticket.Comments,
+                Employee = ticket.Employee,
+                Device = ticket.Device,
+                Employees = (List<Employee>)ticket.Employees,
+                Client = ticket.Client
             };
 
             return currTicket;
@@ -108,6 +118,10 @@ namespace TicketSystemWeb.Controllers
         //GET
         public IActionResult Create()
         {
+            var deviceList = _IDeviceLogic.GetDevices();
+
+            ViewBag.Devices = deviceList;
+
             return View();
         }
 
@@ -146,6 +160,7 @@ namespace TicketSystemWeb.Controllers
                     TicketPriority = (TicketDTO.TicketPriorities)(int)obj.TicketPriority,
                     TicketStatus = (TicketDTO.TicketStatuses)(int)obj.TicketStatus,
                     CreatedDateTime = obj.CreatedDateTime,
+                    DeviceId = obj.DeviceId
                 };
                 var result = _ITicketLogic.AddTicket(ticketDto);
 
@@ -227,6 +242,7 @@ namespace TicketSystemWeb.Controllers
                     TicketPriority = (TicketDTO.TicketPriorities)(int)obj.TicketPriority,
                     TicketStatus = (TicketDTO.TicketStatuses)(int)obj.TicketStatus,
                     TicketLevel = (TicketDTO.TicketLevels)(int)obj.TicketLevel,
+                    ResponsibleEmployee = obj.ResponsibleEmployee,
                     CreatedDateTime = obj.CreatedDateTime,
                 };
                 var result = _ITicketLogic.UpdateTicket(ticketDto);

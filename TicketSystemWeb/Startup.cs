@@ -1,3 +1,4 @@
+using DAL.Data;
 using DAL.Functions;
 using LOGIC;
 using LOGIC.DeviceLogic;
@@ -28,11 +29,13 @@ namespace TicketSystemWeb
             services.AddScoped<IDeviceDal, DeviceData>();
             services.AddScoped<ITicketDal, TicketData>();
             services.AddScoped<ICommentDal, CommentData>();
-            services.AddScoped<IEmployeeDal, AccountData>();
+            services.AddScoped<IEmployeeDal, EmployeeData>();
+            services.AddScoped<IClientDal, ClientData>();
             services.AddScoped<ITicketLogic, TicketLogic>();
             services.AddScoped<IDeviceLogic, DeviceLogic>();
             services.AddScoped<ICommentLogic, CommentLogic>();
             services.AddScoped<IEmployeeLogic, EmployeeLogic>();
+            services.AddScoped<IClientLogic, ClientLogic>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

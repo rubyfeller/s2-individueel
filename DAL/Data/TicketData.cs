@@ -22,7 +22,8 @@ namespace DAL.Functions
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
-                using SqlCommand command = new SqlCommand("INSERT INTO Tickets (ticketSubject, ticketContent, createdDateTime, ticketCategory, ticketPriority, ticketStatus) VALUES (@TicketSubject, @TicketContent, @CreatedDateTime, @TicketCategory, @TicketPriority, @TicketStatus)", connection);
+                using SqlCommand command = new SqlCommand("INSERT INTO Tickets (deviceId, ticketSubject, ticketContent, createdDateTime, ticketCategory, ticketPriority, ticketStatus) VALUES (@DeviceId, @TicketSubject, @TicketContent, @CreatedDateTime, @TicketCategory, @TicketPriority, @TicketStatus)", connection);
+                command.Parameters.AddWithValue("@DeviceId", (int)ticketDto.DeviceId);
                 command.Parameters.AddWithValue("@TicketSubject", ticketDto.TicketSubject);
                 command.Parameters.AddWithValue("@TicketContent", ticketDto.TicketContent);
                 command.Parameters.AddWithValue("@CreatedDateTime", ticketDto.CreatedDateTime);
@@ -59,6 +60,7 @@ namespace DAL.Functions
                     ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
                     ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
                     ticket.TicketLevel = (Ticket.TicketLevels)Convert.ToInt32(reader.GetInt32("ticketLevel"));
+
                     ticketList.Add(new TicketDTO
                     {
                         TicketId = Convert.ToInt32(reader.GetInt32("TicketId")),
@@ -93,23 +95,30 @@ namespace DAL.Functions
                 while (reader.Read())
                 {
                     ticket.TicketId = Convert.ToInt32(reader.GetInt32("ticketId"));
+                    ticket.DeviceId = Convert.ToInt32(reader.GetInt32("deviceId"));
                     ticket.TicketSubject = reader.GetString("ticketSubject");
                     ticket.TicketContent = reader.GetString("ticketContent");
                     ticket.CreatedDateTime = reader.GetDateTime("createdDateTime");
                     ticket.TicketCategory = (Ticket.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory"));
                     ticket.TicketPriority = (Ticket.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority"));
                     ticket.TicketStatus = (Ticket.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus"));
-                    //ticket.TicketLevel = (Ticket.TicketLevels)Convert.ToInt32(reader.GetInt32("ticketLevel"));
+                    ticket.TicketLevel = (Ticket.TicketLevels)Convert.ToInt32(reader.GetInt32("ticketLevel"));
+                    ticket.ResponsibleEmployee = reader.GetInt32("responsibleEmployee");
+                    ticket.ClientId = reader.GetInt32("clientId");
+
                     specificTicket = new TicketDTO()
                     {
                         TicketId = Convert.ToInt32(reader.GetInt32("ticketId")),
+                        DeviceId = Convert.ToInt32(reader.GetInt32("deviceId")),
                         TicketSubject = reader.GetString("ticketSubject"),
                         TicketContent = reader.GetString("ticketContent"),
                         CreatedDateTime = reader.GetDateTime("createdDateTime"),
                         TicketCategory = (TicketDTO.TicketCategories)Convert.ToInt32(reader.GetInt32("ticketCategory")),
                         TicketPriority = (TicketDTO.TicketPriorities)Convert.ToInt32(reader.GetInt32("ticketPriority")),
                         TicketStatus = (TicketDTO.TicketStatuses)Convert.ToInt32(reader.GetInt32("ticketStatus")),
-                        //TicketLevel = (Ticket.TicketLevels)Convert.ToInt32(reader.GetInt32("ticketLevel")),
+                        TicketLevel = (TicketDTO.TicketLevels)(Ticket.TicketLevels)Convert.ToInt32(reader.GetInt32("ticketLevel")),
+                        ResponsibleEmployee = reader.GetInt32("responsibleEmployee"),
+                        ClientId = reader.GetInt32("clientId")
                     };
                 }
             }
@@ -123,7 +132,7 @@ namespace DAL.Functions
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
 
-                using SqlCommand command = new SqlCommand("UPDATE Tickets SET ticketSubject = @TicketSubject, ticketContent = @TicketContent, ticketLevel = @TicketLevel, createdDateTime = @CreatedDateTime, ticketCategory = @TicketCategory, ticketPriority = @TicketPriority, ticketStatus = @TicketStatus WHERE ticketId = @TicketId", connection);
+                using SqlCommand command = new SqlCommand("UPDATE Tickets SET ticketSubject = @TicketSubject, ticketContent = @TicketContent, ticketLevel = @TicketLevel, createdDateTime = @CreatedDateTime, ticketCategory = @TicketCategory, ticketPriority = @TicketPriority, ticketStatus = @TicketStatus, responsibleEmployee = @ResponsibleEmployee WHERE ticketId = @TicketId", connection);
                 command.Parameters.AddWithValue("@TicketId", ticketDto.TicketId);
                 command.Parameters.AddWithValue("@TicketSubject", ticketDto.TicketSubject);
                 command.Parameters.AddWithValue("@TicketContent", ticketDto.TicketContent);
@@ -132,6 +141,8 @@ namespace DAL.Functions
                 command.Parameters.AddWithValue("@CreatedDateTime", ticketDto.CreatedDateTime);
                 command.Parameters.AddWithValue("@TicketCategory", ticketDto.TicketCategory);
                 command.Parameters.AddWithValue("@TicketPriority", ticketDto.TicketPriority);
+                command.Parameters.AddWithValue("@ResponsibleEmployee", ticketDto.ResponsibleEmployee);
+
                 connection.Open();
                 updateTicketResult = command.ExecuteNonQuery();
             }
