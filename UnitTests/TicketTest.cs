@@ -161,10 +161,7 @@ namespace UnitTests
         public void TestIsTicketDTOTransferedToLogicObject()
         {
             // Arrange
-            //mock.Mock<ITicketDal>().Setup(x => x.GetTickets(0)).Returns(GetSampleTickets());
             _ticketDal.Setup(x => x.GetTickets(0)).Returns(GetSampleTickets());
-
-            //var logicInstance = mock.Create<TicketLogic>();
 
             var expectedResult = GetSampleTickets();
 
@@ -206,7 +203,6 @@ namespace UnitTests
         public void TestUpdateTicket()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
             var ticket = new TicketDTO
             {
                 TicketId = 1,

@@ -12,6 +12,15 @@ namespace UnitTests
 {
     public class CommentTest
     {
+        private readonly Mock<ICommentDal> _commentDal = new Mock<ICommentDal>();
+
+        private readonly CommentLogic _CommentLogic;
+
+        public CommentTest()
+        {
+            _CommentLogic = new CommentLogic(_commentDal.Object);
+        }
+
         private static List<CommentDTO> GetSampleComments()
         {
             List<CommentDTO> comments = new List<CommentDTO>
@@ -39,19 +48,22 @@ namespace UnitTests
         public void TestIsCommentDTOTransferedToLogicObject()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
-            mock.Mock<ICommentDal>().Setup(x => x.GetComments(0)).Returns(GetSampleComments());
-
-            var logicInstance = mock.Create<CommentLogic>();
+            _commentDal.Setup(x => x.GetComments(0)).Returns(GetSampleComments());
 
             var expectedResult = GetSampleComments();
 
             // Act
-            var actualResult = logicInstance.GetComments(0);
+            var actualResult = _CommentLogic.GetComments(0);
 
             // Assert
             Assert.True(actualResult != null);
             Assert.IsType<Comment>(actualResult[0]);
+            for (int i = 0; i < expectedResult.Count; i++)
+            {
+                Assert.Equal(expectedResult[i].CommentId, actualResult[i].CommentId);
+                Assert.Equal(expectedResult[i].CommentContent, actualResult[i].CommentContent);
+                Assert.Equal(expectedResult[i].TicketId, actualResult[i].TicketId);
+            }
             Assert.Equal(2, expectedResult.Count);
         }
 
@@ -59,14 +71,13 @@ namespace UnitTests
         public void TestGetComments()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
-            var logicMock = mock.Create<CommentLogic>();
             var expectedResult = GetSampleComments();
 
             foreach (var comment in GetSampleComments())
             {
-                mock.Mock<ICommentDal>().Setup(x => x.GetComments(comment.TicketId)).Returns(GetSampleComments());
-                var actualResult = logicMock.GetComments(comment.TicketId);
+                _commentDal.Setup(x => x.GetComments(comment.TicketId)).Returns(GetSampleComments);
+
+                var actualResult = _CommentLogic.GetComments(comment.TicketId);
 
                 // Assert
                 Assert.True(actualResult != null);
@@ -74,6 +85,8 @@ namespace UnitTests
                 for (int i = 0; i < expectedResult.Count; i++)
                 {
                     Assert.Equal(expectedResult[i].CommentId, actualResult[i].CommentId);
+                    Assert.Equal(expectedResult[i].CommentContent, actualResult[i].CommentContent);
+                    Assert.Equal(expectedResult[i].TicketId, actualResult[i].TicketId);
                 }
             }
         }
@@ -82,7 +95,6 @@ namespace UnitTests
         public void TestAddComment()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
             var comment = new CommentDTO
             {
                 CommentId = 1054,
@@ -91,30 +103,27 @@ namespace UnitTests
                 TicketId = 1065,
             };
 
-            mock.Mock<ICommentDal>().Setup(x => x.AddComment(comment));
-            var logicMock = mock.Create<ICommentDal>();
+            _commentDal.Setup(x => x.AddComment(comment));
 
             // Act
-            logicMock.AddComment(comment);
+            _CommentLogic.AddComment(comment);
 
             // Assert
-            mock.Mock<ICommentDal>().Verify(x => x.AddComment(comment), Times.Once);
+            _commentDal.Verify(x => x.AddComment(comment), Times.Once);
         }
 
         [Fact]
         public void TestDeleteComment()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
             int commentId = 1054;
-            mock.Mock<ICommentDal>().Setup(x => x.DeleteComment(commentId));
-            var logicMock = mock.Create<CommentLogic>();
+            _commentDal.Setup(x => x.DeleteComment(commentId));
 
             // Act
-            logicMock.DeleteComment(commentId);
+            _CommentLogic.DeleteComment(commentId);
 
             // Assert
-            mock.Mock<ICommentDal>().Verify(x => x.DeleteComment(commentId), Times.Once);
+            _commentDal.Verify(x => x.DeleteComment(commentId), Times.Once);
         }
     }
 }

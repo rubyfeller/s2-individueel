@@ -11,6 +11,15 @@ namespace UnitTests
 {
     public class DeviceTest
     {
+        private readonly Mock<IDeviceDal> _deviceDal = new Mock<IDeviceDal>();
+
+        private readonly DeviceLogic _DeviceLogic;
+
+        public DeviceTest()
+        {
+            _DeviceLogic = new DeviceLogic(_deviceDal.Object);
+        }
+
         private List<DeviceDTO> GetSampleDevices()
         {
             List<DeviceDTO> devices = new List<DeviceDTO>
@@ -63,19 +72,28 @@ namespace UnitTests
         public void TestIsDeviceDTOTransferedToLogicObject()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
-            mock.Mock<IDeviceDal>().Setup(x => x.GetDevices()).Returns(GetSampleDevices());
-
-            var logicInstance = mock.Create<DeviceLogic>();
+            _deviceDal.Setup(x => x.GetDevices()).Returns(GetSampleDevices());
 
             var expectedResult = GetSampleDevices();
 
             // Act
-            var actualResult = logicInstance.GetDevices();
+            var actualResult = _DeviceLogic.GetDevices();
 
             // Assert
             Assert.True(actualResult != null);
             Assert.IsType<Device>(actualResult[0]);
+            for (int i = 0; i < expectedResult.Count; i++)
+            {
+                Assert.Equal(expectedResult[i].DeviceId, actualResult[i].DeviceId);
+                Assert.Equal(expectedResult[i].ClientId, actualResult[i].ClientId);
+                Assert.Equal(expectedResult[i].TicketId, actualResult[i].TicketId);
+                Assert.Equal(expectedResult[i].DeviceName, actualResult[i].DeviceName);
+                Assert.Equal(expectedResult[i].DeviceVersion, actualResult[i].DeviceVersion);
+                Assert.Equal(expectedResult[i].Brand, actualResult[i].Brand);
+                Assert.Equal(expectedResult[i].OsVersion, actualResult[i].OsVersion);
+                Assert.Equal(expectedResult[i].SerialNumber, actualResult[i].SerialNumber);
+
+            }
             Assert.Equal(2, expectedResult.Count);
         }
 
@@ -83,14 +101,11 @@ namespace UnitTests
         public void TestGetDevices()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
-            mock.Mock<IDeviceDal>().Setup(x => x.GetDevices()).Returns(GetSampleDevices);
-
-            var logicMock = mock.Create<DeviceLogic>();
+            _deviceDal.Setup(x => x.GetDevices()).Returns(GetSampleDevices);
 
             var expectedResult = GetSampleDevices();
 
-            var actualResult = logicMock.GetDevices();
+            var actualResult = _DeviceLogic.GetDevices();
 
             // Assert   
             Assert.True(actualResult != null);
@@ -98,6 +113,13 @@ namespace UnitTests
             for (int i = 0; i < expectedResult.Count; i++)
             {
                 Assert.Equal(expectedResult[i].DeviceId, actualResult[i].DeviceId);
+                Assert.Equal(expectedResult[i].ClientId, actualResult[i].ClientId);
+                Assert.Equal(expectedResult[i].TicketId, actualResult[i].TicketId);
+                Assert.Equal(expectedResult[i].DeviceName, actualResult[i].DeviceName);
+                Assert.Equal(expectedResult[i].DeviceVersion, actualResult[i].DeviceVersion);
+                Assert.Equal(expectedResult[i].Brand, actualResult[i].Brand);
+                Assert.Equal(expectedResult[i].OsVersion, actualResult[i].OsVersion);
+                Assert.Equal(expectedResult[i].SerialNumber, actualResult[i].SerialNumber);
             }
         }
 
@@ -105,7 +127,6 @@ namespace UnitTests
         public void TestAddDevice()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
             var device = new DeviceDTO
             {
                 DeviceId = 1025,
@@ -118,21 +139,20 @@ namespace UnitTests
                 SerialNumber = "123456",
             };
 
-            mock.Mock<IDeviceDal>().Setup(x => x.AddDevice(device));
-            var logicMock = mock.Create<IDeviceDal>();
+            _deviceDal.Setup(x => x.AddDevice(device));
+
 
             // Act
-            logicMock.AddDevice(device);
+            _DeviceLogic.AddDevice(device);
 
             // Assert
-            mock.Mock<IDeviceDal>().Verify(x => x.AddDevice(device), Times.Once);
+            _deviceDal.Verify(x => x.AddDevice(device), Times.Once);
         }
 
         [Fact]
         public void TestUpdateDevice()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
             var device = new DeviceDTO
             {
                 DeviceId = 1025,
@@ -145,50 +165,52 @@ namespace UnitTests
                 SerialNumber = "123456",
             };
 
-            mock.Mock<IDeviceDal>().Setup(x => x.UpdateDevice(device));
-            var logicMock = mock.Create<DeviceLogic>();
+            _deviceDal.Setup(x => x.UpdateDevice(device));
 
             // Act
-            logicMock.UpdateDevice(device);
+            _DeviceLogic.UpdateDevice(device);
 
             // Assert
-            mock.Mock<IDeviceDal>().Verify(x => x.UpdateDevice(device), Times.Once);
+            _deviceDal.Verify(x => x.UpdateDevice(device), Times.Once);
         }
 
         [Fact]
         public void TestDeleteDevice()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
             int deviceId = 1025;
-            mock.Mock<IDeviceDal>().Setup(x => x.DeleteDevice(deviceId));
-            var logicMock = mock.Create<DeviceLogic>();
+            _deviceDal.Setup(x => x.DeleteDevice(deviceId));
 
             // Act
-            logicMock.DeleteDevice(deviceId);
+            _DeviceLogic.DeleteDevice(deviceId);
 
             // Assert
-            mock.Mock<IDeviceDal>().Verify(x => x.DeleteDevice(deviceId), Times.Once);
+            _deviceDal.Verify(x => x.DeleteDevice(deviceId), Times.Once);
         }
 
         [Fact]
         public void TestGetDevice()
         {
             // Arrange
-            using var mock = AutoMock.GetLoose();
             var device = GetSampleDevice();
-            mock.Mock<IDeviceDal>().Setup(x => x.GetDevice(device.DeviceId)).Returns(GetSampleDevice);
 
-            var logicMock = mock.Create<DeviceLogic>();
+            _deviceDal.Setup(x => x.GetDevice(device.DeviceId)).Returns(device);
 
             var expectedResult = GetSampleDevice();
 
-            var actualResult = logicMock.GetDevice(device.DeviceId);
+            var actualResult = _DeviceLogic.GetDevice(device.DeviceId);
 
             // Assert
             Assert.True(actualResult != null);
             Assert.IsType<Device>(actualResult);
             Assert.Equal(expectedResult.DeviceId, actualResult.DeviceId);
+            Assert.Equal(expectedResult.ClientId, actualResult.ClientId);
+            Assert.Equal(expectedResult.TicketId, actualResult.TicketId);
+            Assert.Equal(expectedResult.DeviceName, actualResult.DeviceName);
+            Assert.Equal(expectedResult.DeviceVersion, actualResult.DeviceVersion);
+            Assert.Equal(expectedResult.Brand, actualResult.Brand);
+            Assert.Equal(expectedResult.OsVersion, actualResult.OsVersion);
+            Assert.Equal(expectedResult.SerialNumber, actualResult.SerialNumber);
         }
     }
 }
