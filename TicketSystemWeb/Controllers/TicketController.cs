@@ -164,7 +164,7 @@ namespace TicketSystemWeb.Controllers
                 };
                 var result = _ITicketLogic.AddTicket(ticketDto);
 
-                if (result != null)
+                if (result != 0)
                 {
                     TempData["success"] = "Ticket succesvol toegevoegd";
                 }
@@ -192,7 +192,7 @@ namespace TicketSystemWeb.Controllers
                 };
                 var result = _ICommentLogic.AddComment(commentDto);
 
-                if (result != null)
+                if (result != 0)
                 {
                     TempData["success"] = "Reactie succesvol toegevoegd";
                 }
@@ -247,7 +247,7 @@ namespace TicketSystemWeb.Controllers
                 };
                 var result = _ITicketLogic.UpdateTicket(ticketDto);
 
-                if (result != null)
+                if (result != 0)
                 {
                     TempData["success"] = "Ticket succesvol aangepast";
                 }

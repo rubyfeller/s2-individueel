@@ -58,7 +58,6 @@ namespace LOGIC.TicketLogic
                     TicketStatus = (Ticket.TicketStatuses)ticket.TicketStatus,
                     TicketLevel = (Ticket.TicketLevels)ticket.TicketLevel,
                     CreatedDateTime = ticket.CreatedDateTime,
-                    //Comments = commentLogic.GetComments(ticket.TicketId),
                 });
             }
 

@@ -68,9 +68,9 @@ namespace DAL.Functions
             }
             return commentResult;
         }
-
+        
         // Delete comment
-        public Int32 DeleteComment(int commentid)
+        public int DeleteComment(int commentid)
         {
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))

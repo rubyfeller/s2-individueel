@@ -163,7 +163,7 @@ namespace DAL.Functions
         }
 
         // Delete ticket
-        public Int32 DeleteDevice(int deviceid)
+        public int DeleteDevice(int deviceid)
         {
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
