@@ -123,7 +123,6 @@ namespace DAL.Functions
                             };
                         }
                         return device;
-
                     }
                 }
             }

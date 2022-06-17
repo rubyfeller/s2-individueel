@@ -2,7 +2,6 @@
 using LOGIC.Entities;
 using LOGIC.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using TicketSystemWeb.Models;
 using TicketSystemWeb.ViewModels;
@@ -30,12 +29,14 @@ namespace TicketSystemWeb.Controllers
             {
                 if (TempData.ContainsKey("employee"))
                 {
-                    ticketLevel = (int)TempData["employee"];
+                    ticketLevel = (int)TempData["ticketLevel"];
+                    //ticketLevel = (int)TempData["employee"];
                 }
 
                 if (TempData.ContainsKey("administrator"))
                 {
-                    ticketLevel = (int)TempData["administrator"];
+                    ticketLevel = (int)TempData["ticketLevel"];
+                    //ticketLevel = (int)TempData["administrator"];
                 }
             }
 
@@ -46,6 +47,7 @@ namespace TicketSystemWeb.Controllers
 
             TempData.Keep("employee");
             TempData.Keep("administrator");
+            TempData.Keep("ticketLevel");
             List<Ticket> ticketList = _ITicketLogic.GetTickets(ticketLevel);
             return ticketList;
         }

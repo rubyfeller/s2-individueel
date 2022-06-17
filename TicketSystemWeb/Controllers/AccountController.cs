@@ -1,6 +1,5 @@
 ﻿using LOGIC.Entities;
 using LOGIC.Interfaces;
-using LOGIC.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TicketSystemWeb.ViewModels;
@@ -62,6 +61,7 @@ namespace TicketSystemWeb.Controllers
                 if (obj.Password == "medewerker")
                 {
                     TempData["employee"] = 1;
+                    TempData["ticketLevel"] = 2;
                     TempData["success"] = "Succesvol ingelogd als medewerker";
                     return RedirectToAction("Index", "Home");
 
@@ -69,6 +69,7 @@ namespace TicketSystemWeb.Controllers
                 if (obj.Password == "administrator")
                 {
                     TempData["administrator"] = 2;
+                    TempData["ticketLevel"] = 3;
                     TempData["success"] = "Succesvol ingelogd als administrator";
                     return RedirectToAction("Index", "Home");
                 }

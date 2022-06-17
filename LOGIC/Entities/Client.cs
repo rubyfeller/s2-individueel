@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LOGIC.Entities
+﻿namespace LOGIC.Entities
 {
     public class Client
     {

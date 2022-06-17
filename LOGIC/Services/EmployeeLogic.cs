@@ -47,7 +47,6 @@ namespace LOGIC.Services
                 CompetenceLevel = employee.CompetenceLevel,
                 Role = employee.Role,
             };
-
             return specificEmployee;
         }
     }

@@ -27,7 +27,6 @@ namespace LOGIC
                     CreatedDateTime = comment.CreatedDateTime,
                 });
             }
-
             return comments;
         }
 

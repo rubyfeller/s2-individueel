@@ -23,7 +23,7 @@ namespace DAL.Functions
             {
 
                 using SqlCommand command = new SqlCommand("INSERT INTO Tickets (deviceId, ticketSubject, ticketContent, createdDateTime, ticketCategory, ticketPriority, ticketStatus) VALUES (@DeviceId, @TicketSubject, @TicketContent, @CreatedDateTime, @TicketCategory, @TicketPriority, @TicketStatus)", connection);
-                command.Parameters.AddWithValue("@DeviceId", (int)ticketDto.DeviceId);
+                command.Parameters.AddWithValue("@DeviceId", ticketDto.DeviceId);
                 command.Parameters.AddWithValue("@TicketSubject", ticketDto.TicketSubject);
                 command.Parameters.AddWithValue("@TicketContent", ticketDto.TicketContent);
                 command.Parameters.AddWithValue("@CreatedDateTime", ticketDto.CreatedDateTime);
