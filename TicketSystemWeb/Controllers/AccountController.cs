@@ -61,7 +61,7 @@ namespace TicketSystemWeb.Controllers
                 if (obj.Password == "medewerker")
                 {
                     TempData["employee"] = 1;
-                    TempData["ticketLevel"] = 2;
+                    TempData["ticketLevel"] = 1;
                     TempData["success"] = "Succesvol ingelogd als medewerker";
                     return RedirectToAction("Index", "Home");
 
@@ -69,7 +69,7 @@ namespace TicketSystemWeb.Controllers
                 if (obj.Password == "administrator")
                 {
                     TempData["administrator"] = 2;
-                    TempData["ticketLevel"] = 3;
+                    TempData["ticketLevel"] = 2;
                     TempData["success"] = "Succesvol ingelogd als administrator";
                     return RedirectToAction("Index", "Home");
                 }
@@ -90,6 +90,7 @@ namespace TicketSystemWeb.Controllers
         {
             TempData.Remove("employee");
             TempData.Remove("administrator");
+            TempData.Remove("ticketLevel");
             TempData["success"] = "Succesvol uitgelogd";
             return RedirectToAction("Index");
         }

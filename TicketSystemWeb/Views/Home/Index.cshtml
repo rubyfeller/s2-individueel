@@ -1,9 +1,14 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welkom</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu dui tempor, sagittis libero nec, ullamcorper ligula. Fusce vitae urna libero. Donec malesuada pellentesque orci nec venenatis. Duis commodo velit eget nibh sodales, vel faucibus diam pulvinar. Proin iaculis ipsum vel dui pretium tempus. Nunc porta placerat mauris faucibus vulputate. Curabitur mollis risus ac libero vehicula lacinia. Nunc hendrerit bibendum quam ac accumsan.</p>
-    <a asp-controller="Ticket" asp-action="Index" class="btn btn-success">Ga naar overzicht van tickets</a>
+    <p>In dit ticketsysteem kunt u IT-gerelateerde vragen en problemen vastleggen.<p>
+    <p>Een servicedesk medewerker kan de openstaande vragen en problemen op deze manier beter managen en sneller tot een reactie komen.</p>
+    <p>Daarnaast kunt u gemakkelijk de status van het ticket inzien.</p>
+    <h2>Aan de slag</h2>
+    <a asp-controller="Ticket" asp-action="Index" class="btn btn-success">Bekijk overzicht van tickets</a>
+    <a asp-controller="Ticket" asp-action="Index" class="btn btn-primary">Bekijk mijn apparaten</a>
+
 </div>

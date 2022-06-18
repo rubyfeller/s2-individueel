@@ -10,7 +10,7 @@ namespace TicketSystemWeb.Models
     {
         [Key]
         public int TicketId { get; set; }
-        public int DeviceId { get; set; }
+        public int? DeviceId { get; set; }
         [Required(ErrorMessage = "Het invullen van een onderwerp is verplicht")]
         [DisplayName("Onderwerp")]
         public string TicketSubject { get; set; }

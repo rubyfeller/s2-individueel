@@ -162,7 +162,7 @@ namespace TicketSystemWeb.Controllers
                     TicketPriority = (TicketDTO.TicketPriorities)(int)obj.TicketPriority,
                     TicketStatus = (TicketDTO.TicketStatuses)(int)obj.TicketStatus,
                     CreatedDateTime = obj.CreatedDateTime,
-                    DeviceId = obj.DeviceId
+                    DeviceId = obj.DeviceId ?? 0,
                 };
                 var result = _ITicketLogic.AddTicket(ticketDto);
 

@@ -9,6 +9,5 @@ namespace LOGIC.Entities
         public string CommentContent { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
         public int TicketId { get; set; }
-        public Ticket Ticket { get; set; }
     }
 }

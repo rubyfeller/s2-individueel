@@ -51,27 +51,28 @@
         <br />
         @if (TempData.ContainsKey("administrator"))
         {
-                <div class="row">
-                    <span asp-validation-for="TicketLevel">Niveau</span>
-                    <div class="col-sm-3">
-                        <select asp-for="TicketLevel" asp-items="Html.GetEnumSelectList<TicketLevels>()" class="form-control">
-                            <option selected="selected">Selecteer een niveau</option>
-                        </select>
-                    </div>
+            <div class="row">
+                <span asp-validation-for="TicketLevel">Niveau</span>
+                <div class="col-sm-3">
+                    <select asp-for="TicketLevel" asp-items="Html.GetEnumSelectList<TicketLevels>()" class="form-control">
+                        <option selected="selected">Selecteer een niveau</option>
+                    </select>
                 </div>
-                <br />
-                <div class="row">
-                    <span>Medewerker toewijzen</span>
-                    <div class="col-sm-3">
-                        <select asp-for="ResponsibleEmployee" class="form-control">
+            </div>
+            <br />
+            <div class="row">
+                <span>Medewerker toewijzen</span>
+                <div class="col-sm-3">
+                    <select asp-for="ResponsibleEmployee" class="form-control">
                         @foreach (var employee in Model.Employees)
                         {
-                                    <option value="@employee.EmployeeId">@employee.FirstName @employee.LastName</option>
+                            <option>Selecteer een medewerker</option>
+                            <option value="@employee.EmployeeId">@employee.FirstName @employee.LastName</option>
                         }
-                        </select>
-                    </div>
+                    </select>
                 </div>
-                <br />
+            </div>
+            <br />
         }
         <button type="submit" class="btn btn-primary" style="width: 150px">Ticket bewerken</button>
         <a asp-controller="Ticket" asp-action="Index" class="btn btn-secondary" style="width: 150px">Terug naar overzicht</a>

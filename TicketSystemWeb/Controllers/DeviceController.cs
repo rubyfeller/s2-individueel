@@ -34,8 +34,8 @@ namespace TicketSystemWeb.Controllers
                 newDeviceList.Add(new DeviceViewModel
                 {
                     DeviceId = devices.DeviceId,
-                    ClientId = devices.ClientId,
-                    TicketId = devices.TicketId,
+                    ClientId = devices.ClientId ?? 0,
+                    TicketId = devices.TicketId ?? 0,
                     DeviceName = devices.DeviceName,
                     DeviceVersion = devices.DeviceVersion,
                     Brand = devices.Brand,
@@ -53,8 +53,8 @@ namespace TicketSystemWeb.Controllers
             DeviceViewModel specificDevice = new DeviceViewModel
             {
                 DeviceId = device.DeviceId,
-                ClientId = 0,
-                TicketId = 0,
+                ClientId = device.ClientId ?? 0,
+                TicketId = device.TicketId ?? 0,
                 DeviceName = device.DeviceName,
                 DeviceVersion = device.DeviceVersion,
                 Brand = device.Brand,
@@ -85,18 +85,16 @@ namespace TicketSystemWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                obj.ClientId = 0;
-                obj.TicketId = 0;
                 DeviceDTO deviceDto = new DeviceDTO
                 {
                     DeviceId = obj.DeviceId,
-                    ClientId = obj.ClientId,
-                    TicketId = obj.TicketId,
+                    ClientId = obj.ClientId ?? 0,
+                    TicketId = obj.TicketId ?? 0,
                     DeviceName = obj.DeviceName,
-                    DeviceVersion = obj.DeviceVersion,
+                    DeviceVersion = obj.DeviceVersion ?? "",
                     Brand = obj.Brand,
-                    OsVersion = obj.OsVersion,
-                    SerialNumber = obj.SerialNumber,
+                    OsVersion = obj.OsVersion ?? "",
+                    SerialNumber = obj.SerialNumber ?? "",
                 };
                 var result = _IDeviceLogic.AddDevice(deviceDto);
 
@@ -168,8 +166,8 @@ namespace TicketSystemWeb.Controllers
                 DeviceDTO deviceDto = new DeviceDTO
                 {
                     DeviceId = obj.DeviceId,
-                    ClientId = obj.ClientId,
-                    TicketId = obj.TicketId,
+                    ClientId = obj.ClientId ?? 0,
+                    TicketId = obj.TicketId ?? 0,
                     DeviceName = obj.DeviceName,
                     DeviceVersion = obj.DeviceVersion,
                     Brand = obj.Brand,
