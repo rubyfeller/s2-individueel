@@ -11,13 +11,10 @@ namespace DAL.Functions
     public class DeviceData : IDeviceDal
     {
         private readonly DBCollection dbConnection = new DBCollection();
-        int deviceResult;
-        int updateDeviceResult;
-        int deleteDeviceResult;
 
-        // Add a new device
         public int AddDevice(DeviceDTO device)
         {
+            int deviceResult;
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -38,7 +35,6 @@ namespace DAL.Functions
             return deviceResult;
         }
 
-        // Get all devices
         public List<DeviceDTO> GetDevices()
         {
             Device device = new Device();
@@ -125,9 +121,9 @@ namespace DAL.Functions
             }
         }
 
-        // Update device
         public int UpdateDevice(DeviceDTO device)
         {
+            int updateDeviceResult;
             Device newDevice = new Device
             {
                 DeviceId = device.DeviceId,
@@ -158,9 +154,10 @@ namespace DAL.Functions
             return updateDeviceResult;
         }
 
-        // Delete ticket
         public int DeleteDevice(int deviceid)
         {
+            int deleteDeviceResult;
+
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

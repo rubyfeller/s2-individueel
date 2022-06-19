@@ -12,7 +12,6 @@ namespace DAL.Functions
     {
         private readonly DBCollection dbConnection = new DBCollection();
 
-        // Get all employees
         public List<EmployeeDTO> GetEmployees()
         {
             Employee employee = new Employee();

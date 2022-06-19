@@ -11,13 +11,10 @@ namespace DAL.Functions
     public class TicketData : ITicketDal
     {
         private readonly DBCollection dbConnection = new DBCollection();
-        int ticketResult;
-        int updateTicketResult;
-        int deleteTicketResult;
 
-        // Add a new ticket
         public int AddTicket(TicketDTO ticketDto)
         {
+            int ticketResult;
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -36,7 +33,6 @@ namespace DAL.Functions
             return ticketResult;
         }
 
-        // Get all tickets
         public List<TicketDTO> GetTickets(int ticketLevel)
         {
             Ticket ticket = new Ticket();
@@ -124,10 +120,9 @@ namespace DAL.Functions
             }
             return specificTicket;
         }
-
-        // Update ticket
         public int UpdateTicket(TicketDTO ticketDto)
         {
+            int updateTicketResult;
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -149,9 +144,9 @@ namespace DAL.Functions
             return updateTicketResult;
         }
 
-        // Delete ticket
         public int DeleteTicket(int ticketid)
         {
+            int deleteTicketResult;
             var connectionString = dbConnection.GetConnectionString();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

@@ -4,7 +4,7 @@ namespace TicketSystemWeb.ViewModels
 {
     public class HourRegistrationViewModel
     {
-        DateTime startTime { get; set; }
-        DateTime endTime { get; set; }
+        DateTime StartTime { get; set; }
+        DateTime EndTime { get; set; }
     }
 }

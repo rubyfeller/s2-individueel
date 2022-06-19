@@ -12,7 +12,6 @@ namespace DAL.Data
     {
         private readonly DBCollection dbConnection = new DBCollection();
 
-        // Get all employees
         public List<ClientDTO> GetClients()
         {
             Client client = new Client();
